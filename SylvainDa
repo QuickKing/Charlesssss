@@ -1,0 +1,1085 @@
+
+local TABLE_TableIndirection = {};
+bit32 = {};
+TABLE_TableIndirection["N%0"] = 32;
+TABLE_TableIndirection["P%0"] = 2 ^ TABLE_TableIndirection["N%0"];
+bit32.bnot = function(x)
+	x = x % TABLE_TableIndirection["P%0"];
+	return (TABLE_TableIndirection["P%0"] - 1) - x;
+end;
+bit32.band = function(x, y)
+	if (y == 255) then
+		return x % 256;
+	end
+	if (y == 65535) then
+		return x % 65536;
+	end
+	if (y == 4294967295) then
+		return x % 4294967296;
+	end
+	x, y = x % TABLE_TableIndirection["P%0"], y % TABLE_TableIndirection["P%0"];
+	TABLE_TableIndirection["r%0"] = 0;
+	TABLE_TableIndirection["p%0"] = 1;
+	for i = 1, TABLE_TableIndirection["N%0"] do
+		local a, b = x % 2, y % 2;
+		x, y = math.floor(x / 2), math.floor(y / 2);
+		if ((a + b) == 2) then
+			TABLE_TableIndirection["r%0"] = TABLE_TableIndirection["r%0"] + TABLE_TableIndirection["p%0"];
+		end
+		TABLE_TableIndirection["p%0"] = 2 * TABLE_TableIndirection["p%0"];
+	end
+	return TABLE_TableIndirection["r%0"];
+end;
+bit32.bor = function(x, y)
+	if (y == 255) then
+		return (x - (x % 256)) + 255;
+	end
+	if (y == 65535) then
+		return (x - (x % 65536)) + 65535;
+	end
+	if (y == 4294967295) then
+		return 4294967295;
+	end
+	x, y = x % TABLE_TableIndirection["P%0"], y % TABLE_TableIndirection["P%0"];
+	TABLE_TableIndirection["r%0"] = 0;
+	TABLE_TableIndirection["p%0"] = 1;
+	for i = 1, TABLE_TableIndirection["N%0"] do
+		local a, b = x % 2, y % 2;
+		x, y = math.floor(x / 2), math.floor(y / 2);
+		if ((a + b) >= 1) then
+			TABLE_TableIndirection["r%0"] = TABLE_TableIndirection["r%0"] + TABLE_TableIndirection["p%0"];
+		end
+		TABLE_TableIndirection["p%0"] = 2 * TABLE_TableIndirection["p%0"];
+	end
+	return TABLE_TableIndirection["r%0"];
+end;
+bit32.bxor = function(x, y)
+	x, y = x % TABLE_TableIndirection["P%0"], y % TABLE_TableIndirection["P%0"];
+	TABLE_TableIndirection["r%0"] = 0;
+	TABLE_TableIndirection["p%0"] = 1;
+	for i = 1, TABLE_TableIndirection["N%0"] do
+		local a, b = x % 2, y % 2;
+		x, y = math.floor(x / 2), math.floor(y / 2);
+		if ((a + b) == 1) then
+			TABLE_TableIndirection["r%0"] = TABLE_TableIndirection["r%0"] + TABLE_TableIndirection["p%0"];
+		end
+		TABLE_TableIndirection["p%0"] = 2 * TABLE_TableIndirection["p%0"];
+	end
+	return TABLE_TableIndirection["r%0"];
+end;
+bit32.lshift = function(x, s_amount)
+	if (math.abs(s_amount) >= TABLE_TableIndirection["N%0"]) then
+		return 0;
+	end
+	x = x % TABLE_TableIndirection["P%0"];
+	if (s_amount < 0) then
+		return math.floor(x * (2 ^ s_amount));
+	else
+		return (x * (2 ^ s_amount)) % TABLE_TableIndirection["P%0"];
+	end
+end;
+bit32.rshift = function(x, s_amount)
+	if (math.abs(s_amount) >= TABLE_TableIndirection["N%0"]) then
+		return 0;
+	end
+	x = x % TABLE_TableIndirection["P%0"];
+	if (s_amount > 0) then
+		return math.floor(x * (2 ^ -s_amount));
+	else
+		return (x * (2 ^ -s_amount)) % TABLE_TableIndirection["P%0"];
+	end
+end;
+bit32.arshift = function(x, s_amount)
+	if (math.abs(s_amount) >= TABLE_TableIndirection["N%0"]) then
+		return 0;
+	end
+	x = x % TABLE_TableIndirection["P%0"];
+	if (s_amount > 0) then
+		TABLE_TableIndirection["add%0"] = 0;
+		if (x >= (TABLE_TableIndirection["P%0"] / 2)) then
+			TABLE_TableIndirection["add%0"] = TABLE_TableIndirection["P%0"] - (2 ^ (TABLE_TableIndirection["N%0"] - s_amount));
+		end
+		return math.floor(x * (2 ^ -s_amount)) + TABLE_TableIndirection["add%0"];
+	else
+		return (x * (2 ^ -s_amount)) % TABLE_TableIndirection["P%0"];
+	end
+end;
+TABLE_TableIndirection["Rayfield%0"] = loadstring(game:HttpGet("https://sirius.menu/rayfield"))();
+TABLE_TableIndirection["Window%0"] = TABLE_TableIndirection["Rayfield%0"]:CreateWindow({Name="🏴‍☠️ Pilfering Pirates 🏴‍☠️",Icon=0,LoadingTitle="Blacklow Technologie",LoadingSubtitle="By Blacklow",Theme="Default",DisableRayfieldPrompts=false,DisableBuildWarnings=false,ConfigurationSaving={Enabled=true,FolderName=nil,FileName="Blacklow"},Discord={Enabled=true,Invite="zd9U983X",RememberJoins=true},KeySystem=true,KeySettings={Title="🔑 Blacklow Key system 🔑",Subtitle="Join Discord for key ",Note="Blacklow is free thanks for making the key system",FileName="Key",SaveKey=true,GrabKeyFromSite=false,Key={"d8$Lz2!tPqV&x@M7bNwK1#jF0mU"}}});
+TABLE_TableIndirection["Rayfield%0"]:Notify({Title="❤️ Thank you ❤️",Content="Thank you for using Blacklow",Duration=6.5,Image=4483362458});
+TABLE_TableIndirection["PlayerSetting%0"] = TABLE_TableIndirection["Window%0"]:CreateTab("👤 Player 👤", 4483362458);
+TABLE_TableIndirection["PlayerSetting%0"]:CreateSection("Player Settings");
+TABLE_TableIndirection["PlayerSetting%0"]:CreateSlider({Name="🏃 Walkspeed 🏃",Range={0,500},Increment=1,Suffix="Speed",CurrentValue=16,Flag="WalkSpeed",Callback=function(Value)
+	TABLE_TableIndirection["player%0"] = game.Players.LocalPlayer;
+	if (TABLE_TableIndirection["player%0"] and TABLE_TableIndirection["player%0"].Character and TABLE_TableIndirection["player%0"].Character:FindFirstChild("Humanoid")) then
+		TABLE_TableIndirection["humanoid%0"] = TABLE_TableIndirection["player%0"].Character.Humanoid;
+		TABLE_TableIndirection["humanoid%0"].WalkSpeed = Value;
+	end
+end});
+TABLE_TableIndirection["PlayerSetting%0"]:CreateSlider({Name="🦸 JumpPower 🦸",Range={0,300},Increment=1,Suffix="Power",CurrentValue=50,Flag="JumpPower",Callback=function(Value)
+	TABLE_TableIndirection["player%0"] = game.Players.LocalPlayer;
+	if (TABLE_TableIndirection["player%0"] and TABLE_TableIndirection["player%0"].Character and TABLE_TableIndirection["player%0"].Character:FindFirstChild("Humanoid")) then
+		TABLE_TableIndirection["humanoid%0"] = TABLE_TableIndirection["player%0"].Character.Humanoid;
+		TABLE_TableIndirection["humanoid%0"].WalkSpeed = Value;
+	end
+end});
+TABLE_TableIndirection["PlayerSetting%0"]:CreateToggle({Name="🌌 Infinite Jumps 🌌",CurrentValue=false,Flag="InfiniteJumps",Callback=function(Value)
+	_G.infinjump = Value;
+	TABLE_TableIndirection["plr%0"] = game:GetService("Players").LocalPlayer;
+	TABLE_TableIndirection["m%0"] = TABLE_TableIndirection["plr%0"]:GetMouse();
+	if _G.jumpConnection then
+		_G.jumpConnection:Disconnect();
+	end
+	_G.jumpConnection = TABLE_TableIndirection["m%0"].KeyDown:Connect(function(k)
+		if (_G.infinjump and (k == " ")) then
+			TABLE_TableIndirection["humanoid%0"] = TABLE_TableIndirection["plr%0"].Character and TABLE_TableIndirection["plr%0"].Character:FindFirstChildOfClass("Humanoid");
+			if TABLE_TableIndirection["humanoid%0"] then
+				TABLE_TableIndirection["humanoid%0"]:ChangeState("Jumping");
+			end
+		end
+	end);
+end});
+TABLE_TableIndirection["PlayerSetting%0"]:CreateToggle({Name="🌌 Gravity 🌌",CurrentValue=false,Flag="Gravity",Callback=function(Value)
+	game.Workspace.Gravity = (Value and 0) or 196.2;
+end});
+TABLE_TableIndirection["SilentAimTab%0"] = TABLE_TableIndirection["Window%0"]:CreateTab("🔫 Silent Aim 🔫", 4483362458);
+TABLE_TableIndirection["SilentAimTab%0"]:CreateSection("Silent Aim Settings");
+TABLE_TableIndirection["player%0"] = game.Players.LocalPlayer;
+TABLE_TableIndirection["SilentAim%0"] = false;
+TABLE_TableIndirection["TeamChecked%0"] = true;
+TABLE_TableIndirection["SelectedGuns%0"] = {};
+TABLE_TableIndirection["FireRate%0"] = 0.1;
+local function notifyError(gun, err)
+	if (string.find(err, "not a valid member of Model") or string.find(err, "Weapon not found or doesn't support firing")) then
+		return;
+	end
+	TABLE_TableIndirection["Rayfield%0"]:Notify({Title="❗ Silent Aim Error ❗",Content=("Error firing with " .. gun .. ".\n" .. "❌ Issue: " .. err .. "\n" .. "📩 Contact support on Discord!"),Duration=5,Image=4483362458});
+end
+local function getClosestEnemy()
+	TABLE_TableIndirection["closestEnemy%0"] = nil;
+	TABLE_TableIndirection["minDistance%0"] = math.huge;
+	for _, plr in pairs(game.Players:GetPlayers()) do
+		if ((plr ~= TABLE_TableIndirection["player%0"]) and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")) then
+			if (not TABLE_TableIndirection["TeamChecked%0"] or (plr.Team ~= TABLE_TableIndirection["player%0"].Team)) then
+				TABLE_TableIndirection["distance%0"] = (TABLE_TableIndirection["player%0"].Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).Magnitude;
+				if (TABLE_TableIndirection["distance%0"] < TABLE_TableIndirection["minDistance%0"]) then
+					TABLE_TableIndirection["minDistance%0"] = TABLE_TableIndirection["distance%0"];
+					TABLE_TableIndirection["closestEnemy%0"] = plr.Character.HumanoidRootPart;
+				end
+			end
+		end
+	end
+	return TABLE_TableIndirection["closestEnemy%0"];
+end
+local function fireAtEnemy()
+	while TABLE_TableIndirection["SilentAim%0"] do
+		if (TABLE_TableIndirection["player%0"].Character and TABLE_TableIndirection["player%0"].Character:FindFirstChild("HumanoidRootPart")) then
+			TABLE_TableIndirection["target%0"] = getClosestEnemy();
+			if TABLE_TableIndirection["target%0"] then
+				for _, gun in ipairs(TABLE_TableIndirection["SelectedGuns%0"]) do
+					TABLE_TableIndirection["args%0"] = {[1]=TABLE_TableIndirection["target%0"].Position};
+					local success, err = pcall(function()
+						if (gun == "Paintball") then
+							game:GetService("Players").LocalPlayer.Character.Paintball.Activate:FireServer(unpack(TABLE_TableIndirection["args%0"]));
+						elseif (gun == "Superball") then
+							game:GetService("Players").LocalPlayer.Character.Superball.Activate:FireServer(unpack(TABLE_TableIndirection["args%0"]));
+						elseif (gun == "Flintlock") then
+							game:GetService("Players").LocalPlayer.Character.Flintlock.Activate:FireServer(unpack(TABLE_TableIndirection["args%0"]));
+						else
+							TABLE_TableIndirection["weapon%0"] = TABLE_TableIndirection["player%0"].Character:FindFirstChild(gun);
+							if (TABLE_TableIndirection["weapon%0"] and TABLE_TableIndirection["weapon%0"]:FindFirstChild("Activate")) then
+								TABLE_TableIndirection["weapon%0"].Activate:FireServer(unpack(TABLE_TableIndirection["args%0"]));
+							else
+								error("Weapon not found or doesn't support firing");
+							end
+						end
+					end);
+					if not success then
+						notifyError(gun, err);
+					end
+				end
+			end
+		end
+		wait(TABLE_TableIndirection["FireRate%0"]);
+	end
+end
+TABLE_TableIndirection["player%0"].CharacterAdded:Connect(function()
+	if TABLE_TableIndirection["SilentAim%0"] then
+		fireAtEnemy();
+	end
+end);
+TABLE_TableIndirection["SilentAimTab%0"]:CreateToggle({Name="Activated",CurrentValue=false,Flag="ActivatedSilentAim",Callback=function(Value)
+	TABLE_TableIndirection["SilentAim%0"] = Value;
+	if TABLE_TableIndirection["SilentAim%0"] then
+		fireAtEnemy();
+	end
+end});
+TABLE_TableIndirection["SilentAimTab%0"]:CreateToggle({Name="Team Checked",CurrentValue=true,Flag="TeamChecked",Callback=function(Value)
+	TABLE_TableIndirection["TeamChecked%0"] = Value;
+end});
+TABLE_TableIndirection["SilentAimTab%0"]:CreateDropdown({Name="Gun",Options={"Flintlock","Launcher","Superball","Paintball"},CurrentOption={"Flintlock"},MultipleOptions=true,Flag="GunSilentAim",Callback=function(Options)
+	TABLE_TableIndirection["SelectedGuns%0"] = Options;
+end});
+TABLE_TableIndirection["SilentAimTab%0"]:CreateSlider({Name="Fire Rate (sec)",Range={0.05,1.5},Increment=0.05,Suffix="sec",CurrentValue=0.05,Flag="FireRate",Callback=function(Value)
+	TABLE_TableIndirection["FireRate%0"] = Value;
+end});
+TABLE_TableIndirection["Visual%0"] = TABLE_TableIndirection["Window%0"]:CreateTab("🖥️ Visual 🖥️", 4483362458);
+TABLE_TableIndirection["Section%0"] = TABLE_TableIndirection["Visual%0"]:CreateSection("Utility");
+TABLE_TableIndirection["Button%0"] = TABLE_TableIndirection["Visual%0"]:CreateButton({Name="Name esp",Callback=function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Lucasfin000/SpaceHub/main/UESP"))();
+end});
+TABLE_TableIndirection["Button%1"] = TABLE_TableIndirection["Visual%0"]:CreateButton({Name="Tracer",Callback=function()
+	TABLE_TableIndirection["workspace%0"] = game:GetService("Workspace");
+	TABLE_TableIndirection["player%1"] = game:GetService("Players").LocalPlayer;
+	TABLE_TableIndirection["camera%0"] = TABLE_TableIndirection["workspace%0"].CurrentCamera;
+	TABLE_TableIndirection["on%0"] = true;
+	TABLE_TableIndirection["Box_Color%0"] = Color3.fromRGB(0, 255, 50);
+	TABLE_TableIndirection["Box_Thickness%0"] = 1.4;
+	TABLE_TableIndirection["Box_Transparency%0"] = 1;
+	TABLE_TableIndirection["Tracers%0"] = true;
+	TABLE_TableIndirection["Tracer_Color%0"] = Color3.fromRGB(0, 255, 50);
+	TABLE_TableIndirection["Tracer_Thickness%0"] = 1.4;
+	TABLE_TableIndirection["Tracer_Transparency%0"] = 1;
+	TABLE_TableIndirection["Autothickness%0"] = false;
+	TABLE_TableIndirection["Team_Check%0"] = false;
+	TABLE_TableIndirection["red%0"] = Color3.fromRGB(227, 52, 52);
+	TABLE_TableIndirection["green%0"] = Color3.fromRGB(88, 217, 24);
+	local function NewLine()
+		TABLE_TableIndirection["line%0"] = Drawing.new("Line");
+		TABLE_TableIndirection["line%0"].Visible = false;
+		TABLE_TableIndirection["line%0"].From = Vector2.new(0, 0);
+		TABLE_TableIndirection["line%0"].To = Vector2.new(1, 1);
+		TABLE_TableIndirection["line%0"].Color = TABLE_TableIndirection["Box_Color%0"];
+		TABLE_TableIndirection["line%0"].Thickness = TABLE_TableIndirection["Box_Thickness%0"];
+		TABLE_TableIndirection["line%0"].Transparency = TABLE_TableIndirection["Box_Transparency%0"];
+		return TABLE_TableIndirection["line%0"];
+	end
+	for i, v in pairs(game.Players:GetChildren()) do
+		TABLE_TableIndirection["lines%0"] = {line1=NewLine(),line2=NewLine(),line3=NewLine(),line4=NewLine(),line5=NewLine(),line6=NewLine(),line7=NewLine(),line8=NewLine(),line9=NewLine(),line10=NewLine(),line11=NewLine(),line12=NewLine(),Tracer=NewLine()};
+		TABLE_TableIndirection["lines%0"].Tracer.Color = TABLE_TableIndirection["Tracer_Color%0"];
+		TABLE_TableIndirection["lines%0"].Tracer.Thickness = TABLE_TableIndirection["Tracer_Thickness%0"];
+		TABLE_TableIndirection["lines%0"].Tracer.Transparency = TABLE_TableIndirection["Tracer_Transparency%0"];
+		local function ESP()
+			TABLE_TableIndirection["connection%0"] = nil;
+			connection = game:GetService("RunService").RenderStepped:Connect(function()
+				if (TABLE_TableIndirection["on%0"] and (v.Character ~= nil) and (v.Character:FindFirstChild("Humanoid") ~= nil) and (v.Character:FindFirstChild("HumanoidRootPart") ~= nil) and (v.Name ~= TABLE_TableIndirection["player%1"].Name) and (v.Character.Humanoid.Health > 0) and (v.Character:FindFirstChild("Head") ~= nil)) then
+					local pos, vis = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint(v.Character.HumanoidRootPart.Position);
+					if vis then
+						TABLE_TableIndirection["Scale%0"] = v.Character.Head.Size.Y / 2;
+						TABLE_TableIndirection["Size%0"] = Vector3.new(2, 3, 1.5) * TABLE_TableIndirection["Scale%0"] * 2;
+						TABLE_TableIndirection["Top1%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["Size%0"].X, TABLE_TableIndirection["Size%0"].Y, -TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Top2%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["Size%0"].X, TABLE_TableIndirection["Size%0"].Y, TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Top3%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["Size%0"].X, TABLE_TableIndirection["Size%0"].Y, TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Top4%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["Size%0"].X, TABLE_TableIndirection["Size%0"].Y, -TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Bottom1%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["Size%0"].X, -TABLE_TableIndirection["Size%0"].Y, -TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Bottom2%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["Size%0"].X, -TABLE_TableIndirection["Size%0"].Y, TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Bottom3%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["Size%0"].X, -TABLE_TableIndirection["Size%0"].Y, TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Bottom4%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["Size%0"].X, -TABLE_TableIndirection["Size%0"].Y, -TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["lines%0"].line1.From = Vector2.new(TABLE_TableIndirection["Top1%0"].X, TABLE_TableIndirection["Top1%0"].Y);
+						TABLE_TableIndirection["lines%0"].line1.To = Vector2.new(TABLE_TableIndirection["Top2%0"].X, TABLE_TableIndirection["Top2%0"].Y);
+						TABLE_TableIndirection["lines%0"].line2.From = Vector2.new(TABLE_TableIndirection["Top2%0"].X, TABLE_TableIndirection["Top2%0"].Y);
+						TABLE_TableIndirection["lines%0"].line2.To = Vector2.new(TABLE_TableIndirection["Top3%0"].X, TABLE_TableIndirection["Top3%0"].Y);
+						TABLE_TableIndirection["lines%0"].line3.From = Vector2.new(TABLE_TableIndirection["Top3%0"].X, TABLE_TableIndirection["Top3%0"].Y);
+						TABLE_TableIndirection["lines%0"].line3.To = Vector2.new(TABLE_TableIndirection["Top4%0"].X, TABLE_TableIndirection["Top4%0"].Y);
+						TABLE_TableIndirection["lines%0"].line4.From = Vector2.new(TABLE_TableIndirection["Top4%0"].X, TABLE_TableIndirection["Top4%0"].Y);
+						TABLE_TableIndirection["lines%0"].line4.To = Vector2.new(TABLE_TableIndirection["Top1%0"].X, TABLE_TableIndirection["Top1%0"].Y);
+						TABLE_TableIndirection["lines%0"].line5.From = Vector2.new(TABLE_TableIndirection["Bottom1%0"].X, TABLE_TableIndirection["Bottom1%0"].Y);
+						TABLE_TableIndirection["lines%0"].line5.To = Vector2.new(TABLE_TableIndirection["Bottom2%0"].X, TABLE_TableIndirection["Bottom2%0"].Y);
+						TABLE_TableIndirection["lines%0"].line6.From = Vector2.new(TABLE_TableIndirection["Bottom2%0"].X, TABLE_TableIndirection["Bottom2%0"].Y);
+						TABLE_TableIndirection["lines%0"].line6.To = Vector2.new(TABLE_TableIndirection["Bottom3%0"].X, TABLE_TableIndirection["Bottom3%0"].Y);
+						TABLE_TableIndirection["lines%0"].line7.From = Vector2.new(TABLE_TableIndirection["Bottom3%0"].X, TABLE_TableIndirection["Bottom3%0"].Y);
+						TABLE_TableIndirection["lines%0"].line7.To = Vector2.new(TABLE_TableIndirection["Bottom4%0"].X, TABLE_TableIndirection["Bottom4%0"].Y);
+						TABLE_TableIndirection["lines%0"].line8.From = Vector2.new(TABLE_TableIndirection["Bottom4%0"].X, TABLE_TableIndirection["Bottom4%0"].Y);
+						TABLE_TableIndirection["lines%0"].line8.To = Vector2.new(TABLE_TableIndirection["Bottom1%0"].X, TABLE_TableIndirection["Bottom1%0"].Y);
+						TABLE_TableIndirection["lines%0"].line9.From = Vector2.new(TABLE_TableIndirection["Bottom1%0"].X, TABLE_TableIndirection["Bottom1%0"].Y);
+						TABLE_TableIndirection["lines%0"].line9.To = Vector2.new(TABLE_TableIndirection["Top1%0"].X, TABLE_TableIndirection["Top1%0"].Y);
+						TABLE_TableIndirection["lines%0"].line10.From = Vector2.new(TABLE_TableIndirection["Bottom2%0"].X, TABLE_TableIndirection["Bottom2%0"].Y);
+						TABLE_TableIndirection["lines%0"].line10.To = Vector2.new(TABLE_TableIndirection["Top2%0"].X, TABLE_TableIndirection["Top2%0"].Y);
+						TABLE_TableIndirection["lines%0"].line11.From = Vector2.new(TABLE_TableIndirection["Bottom3%0"].X, TABLE_TableIndirection["Bottom3%0"].Y);
+						TABLE_TableIndirection["lines%0"].line11.To = Vector2.new(TABLE_TableIndirection["Top3%0"].X, TABLE_TableIndirection["Top3%0"].Y);
+						TABLE_TableIndirection["lines%0"].line12.From = Vector2.new(TABLE_TableIndirection["Bottom4%0"].X, TABLE_TableIndirection["Bottom4%0"].Y);
+						TABLE_TableIndirection["lines%0"].line12.To = Vector2.new(TABLE_TableIndirection["Top4%0"].X, TABLE_TableIndirection["Top4%0"].Y);
+						if TABLE_TableIndirection["Tracers%0"] then
+							TABLE_TableIndirection["trace%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(0, -TABLE_TableIndirection["Size%0"].Y, 0)).p);
+							TABLE_TableIndirection["lines%0"].Tracer.From = Vector2.new(TABLE_TableIndirection["camera%0"].ViewportSize.X / 2, TABLE_TableIndirection["camera%0"].ViewportSize.Y);
+							TABLE_TableIndirection["lines%0"].Tracer.To = Vector2.new(TABLE_TableIndirection["trace%0"].X, TABLE_TableIndirection["trace%0"].Y);
+						end
+						if TABLE_TableIndirection["Team_Check%0"] then
+							if (v.TeamColor == TABLE_TableIndirection["player%1"].TeamColor) then
+								for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+									x.Color = TABLE_TableIndirection["green%0"];
+								end
+							else
+								for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+									x.Color = TABLE_TableIndirection["red%0"];
+								end
+							end
+						end
+						if TABLE_TableIndirection["Autothickness%0"] then
+							TABLE_TableIndirection["distance%0"] = (TABLE_TableIndirection["player%1"].Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude;
+							TABLE_TableIndirection["value%0"] = math.clamp((1 / TABLE_TableIndirection["distance%0"]) * 100, 0.1, 4);
+							for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+								x.Thickness = TABLE_TableIndirection["value%0"];
+							end
+						else
+							for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+								x.Thickness = TABLE_TableIndirection["Box_Thickness%0"];
+							end
+						end
+						for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+							if (x ~= TABLE_TableIndirection["lines%0"].Tracer) then
+								x.Visible = true;
+							end
+						end
+						if TABLE_TableIndirection["Tracers%0"] then
+							TABLE_TableIndirection["lines%0"].Tracer.Visible = true;
+						end
+					else
+						for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+							x.Visible = false;
+						end
+					end
+				else
+					for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+						x.Visible = false;
+					end
+					if (game.Players:FindFirstChild(v.Name) == nil) then
+						TABLE_TableIndirection["connection%0"]:Disconnect();
+					end
+				end
+			end);
+		end
+		coroutine.wrap(ESP)();
+	end
+	game.Players.PlayerAdded:Connect(function(newplr)
+		TABLE_TableIndirection["lines%0"] = {line1=NewLine(),line2=NewLine(),line3=NewLine(),line4=NewLine(),line5=NewLine(),line6=NewLine(),line7=NewLine(),line8=NewLine(),line9=NewLine(),line10=NewLine(),line11=NewLine(),line12=NewLine(),Tracer=NewLine()};
+		TABLE_TableIndirection["lines%0"].Tracer.Color = TABLE_TableIndirection["Tracer_Color%0"];
+		TABLE_TableIndirection["lines%0"].Tracer.Thickness = TABLE_TableIndirection["Tracer_Thickness%0"];
+		TABLE_TableIndirection["lines%0"].Tracer.Transparency = TABLE_TableIndirection["Tracer_Transparency%0"];
+		local function ESP()
+			TABLE_TableIndirection["connection%0"] = nil;
+			connection = game:GetService("RunService").RenderStepped:Connect(function()
+				if (TABLE_TableIndirection["on%0"] and (newplr.Character ~= nil) and (newplr.Character:FindFirstChild("Humanoid") ~= nil) and (newplr.Character:FindFirstChild("HumanoidRootPart") ~= nil) and (newplr.Name ~= TABLE_TableIndirection["player%1"].Name) and (newplr.Character.Humanoid.Health > 0) and (newplr.Character:FindFirstChild("Head") ~= nil)) then
+					local pos, vis = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint(newplr.Character.HumanoidRootPart.Position);
+					if vis then
+						TABLE_TableIndirection["Scale%0"] = newplr.Character.Head.Size.Y / 2;
+						TABLE_TableIndirection["Size%0"] = Vector3.new(2, 3, 1.5) * TABLE_TableIndirection["Scale%0"] * 2;
+						TABLE_TableIndirection["Top1%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["Size%0"].X, TABLE_TableIndirection["Size%0"].Y, -TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Top2%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["Size%0"].X, TABLE_TableIndirection["Size%0"].Y, TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Top3%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["Size%0"].X, TABLE_TableIndirection["Size%0"].Y, TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Top4%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["Size%0"].X, TABLE_TableIndirection["Size%0"].Y, -TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Bottom1%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["Size%0"].X, -TABLE_TableIndirection["Size%0"].Y, -TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Bottom2%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["Size%0"].X, -TABLE_TableIndirection["Size%0"].Y, TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Bottom3%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["Size%0"].X, -TABLE_TableIndirection["Size%0"].Y, TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["Bottom4%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["Size%0"].X, -TABLE_TableIndirection["Size%0"].Y, -TABLE_TableIndirection["Size%0"].Z)).p);
+						TABLE_TableIndirection["lines%0"].line1.From = Vector2.new(TABLE_TableIndirection["Top1%0"].X, TABLE_TableIndirection["Top1%0"].Y);
+						TABLE_TableIndirection["lines%0"].line1.To = Vector2.new(TABLE_TableIndirection["Top2%0"].X, TABLE_TableIndirection["Top2%0"].Y);
+						TABLE_TableIndirection["lines%0"].line2.From = Vector2.new(TABLE_TableIndirection["Top2%0"].X, TABLE_TableIndirection["Top2%0"].Y);
+						TABLE_TableIndirection["lines%0"].line2.To = Vector2.new(TABLE_TableIndirection["Top3%0"].X, TABLE_TableIndirection["Top3%0"].Y);
+						TABLE_TableIndirection["lines%0"].line3.From = Vector2.new(TABLE_TableIndirection["Top3%0"].X, TABLE_TableIndirection["Top3%0"].Y);
+						TABLE_TableIndirection["lines%0"].line3.To = Vector2.new(TABLE_TableIndirection["Top4%0"].X, TABLE_TableIndirection["Top4%0"].Y);
+						TABLE_TableIndirection["lines%0"].line4.From = Vector2.new(TABLE_TableIndirection["Top4%0"].X, TABLE_TableIndirection["Top4%0"].Y);
+						TABLE_TableIndirection["lines%0"].line4.To = Vector2.new(TABLE_TableIndirection["Top1%0"].X, TABLE_TableIndirection["Top1%0"].Y);
+						TABLE_TableIndirection["lines%0"].line5.From = Vector2.new(TABLE_TableIndirection["Bottom1%0"].X, TABLE_TableIndirection["Bottom1%0"].Y);
+						TABLE_TableIndirection["lines%0"].line5.To = Vector2.new(TABLE_TableIndirection["Bottom2%0"].X, TABLE_TableIndirection["Bottom2%0"].Y);
+						TABLE_TableIndirection["lines%0"].line6.From = Vector2.new(TABLE_TableIndirection["Bottom2%0"].X, TABLE_TableIndirection["Bottom2%0"].Y);
+						TABLE_TableIndirection["lines%0"].line6.To = Vector2.new(TABLE_TableIndirection["Bottom3%0"].X, TABLE_TableIndirection["Bottom3%0"].Y);
+						TABLE_TableIndirection["lines%0"].line7.From = Vector2.new(TABLE_TableIndirection["Bottom3%0"].X, TABLE_TableIndirection["Bottom3%0"].Y);
+						TABLE_TableIndirection["lines%0"].line7.To = Vector2.new(TABLE_TableIndirection["Bottom4%0"].X, TABLE_TableIndirection["Bottom4%0"].Y);
+						TABLE_TableIndirection["lines%0"].line8.From = Vector2.new(TABLE_TableIndirection["Bottom4%0"].X, TABLE_TableIndirection["Bottom4%0"].Y);
+						TABLE_TableIndirection["lines%0"].line8.To = Vector2.new(TABLE_TableIndirection["Bottom1%0"].X, TABLE_TableIndirection["Bottom1%0"].Y);
+						TABLE_TableIndirection["lines%0"].line9.From = Vector2.new(TABLE_TableIndirection["Bottom1%0"].X, TABLE_TableIndirection["Bottom1%0"].Y);
+						TABLE_TableIndirection["lines%0"].line9.To = Vector2.new(TABLE_TableIndirection["Top1%0"].X, TABLE_TableIndirection["Top1%0"].Y);
+						TABLE_TableIndirection["lines%0"].line10.From = Vector2.new(TABLE_TableIndirection["Bottom2%0"].X, TABLE_TableIndirection["Bottom2%0"].Y);
+						TABLE_TableIndirection["lines%0"].line10.To = Vector2.new(TABLE_TableIndirection["Top2%0"].X, TABLE_TableIndirection["Top2%0"].Y);
+						TABLE_TableIndirection["lines%0"].line11.From = Vector2.new(TABLE_TableIndirection["Bottom3%0"].X, TABLE_TableIndirection["Bottom3%0"].Y);
+						TABLE_TableIndirection["lines%0"].line11.To = Vector2.new(TABLE_TableIndirection["Top3%0"].X, TABLE_TableIndirection["Top3%0"].Y);
+						TABLE_TableIndirection["lines%0"].line12.From = Vector2.new(TABLE_TableIndirection["Bottom4%0"].X, TABLE_TableIndirection["Bottom4%0"].Y);
+						TABLE_TableIndirection["lines%0"].line12.To = Vector2.new(TABLE_TableIndirection["Top4%0"].X, TABLE_TableIndirection["Top4%0"].Y);
+						if TABLE_TableIndirection["Tracers%0"] then
+							TABLE_TableIndirection["trace%0"] = TABLE_TableIndirection["camera%0"]:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(0, -TABLE_TableIndirection["Size%0"].Y, 0)).p);
+							TABLE_TableIndirection["lines%0"].Tracer.From = Vector2.new(TABLE_TableIndirection["camera%0"].ViewportSize.X / 2, TABLE_TableIndirection["camera%0"].ViewportSize.Y);
+							TABLE_TableIndirection["lines%0"].Tracer.To = Vector2.new(TABLE_TableIndirection["trace%0"].X, TABLE_TableIndirection["trace%0"].Y);
+						end
+						if TABLE_TableIndirection["Team_Check%0"] then
+							if (newplr.TeamColor == TABLE_TableIndirection["player%1"].TeamColor) then
+								for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+									x.Color = TABLE_TableIndirection["green%0"];
+								end
+							else
+								for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+									x.Color = TABLE_TableIndirection["red%0"];
+								end
+							end
+						end
+						if TABLE_TableIndirection["Autothickness%0"] then
+							TABLE_TableIndirection["distance%0"] = (TABLE_TableIndirection["player%1"].Character.HumanoidRootPart.Position - newplr.Character.HumanoidRootPart.Position).magnitude;
+							TABLE_TableIndirection["value%0"] = math.clamp((1 / TABLE_TableIndirection["distance%0"]) * 100, 0.1, 4);
+							for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+								x.Thickness = TABLE_TableIndirection["value%0"];
+							end
+						else
+							for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+								x.Thickness = TABLE_TableIndirection["Box_Thickness%0"];
+							end
+						end
+						for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+							if (x ~= TABLE_TableIndirection["lines%0"].Tracer) then
+								x.Visible = true;
+							end
+						end
+						if TABLE_TableIndirection["Tracers%0"] then
+							TABLE_TableIndirection["lines%0"].Tracer.Visible = true;
+						end
+					else
+						for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+							x.Visible = false;
+						end
+					end
+				else
+					for u, x in pairs(TABLE_TableIndirection["lines%0"]) do
+						x.Visible = false;
+					end
+					if (game.Players:FindFirstChild(newplr.Name) == nil) then
+						TABLE_TableIndirection["connection%0"]:Disconnect();
+					end
+				end
+			end);
+		end
+		coroutine.wrap(ESP)();
+	end);
+end});
+TABLE_TableIndirection["Button%2"] = TABLE_TableIndirection["Visual%0"]:CreateButton({Name="Xray",Callback=function()
+	TABLE_TableIndirection["workspace%0"] = game:GetService("Workspace");
+	local function setTransparencyForBlocks(transparency)
+		for _, object in ipairs(TABLE_TableIndirection["workspace%0"]:GetDescendants()) do
+			if object:IsA("Part") then
+				object.Transparency = transparency;
+			end
+		end
+	end
+	setTransparencyForBlocks(0.8);
+end});
+TABLE_TableIndirection["Button%3"] = TABLE_TableIndirection["Visual%0"]:CreateButton({Name="Rtx",Callback=function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Biom49/Script/refs/heads/main/Rtx"))();
+end});
+TABLE_TableIndirection["Toggle%0"] = TABLE_TableIndirection["Visual%0"]:CreateToggle({Name="Fps",CurrentValue=false,Flag="Toggle1",Callback=function(Value)
+	TABLE_TableIndirection["player%1"] = game.Players.LocalPlayer;
+	TABLE_TableIndirection["screenGui%0"] = TABLE_TableIndirection["player%1"]:WaitForChild("PlayerGui"):FindFirstChild("ScreenGui") or Instance.new("ScreenGui");
+	TABLE_TableIndirection["screenGui%0"].Name = "ScreenGui";
+	TABLE_TableIndirection["screenGui%0"].Parent = TABLE_TableIndirection["player%1"].PlayerGui;
+	TABLE_TableIndirection["fpsLabel%0"] = TABLE_TableIndirection["screenGui%0"]:FindFirstChild("FpsLabel") or Instance.new("TextLabel");
+	TABLE_TableIndirection["fpsLabel%0"].Name = "FpsLabel";
+	TABLE_TableIndirection["fpsLabel%0"].Size = UDim2.new(0, 200, 0, 50);
+	TABLE_TableIndirection["fpsLabel%0"].Position = UDim2.new(0, 10, 0, 10);
+	TABLE_TableIndirection["fpsLabel%0"].BackgroundTransparency = 1;
+	TABLE_TableIndirection["fpsLabel%0"].TextColor3 = Color3.fromRGB(255, 255, 255);
+	TABLE_TableIndirection["fpsLabel%0"].Font = Enum.Font.GothamBold;
+	TABLE_TableIndirection["fpsLabel%0"].TextSize = 24;
+	TABLE_TableIndirection["fpsLabel%0"].Parent = TABLE_TableIndirection["screenGui%0"];
+	local function updateFps()
+		TABLE_TableIndirection["lastTime%0"] = tick();
+		TABLE_TableIndirection["frameCount%0"] = 0;
+		game:GetService("RunService").Heartbeat:Connect(function()
+			TABLE_TableIndirection["frameCount%0"] = TABLE_TableIndirection["frameCount%0"] + 1;
+			if ((tick() - TABLE_TableIndirection["lastTime%0"]) >= 1) then
+				TABLE_TableIndirection["fps%0"] = TABLE_TableIndirection["frameCount%0"];
+				TABLE_TableIndirection["fpsLabel%0"].Text = "FPS: " .. TABLE_TableIndirection["fps%0"];
+				TABLE_TableIndirection["lastTime%0"] = tick();
+				TABLE_TableIndirection["frameCount%0"] = 0;
+			end
+		end);
+	end
+	if Value then
+		updateFps();
+	elseif TABLE_TableIndirection["fpsLabel%0"] then
+		TABLE_TableIndirection["fpsLabel%0"]:Destroy();
+	end
+end});
+TABLE_TableIndirection["Slider%0"] = TABLE_TableIndirection["Visual%0"]:CreateSlider({Name="FOV",Range={0,120},Increment=1,Suffix="°",CurrentValue=70,Flag="FOVSlider",Callback=function(Value)
+	TABLE_TableIndirection["player%1"] = game.Players.LocalPlayer;
+	if (TABLE_TableIndirection["player%1"] and TABLE_TableIndirection["player%1"].Character) then
+		TABLE_TableIndirection["camera%0"] = game.Workspace.CurrentCamera;
+		if TABLE_TableIndirection["camera%0"] then
+			TABLE_TableIndirection["camera%0"].FieldOfView = Value;
+		end
+	end
+end});
+TABLE_TableIndirection["Aimbot%0"] = TABLE_TableIndirection["Window%0"]:CreateTab("🤖 Aimbot 🤖", 4483362458);
+TABLE_TableIndirection["AimbotActived%0"] = false;
+TABLE_TableIndirection["AimbotActived2%0"] = false;
+TABLE_TableIndirection["AimbotTeamCheck%0"] = false;
+TABLE_TableIndirection["WallCheck%0"] = false;
+TABLE_TableIndirection["DeadCheck%0"] = false;
+TABLE_TableIndirection["closestPlayer%0"] = nil;
+TABLE_TableIndirection["selectedPart%0"] = "Torse";
+TABLE_TableIndirection["UserInputService%0"] = game:GetService("UserInputService");
+TABLE_TableIndirection["RunService%0"] = game:GetService("RunService");
+TABLE_TableIndirection["Players%0"] = game:GetService("Players");
+TABLE_TableIndirection["Workspace%0"] = game:GetService("Workspace");
+local function getPlayerFromCharacter(character)
+	for _, player in pairs(TABLE_TableIndirection["Players%0"]:GetPlayers()) do
+		if (player.Character == character) then
+			return player;
+		end
+	end
+	return nil;
+end
+local function isPlayerBehindWall(localPlayer, targetPlayer)
+	TABLE_TableIndirection["localPosition%0"] = localPlayer.Character.HumanoidRootPart.Position;
+	TABLE_TableIndirection["targetPosition%0"] = targetPlayer.Character.HumanoidRootPart.Position;
+	TABLE_TableIndirection["direction%0"] = (TABLE_TableIndirection["targetPosition%0"] - TABLE_TableIndirection["localPosition%0"]).unit;
+	TABLE_TableIndirection["ray%0"] = Ray.new(TABLE_TableIndirection["localPosition%0"], TABLE_TableIndirection["direction%0"] * (TABLE_TableIndirection["localPosition%0"] - TABLE_TableIndirection["targetPosition%0"]).Magnitude);
+	TABLE_TableIndirection["hit%0"] = TABLE_TableIndirection["Workspace%0"]:FindPartOnRay(TABLE_TableIndirection["ray%0"], localPlayer.Character);
+	return TABLE_TableIndirection["hit%0"] ~= nil;
+end
+local function isPlayerDead(player)
+	return player.Character and player.Character:FindFirstChild("Humanoid") and (player.Character.Humanoid.Health <= 0);
+end
+local function getClosestPlayer()
+	TABLE_TableIndirection["localPlayer%0"] = TABLE_TableIndirection["Players%0"].LocalPlayer;
+	TABLE_TableIndirection["closestDistance%0"] = math.huge;
+	TABLE_TableIndirection["closestPlayer%1"] = nil;
+	for _, player in pairs(TABLE_TableIndirection["Players%0"]:GetPlayers()) do
+		if ((player ~= TABLE_TableIndirection["localPlayer%0"]) and player.Character and player.Character:FindFirstChild("HumanoidRootPart")) then
+			if (TABLE_TableIndirection["AimbotTeamCheck%0"] and (player.Team == TABLE_TableIndirection["localPlayer%0"].Team)) then
+				continue;
+			end
+			if (TABLE_TableIndirection["DeadCheck%0"] and isPlayerDead(player)) then
+				continue;
+			end
+			TABLE_TableIndirection["playerPosition%0"] = player.Character.HumanoidRootPart.Position;
+			if ((TABLE_TableIndirection["playerPosition%0"].X <= -1.253283977508545) and (TABLE_TableIndirection["playerPosition%0"].Y <= -370.7654113769531) and (TABLE_TableIndirection["playerPosition%0"].Z <= -5.06936502456665)) then
+				continue;
+			end
+			TABLE_TableIndirection["localPosition%0"] = TABLE_TableIndirection["localPlayer%0"].Character.HumanoidRootPart.Position;
+			TABLE_TableIndirection["distance%0"] = (TABLE_TableIndirection["playerPosition%0"] - TABLE_TableIndirection["localPosition%0"]).Magnitude;
+			if (TABLE_TableIndirection["distance%0"] < TABLE_TableIndirection["closestDistance%0"]) then
+				TABLE_TableIndirection["closestDistance%0"] = TABLE_TableIndirection["distance%0"];
+				TABLE_TableIndirection["closestPlayer%1"] = player;
+			end
+		end
+	end
+	return TABLE_TableIndirection["closestPlayer%1"];
+end
+local function getTargetPart(player)
+	if (TABLE_TableIndirection["selectedPart%0"] == "Torse") then
+		return player.Character:FindFirstChild("UpperTorso") or player.Character:FindFirstChild("LowerTorso");
+	elseif (TABLE_TableIndirection["selectedPart%0"] == "Head") then
+		return player.Character:FindFirstChild("Head");
+	end
+	return nil;
+end
+local function aimAtTarget(targetPosition)
+	TABLE_TableIndirection["camera%0"] = TABLE_TableIndirection["Workspace%0"].CurrentCamera;
+	TABLE_TableIndirection["direction%0"] = (targetPosition - TABLE_TableIndirection["camera%0"].CFrame.Position).unit;
+	TABLE_TableIndirection["targetCFrame%0"] = CFrame.new(TABLE_TableIndirection["camera%0"].CFrame.Position, TABLE_TableIndirection["camera%0"].CFrame.Position + TABLE_TableIndirection["direction%0"]);
+	TABLE_TableIndirection["camera%0"].CFrame = TABLE_TableIndirection["camera%0"].CFrame:Lerp(TABLE_TableIndirection["targetCFrame%0"], 0.2);
+end
+TABLE_TableIndirection["UserInputService%0"].InputBegan:Connect(function(input)
+	if (input.UserInputType == Enum.UserInputType.MouseButton2) then
+		if TABLE_TableIndirection["AimbotActived%0"] then
+			TABLE_TableIndirection["AimbotActived2%0"] = true;
+			TABLE_TableIndirection["closestPlayer%0"] = getClosestPlayer();
+		end
+	end
+end);
+TABLE_TableIndirection["UserInputService%0"].InputEnded:Connect(function(input)
+	if (input.UserInputType == Enum.UserInputType.MouseButton2) then
+		TABLE_TableIndirection["AimbotActived2%0"] = false;
+		TABLE_TableIndirection["closestPlayer%0"] = nil;
+	end
+end);
+TABLE_TableIndirection["RunService%0"].RenderStepped:Connect(function()
+	if (TABLE_TableIndirection["AimbotActived%0"] and TABLE_TableIndirection["AimbotActived2%0"] and TABLE_TableIndirection["closestPlayer%0"]) then
+		if TABLE_TableIndirection["closestPlayer%0"].Character then
+			TABLE_TableIndirection["targetPart%0"] = getTargetPart(TABLE_TableIndirection["closestPlayer%0"]);
+			if TABLE_TableIndirection["targetPart%0"] then
+				if (TABLE_TableIndirection["WallCheck%0"] and isPlayerBehindWall(TABLE_TableIndirection["Players%0"].LocalPlayer, TABLE_TableIndirection["closestPlayer%0"])) then
+					return;
+				end
+				aimAtTarget(TABLE_TableIndirection["targetPart%0"].Position);
+			end
+		end
+	end
+end);
+TABLE_TableIndirection["Toggle%1"] = TABLE_TableIndirection["Aimbot%0"]:CreateToggle({Name="Aimbot",CurrentValue=false,Flag="Toggle1",Callback=function(Value)
+	TABLE_TableIndirection["AimbotActived%0"] = Value;
+end});
+TABLE_TableIndirection["Toggle%2"] = TABLE_TableIndirection["Aimbot%0"]:CreateToggle({Name="Aim assist (do not activate it at the same time as the aimbot)",CurrentValue=false,Flag="Toggle1",Callback=function(Value)
+	TABLE_TableIndirection["Players%1"] = game:GetService("Players");
+	TABLE_TableIndirection["UserInputService%1"] = game:GetService("UserInputService");
+	TABLE_TableIndirection["RunService%1"] = game:GetService("RunService");
+	TABLE_TableIndirection["SilentAim%1"] = Value;
+	TABLE_TableIndirection["targetPlayer%0"] = nil;
+	TABLE_TableIndirection["localPlayer%0"] = TABLE_TableIndirection["Players%1"].LocalPlayer;
+	local function getClosestPlayer()
+		TABLE_TableIndirection["closestPlayer%1"] = nil;
+		TABLE_TableIndirection["shortestDistance%0"] = math.huge;
+		TABLE_TableIndirection["character%0"] = TABLE_TableIndirection["localPlayer%0"].Character;
+		TABLE_TableIndirection["head%0"] = TABLE_TableIndirection["character%0"] and TABLE_TableIndirection["character%0"]:FindFirstChild("Head");
+		if not TABLE_TableIndirection["head%0"] then
+			return nil;
+		end
+		for _, player in pairs(TABLE_TableIndirection["Players%1"]:GetPlayers()) do
+			if ((player ~= TABLE_TableIndirection["localPlayer%0"]) and (player.Team ~= TABLE_TableIndirection["localPlayer%0"].Team)) then
+				TABLE_TableIndirection["playerCharacter%0"] = player.Character;
+				TABLE_TableIndirection["playerHead%0"] = TABLE_TableIndirection["playerCharacter%0"] and TABLE_TableIndirection["playerCharacter%0"]:FindFirstChild("Head");
+				if TABLE_TableIndirection["playerHead%0"] then
+					TABLE_TableIndirection["distance%0"] = (TABLE_TableIndirection["playerHead%0"].Position - TABLE_TableIndirection["head%0"].Position).Magnitude;
+					if (TABLE_TableIndirection["distance%0"] < TABLE_TableIndirection["shortestDistance%0"]) then
+						TABLE_TableIndirection["closestPlayer%1"] = player;
+						TABLE_TableIndirection["shortestDistance%0"] = TABLE_TableIndirection["distance%0"];
+					end
+				end
+			end
+		end
+		return TABLE_TableIndirection["closestPlayer%1"];
+	end
+	local function aimAtPlayer(player)
+		if (not player or not player.Character) then
+			return;
+		end
+		TABLE_TableIndirection["targetHead%0"] = player.Character:FindFirstChild("Head");
+		TABLE_TableIndirection["camera%0"] = workspace.CurrentCamera;
+		if TABLE_TableIndirection["targetHead%0"] then
+			TABLE_TableIndirection["targetCFrame%0"] = CFrame.new(TABLE_TableIndirection["camera%0"].CFrame.Position, TABLE_TableIndirection["targetHead%0"].Position);
+			TABLE_TableIndirection["camera%0"].CFrame = TABLE_TableIndirection["camera%0"].CFrame:Lerp(TABLE_TableIndirection["targetCFrame%0"], 0.1);
+		end
+	end
+	TABLE_TableIndirection["rightMouseDown%0"] = false;
+	TABLE_TableIndirection["UserInputService%1"].InputBegan:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseButton2) then
+			TABLE_TableIndirection["rightMouseDown%0"] = true;
+			if TABLE_TableIndirection["SilentAim%1"] then
+				TABLE_TableIndirection["targetPlayer%0"] = getClosestPlayer();
+			end
+		end
+	end);
+	TABLE_TableIndirection["UserInputService%1"].InputEnded:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseButton2) then
+			TABLE_TableIndirection["rightMouseDown%0"] = false;
+			TABLE_TableIndirection["targetPlayer%0"] = nil;
+		end
+	end);
+	TABLE_TableIndirection["RunService%1"].RenderStepped:Connect(function()
+		if (TABLE_TableIndirection["SilentAim%1"] and TABLE_TableIndirection["rightMouseDown%0"] and TABLE_TableIndirection["targetPlayer%0"]) then
+			aimAtPlayer(TABLE_TableIndirection["targetPlayer%0"]);
+		end
+	end);
+end});
+TABLE_TableIndirection["Toggle%3"] = TABLE_TableIndirection["Aimbot%0"]:CreateToggle({Name="Check Team",CurrentValue=false,Flag="Toggle2",Callback=function(Value)
+	TABLE_TableIndirection["AimbotTeamCheck%0"] = Value;
+end});
+TABLE_TableIndirection["Toggle%4"] = TABLE_TableIndirection["Aimbot%0"]:CreateToggle({Name="Wall Check",CurrentValue=false,Flag="Toggle3",Callback=function(Value)
+	TABLE_TableIndirection["WallCheck%0"] = Value;
+end});
+TABLE_TableIndirection["Toggle%5"] = TABLE_TableIndirection["Aimbot%0"]:CreateToggle({Name="Dead Check",CurrentValue=false,Flag="Toggle4",Callback=function(Value)
+	TABLE_TableIndirection["DeadCheck%0"] = Value;
+end});
+TABLE_TableIndirection["Keybind%0"] = TABLE_TableIndirection["Aimbot%0"]:CreateKeybind({Name="Activate Aimbot",CurrentKeybind="X",HoldToInteract=false,Flag="Keybind1",Callback=function(Keybind)
+	TABLE_TableIndirection["AimbotActived%0"] = Keybind;
+end});
+TABLE_TableIndirection["Dropdown%0"] = TABLE_TableIndirection["Aimbot%0"]:CreateDropdown({Name="Select Part",Options={"Torse","Head"},CurrentOption="Torse",MultipleOptions=false,Flag="Dropdown1",Callback=function(Options)
+	TABLE_TableIndirection["selectedPart%0"] = Options[1];
+end});
+TABLE_TableIndirection["PovActive%0"] = false;
+TABLE_TableIndirection["PovSize%0"] = 300;
+TABLE_TableIndirection["PovTransparency%0"] = 0;
+TABLE_TableIndirection["PovColor%0"] = Color3.fromRGB(255, 255, 255);
+TABLE_TableIndirection["PovBorderSize%0"] = 1;
+TABLE_TableIndirection["player%1"] = game.Players.LocalPlayer;
+TABLE_TableIndirection["playerGui%0"] = TABLE_TableIndirection["player%1"]:WaitForChild("PlayerGui");
+TABLE_TableIndirection["screenGui%0"] = Instance.new("ScreenGui");
+TABLE_TableIndirection["screenGui%0"].Name = "PovGui";
+TABLE_TableIndirection["screenGui%0"].Parent = TABLE_TableIndirection["playerGui%0"];
+TABLE_TableIndirection["povFrame%0"] = Instance.new("Frame");
+TABLE_TableIndirection["povFrame%0"].Name = "PovFrame";
+TABLE_TableIndirection["povFrame%0"].Size = UDim2.new(0, TABLE_TableIndirection["PovSize%0"], 0, TABLE_TableIndirection["PovSize%0"]);
+TABLE_TableIndirection["povFrame%0"].AnchorPoint = Vector2.new(0.5, 0.5);
+TABLE_TableIndirection["povFrame%0"].BackgroundTransparency = 1;
+TABLE_TableIndirection["povFrame%0"].Parent = TABLE_TableIndirection["screenGui%0"];
+TABLE_TableIndirection["povFrame%0"].Visible = TABLE_TableIndirection["PovActive%0"];
+TABLE_TableIndirection["uiCorner%0"] = Instance.new("UICorner");
+TABLE_TableIndirection["uiCorner%0"].CornerRadius = UDim.new(1, 0);
+TABLE_TableIndirection["uiCorner%0"].Parent = TABLE_TableIndirection["povFrame%0"];
+TABLE_TableIndirection["uiStroke%0"] = Instance.new("UIStroke");
+TABLE_TableIndirection["uiStroke%0"].Thickness = TABLE_TableIndirection["PovBorderSize%0"];
+TABLE_TableIndirection["uiStroke%0"].Color = TABLE_TableIndirection["PovColor%0"];
+TABLE_TableIndirection["uiStroke%0"].Transparency = TABLE_TableIndirection["PovTransparency%0"];
+TABLE_TableIndirection["uiStroke%0"].Parent = TABLE_TableIndirection["povFrame%0"];
+game:GetService("RunService").RenderStepped:Connect(function()
+	if TABLE_TableIndirection["PovActive%0"] then
+		TABLE_TableIndirection["mouse%0"] = TABLE_TableIndirection["player%1"]:GetMouse();
+		TABLE_TableIndirection["povFrame%0"].Position = UDim2.new(0, TABLE_TableIndirection["mouse%0"].X, 0, TABLE_TableIndirection["mouse%0"].Y);
+	end
+end);
+TABLE_TableIndirection["Setting%0"] = TABLE_TableIndirection["Aimbot%0"]:CreateSection("Pov");
+TABLE_TableIndirection["Toggle%6"] = TABLE_TableIndirection["Aimbot%0"]:CreateToggle({Name="Pov",CurrentValue=false,Flag="Toggle1",Callback=function(Value)
+	TABLE_TableIndirection["PovActive%0"] = Value;
+	TABLE_TableIndirection["povFrame%0"].Visible = TABLE_TableIndirection["PovActive%0"];
+end});
+TABLE_TableIndirection["SliderSize%0"] = TABLE_TableIndirection["Aimbot%0"]:CreateSlider({Name="Pov size",Range={0,500},Increment=10,Suffix="px",CurrentValue=TABLE_TableIndirection["PovSize%0"],Flag="Slider1",Callback=function(Value)
+	TABLE_TableIndirection["PovSize%0"] = Value;
+	TABLE_TableIndirection["povFrame%0"].Size = UDim2.new(0, TABLE_TableIndirection["PovSize%0"], 0, TABLE_TableIndirection["PovSize%0"]);
+end});
+TABLE_TableIndirection["SliderBorder%0"] = TABLE_TableIndirection["Aimbot%0"]:CreateSlider({Name="Pov Border",Range={0,50},Increment=1,Suffix="px",CurrentValue=TABLE_TableIndirection["PovBorderSize%0"],Flag="Slider3",Callback=function(Value)
+	TABLE_TableIndirection["PovBorderSize%0"] = Value;
+	TABLE_TableIndirection["uiStroke%0"].Thickness = TABLE_TableIndirection["PovBorderSize%0"];
+end});
+TABLE_TableIndirection["SliderTransparency%0"] = TABLE_TableIndirection["Aimbot%0"]:CreateSlider({Name="Pov Transparency",Range={0,1},Increment=0.1,Suffix="Transparency",CurrentValue=TABLE_TableIndirection["PovTransparency%0"],Flag="Slider2",Callback=function(Value)
+	TABLE_TableIndirection["PovTransparency%0"] = Value;
+	TABLE_TableIndirection["uiStroke%0"].Transparency = TABLE_TableIndirection["PovTransparency%0"];
+end});
+TABLE_TableIndirection["ColorPicker%0"] = TABLE_TableIndirection["Aimbot%0"]:CreateColorPicker({Name="Pov color",Color=TABLE_TableIndirection["PovColor%0"],Flag="ColorPicker1",Callback=function(Value)
+	TABLE_TableIndirection["PovColor%0"] = Value;
+	TABLE_TableIndirection["uiStroke%0"].Color = TABLE_TableIndirection["PovColor%0"];
+end});
+TABLE_TableIndirection["ToggleMultiColor%0"] = TABLE_TableIndirection["Aimbot%0"]:CreateToggle({Name="Multicolor",CurrentValue=false,Flag="Toggle2",Callback=function(Value)
+	while wait() do
+		if Value then
+			TABLE_TableIndirection["randomColor%0"] = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255));
+			TABLE_TableIndirection["uiStroke%0"].Color = TABLE_TableIndirection["randomColor%0"];
+			wait(0.1);
+		end
+	end
+end});
+TABLE_TableIndirection["Others%0"] = TABLE_TableIndirection["Window%0"]:CreateTab("Others", "rewind");
+TABLE_TableIndirection["Section%1"] = TABLE_TableIndirection["Others%0"]:CreateSection("Utility");
+TABLE_TableIndirection["ReplicatedStorage%0"] = game:GetService("ReplicatedStorage");
+TABLE_TableIndirection["Players%1"] = game:GetService("Players");
+TABLE_TableIndirection["StarterGui%0"] = game:GetService("StarterGui");
+TABLE_TableIndirection["player%2"] = TABLE_TableIndirection["Players%1"].LocalPlayer;
+local function notify(title, text, duration)
+	TABLE_TableIndirection["StarterGui%0"]:SetCore("SendNotification", {Title=title,Text=text,Duration=(duration or 3)});
+end
+TABLE_TableIndirection["Button%4"] = TABLE_TableIndirection["Others%0"]:CreateButton({Name="Spawn Boat/Plane (Must take the boat in his hand before making it appear)",Callback=function()
+	local success, err = pcall(function()
+		TABLE_TableIndirection["player%3"] = game:GetService("Players").LocalPlayer;
+		TABLE_TableIndirection["character%0"] = TABLE_TableIndirection["player%3"].Character;
+		TABLE_TableIndirection["playerPosition%0"] = TABLE_TableIndirection["character%0"].PrimaryPart.Position;
+		TABLE_TableIndirection["spawnOffset%0"] = Vector3.new(5, 0, 5);
+		TABLE_TableIndirection["spawnPosition%0"] = TABLE_TableIndirection["playerPosition%0"] + TABLE_TableIndirection["spawnOffset%0"];
+		if not TABLE_TableIndirection["character%0"]:FindFirstChild("Boat") then
+			notify("Error", "You don't have a boat in your inventory", 3);
+			return;
+		end
+		TABLE_TableIndirection["args%0"] = {[1]=TABLE_TableIndirection["spawnPosition%0"]};
+		TABLE_TableIndirection["character%0"].Boat.Activate:FireServer(unpack(TABLE_TableIndirection["args%0"]));
+	end);
+	if not success then
+		notify("Error", "An error occurred: " .. err, 3);
+	end
+end});
+TABLE_TableIndirection["TeleportService%0"] = game:GetService("TeleportService");
+TABLE_TableIndirection["Players%2"] = game:GetService("Players");
+TABLE_TableIndirection["player%3"] = TABLE_TableIndirection["Players%2"].LocalPlayer;
+TABLE_TableIndirection["placeId%0"] = game.PlaceId;
+TABLE_TableIndirection["Button%5"] = TABLE_TableIndirection["Others%0"]:CreateButton({Name="ServerHop",Callback=function()
+	TABLE_TableIndirection["TeleportService%0"]:Teleport(TABLE_TableIndirection["placeId%0"], TABLE_TableIndirection["player%3"]);
+end});
+TABLE_TableIndirection["Button%6"] = TABLE_TableIndirection["Others%0"]:CreateButton({Name="SuperRingV3(GravityGun/Telekinisi)",Callback=function()
+	TABLE_TableIndirection["Players%3"] = game:GetService("Players");
+	TABLE_TableIndirection["RunService%1"] = game:GetService("RunService");
+	TABLE_TableIndirection["UserInputService%1"] = game:GetService("UserInputService");
+	TABLE_TableIndirection["SoundService%0"] = game:GetService("SoundService");
+	TABLE_TableIndirection["StarterGui%1"] = game:GetService("StarterGui");
+	TABLE_TableIndirection["TextChatService%0"] = game:GetService("TextChatService");
+	TABLE_TableIndirection["LocalPlayer%0"] = TABLE_TableIndirection["Players%3"].LocalPlayer;
+	local function playSound(soundId)
+		TABLE_TableIndirection["sound%0"] = Instance.new("Sound");
+		TABLE_TableIndirection["sound%0"].SoundId = "rbxassetid://" .. soundId;
+		TABLE_TableIndirection["sound%0"].Parent = TABLE_TableIndirection["SoundService%0"];
+		TABLE_TableIndirection["sound%0"]:Play();
+		TABLE_TableIndirection["sound%0"].Ended:Connect(function()
+			TABLE_TableIndirection["sound%0"]:Destroy();
+		end);
+	end
+	playSound("2865227271");
+	TABLE_TableIndirection["ScreenGui%0"] = Instance.new("ScreenGui");
+	TABLE_TableIndirection["ScreenGui%0"].Name = "SuperRingPartsGUI";
+	TABLE_TableIndirection["ScreenGui%0"].ResetOnSpawn = false;
+	TABLE_TableIndirection["ScreenGui%0"].Parent = TABLE_TableIndirection["LocalPlayer%0"]:WaitForChild("PlayerGui");
+	TABLE_TableIndirection["MainFrame%0"] = Instance.new("Frame");
+	TABLE_TableIndirection["MainFrame%0"].Size = UDim2.new(0, 220, 0, 190);
+	TABLE_TableIndirection["MainFrame%0"].Position = UDim2.new(0.5, -110, 0.5, -95);
+	TABLE_TableIndirection["MainFrame%0"].BackgroundColor3 = Color3.fromRGB(205, 170, 125);
+	TABLE_TableIndirection["MainFrame%0"].BorderSizePixel = 0;
+	TABLE_TableIndirection["MainFrame%0"].Parent = TABLE_TableIndirection["ScreenGui%0"];
+	TABLE_TableIndirection["UICorner%0"] = Instance.new("UICorner");
+	TABLE_TableIndirection["UICorner%0"].CornerRadius = UDim.new(0, 20);
+	TABLE_TableIndirection["UICorner%0"].Parent = TABLE_TableIndirection["MainFrame%0"];
+	TABLE_TableIndirection["Title%0"] = Instance.new("TextLabel");
+	TABLE_TableIndirection["Title%0"].Size = UDim2.new(1, 0, 0, 40);
+	TABLE_TableIndirection["Title%0"].Position = UDim2.new(0, 0, 0, 0);
+	TABLE_TableIndirection["Title%0"].Text = "Super Ring Parts v3";
+	TABLE_TableIndirection["Title%0"].TextColor3 = Color3.fromRGB(101, 67, 33);
+	TABLE_TableIndirection["Title%0"].BackgroundColor3 = Color3.fromRGB(222, 184, 135);
+	TABLE_TableIndirection["Title%0"].Font = Enum.Font.Fondamento;
+	TABLE_TableIndirection["Title%0"].TextSize = 22;
+	TABLE_TableIndirection["Title%0"].Parent = TABLE_TableIndirection["MainFrame%0"];
+	TABLE_TableIndirection["TitleCorner%0"] = Instance.new("UICorner");
+	TABLE_TableIndirection["TitleCorner%0"].CornerRadius = UDim.new(0, 20);
+	TABLE_TableIndirection["TitleCorner%0"].Parent = TABLE_TableIndirection["Title%0"];
+	TABLE_TableIndirection["ToggleButton%0"] = Instance.new("TextButton");
+	TABLE_TableIndirection["ToggleButton%0"].Size = UDim2.new(0.8, 0, 0, 35);
+	TABLE_TableIndirection["ToggleButton%0"].Position = UDim2.new(0.1, 0, 0.3, 0);
+	TABLE_TableIndirection["ToggleButton%0"].Text = "Ring Parts Off";
+	TABLE_TableIndirection["ToggleButton%0"].BackgroundColor3 = Color3.fromRGB(160, 82, 45);
+	TABLE_TableIndirection["ToggleButton%0"].TextColor3 = Color3.fromRGB(255, 248, 220);
+	TABLE_TableIndirection["ToggleButton%0"].Font = Enum.Font.Fondamento;
+	TABLE_TableIndirection["ToggleButton%0"].TextSize = 18;
+	TABLE_TableIndirection["ToggleButton%0"].Parent = TABLE_TableIndirection["MainFrame%0"];
+	TABLE_TableIndirection["ToggleCorner%0"] = Instance.new("UICorner");
+	TABLE_TableIndirection["ToggleCorner%0"].CornerRadius = UDim.new(0, 10);
+	TABLE_TableIndirection["ToggleCorner%0"].Parent = TABLE_TableIndirection["ToggleButton%0"];
+	TABLE_TableIndirection["DecreaseRadius%0"] = Instance.new("TextButton");
+	TABLE_TableIndirection["DecreaseRadius%0"].Size = UDim2.new(0.2, 0, 0, 35);
+	TABLE_TableIndirection["DecreaseRadius%0"].Position = UDim2.new(0.1, 0, 0.6, 0);
+	TABLE_TableIndirection["DecreaseRadius%0"].Text = "<";
+	TABLE_TableIndirection["DecreaseRadius%0"].BackgroundColor3 = Color3.fromRGB(139, 69, 19);
+	TABLE_TableIndirection["DecreaseRadius%0"].TextColor3 = Color3.fromRGB(255, 248, 220);
+	TABLE_TableIndirection["DecreaseRadius%0"].Font = Enum.Font.Fondamento;
+	TABLE_TableIndirection["DecreaseRadius%0"].TextSize = 18;
+	TABLE_TableIndirection["DecreaseRadius%0"].Parent = TABLE_TableIndirection["MainFrame%0"];
+	TABLE_TableIndirection["DecreaseCorner%0"] = Instance.new("UICorner");
+	TABLE_TableIndirection["DecreaseCorner%0"].CornerRadius = UDim.new(0, 10);
+	TABLE_TableIndirection["DecreaseCorner%0"].Parent = TABLE_TableIndirection["DecreaseRadius%0"];
+	TABLE_TableIndirection["IncreaseRadius%0"] = Instance.new("TextButton");
+	TABLE_TableIndirection["IncreaseRadius%0"].Size = UDim2.new(0.2, 0, 0, 35);
+	TABLE_TableIndirection["IncreaseRadius%0"].Position = UDim2.new(0.7, 0, 0.6, 0);
+	TABLE_TableIndirection["IncreaseRadius%0"].Text = ">";
+	TABLE_TableIndirection["IncreaseRadius%0"].BackgroundColor3 = Color3.fromRGB(139, 69, 19);
+	TABLE_TableIndirection["IncreaseRadius%0"].TextColor3 = Color3.fromRGB(255, 248, 220);
+	TABLE_TableIndirection["IncreaseRadius%0"].Font = Enum.Font.Fondamento;
+	TABLE_TableIndirection["IncreaseRadius%0"].TextSize = 18;
+	TABLE_TableIndirection["IncreaseRadius%0"].Parent = TABLE_TableIndirection["MainFrame%0"];
+	TABLE_TableIndirection["IncreaseCorner%0"] = Instance.new("UICorner");
+	TABLE_TableIndirection["IncreaseCorner%0"].CornerRadius = UDim.new(0, 10);
+	TABLE_TableIndirection["IncreaseCorner%0"].Parent = TABLE_TableIndirection["IncreaseRadius%0"];
+	TABLE_TableIndirection["RadiusDisplay%0"] = Instance.new("TextLabel");
+	TABLE_TableIndirection["RadiusDisplay%0"].Size = UDim2.new(0.4, 0, 0, 35);
+	TABLE_TableIndirection["RadiusDisplay%0"].Position = UDim2.new(0.3, 0, 0.6, 0);
+	TABLE_TableIndirection["RadiusDisplay%0"].Text = "Radius: 50";
+	TABLE_TableIndirection["RadiusDisplay%0"].BackgroundColor3 = Color3.fromRGB(210, 180, 140);
+	TABLE_TableIndirection["RadiusDisplay%0"].TextColor3 = Color3.fromRGB(101, 67, 33);
+	TABLE_TableIndirection["RadiusDisplay%0"].Font = Enum.Font.Fondamento;
+	TABLE_TableIndirection["RadiusDisplay%0"].TextSize = 18;
+	TABLE_TableIndirection["RadiusDisplay%0"].Parent = TABLE_TableIndirection["MainFrame%0"];
+	TABLE_TableIndirection["RadiusCorner%0"] = Instance.new("UICorner");
+	TABLE_TableIndirection["RadiusCorner%0"].CornerRadius = UDim.new(0, 10);
+	TABLE_TableIndirection["RadiusCorner%0"].Parent = TABLE_TableIndirection["RadiusDisplay%0"];
+	TABLE_TableIndirection["Watermark%0"] = Instance.new("TextLabel");
+	TABLE_TableIndirection["Watermark%0"].Size = UDim2.new(1, 0, 0, 20);
+	TABLE_TableIndirection["Watermark%0"].Position = UDim2.new(0, 0, 1, -20);
+	TABLE_TableIndirection["Watermark%0"].Text = "Super Ring [V3] - Cracked By Projeto LKB";
+	TABLE_TableIndirection["Watermark%0"].TextColor3 = Color3.fromRGB(101, 67, 33);
+	TABLE_TableIndirection["Watermark%0"].BackgroundTransparency = 1;
+	TABLE_TableIndirection["Watermark%0"].Font = Enum.Font.Fondamento;
+	TABLE_TableIndirection["Watermark%0"].TextSize = 14;
+	TABLE_TableIndirection["Watermark%0"].Parent = TABLE_TableIndirection["MainFrame%0"];
+	TABLE_TableIndirection["MinimizeButton%0"] = Instance.new("TextButton");
+	TABLE_TableIndirection["MinimizeButton%0"].Size = UDim2.new(0, 30, 0, 30);
+	TABLE_TableIndirection["MinimizeButton%0"].Position = UDim2.new(1, -35, 0, 5);
+	TABLE_TableIndirection["MinimizeButton%0"].Text = "-";
+	TABLE_TableIndirection["MinimizeButton%0"].BackgroundColor3 = Color3.fromRGB(139, 69, 19);
+	TABLE_TableIndirection["MinimizeButton%0"].TextColor3 = Color3.fromRGB(255, 248, 220);
+	TABLE_TableIndirection["MinimizeButton%0"].Font = Enum.Font.Fondamento;
+	TABLE_TableIndirection["MinimizeButton%0"].TextSize = 18;
+	TABLE_TableIndirection["MinimizeButton%0"].Parent = TABLE_TableIndirection["MainFrame%0"];
+	TABLE_TableIndirection["MinimizeCorner%0"] = Instance.new("UICorner");
+	TABLE_TableIndirection["MinimizeCorner%0"].CornerRadius = UDim.new(0, 15);
+	TABLE_TableIndirection["MinimizeCorner%0"].Parent = TABLE_TableIndirection["MinimizeButton%0"];
+	TABLE_TableIndirection["minimized%0"] = false;
+	TABLE_TableIndirection["MinimizeButton%0"].MouseButton1Click:Connect(function()
+		TABLE_TableIndirection["minimized%0"] = not TABLE_TableIndirection["minimized%0"];
+		if TABLE_TableIndirection["minimized%0"] then
+			TABLE_TableIndirection["MainFrame%0"]:TweenSize(UDim2.new(0, 220, 0, 40), "Out", "Quad", 0.3, true);
+			TABLE_TableIndirection["MinimizeButton%0"].Text = "+";
+			TABLE_TableIndirection["ToggleButton%0"].Visible = false;
+			TABLE_TableIndirection["DecreaseRadius%0"].Visible = false;
+			TABLE_TableIndirection["IncreaseRadius%0"].Visible = false;
+			TABLE_TableIndirection["RadiusDisplay%0"].Visible = false;
+			TABLE_TableIndirection["Watermark%0"].Visible = false;
+		else
+			TABLE_TableIndirection["MainFrame%0"]:TweenSize(UDim2.new(0, 220, 0, 190), "Out", "Quad", 0.3, true);
+			TABLE_TableIndirection["MinimizeButton%0"].Text = "-";
+			TABLE_TableIndirection["ToggleButton%0"].Visible = true;
+			TABLE_TableIndirection["DecreaseRadius%0"].Visible = true;
+			TABLE_TableIndirection["IncreaseRadius%0"].Visible = true;
+			TABLE_TableIndirection["RadiusDisplay%0"].Visible = true;
+			TABLE_TableIndirection["Watermark%0"].Visible = true;
+		end
+		playSound("12221967");
+	end);
+	TABLE_TableIndirection["dragging%0"] = nil;
+	TABLE_TableIndirection["dragInput%0"] = nil;
+	TABLE_TableIndirection["dragStart%0"] = nil;
+	TABLE_TableIndirection["startPos%0"] = nil;
+	local function update(input)
+		TABLE_TableIndirection["delta%0"] = input.Position - TABLE_TableIndirection["dragStart%0"];
+		TABLE_TableIndirection["MainFrame%0"].Position = UDim2.new(TABLE_TableIndirection["startPos%0"].X.Scale, TABLE_TableIndirection["startPos%0"].X.Offset + TABLE_TableIndirection["delta%0"].X, TABLE_TableIndirection["startPos%0"].Y.Scale, TABLE_TableIndirection["startPos%0"].Y.Offset + TABLE_TableIndirection["delta%0"].Y);
+	end
+	TABLE_TableIndirection["MainFrame%0"].InputBegan:Connect(function(input)
+		if ((input.UserInputType == Enum.UserInputType.MouseButton1) or (input.UserInputType == Enum.UserInputType.Touch)) then
+			TABLE_TableIndirection["dragging%0"] = true;
+			TABLE_TableIndirection["dragStart%0"] = input.Position;
+			TABLE_TableIndirection["startPos%0"] = TABLE_TableIndirection["MainFrame%0"].Position;
+			input.Changed:Connect(function()
+				if (input.UserInputState == Enum.UserInputState.End) then
+					TABLE_TableIndirection["dragging%0"] = false;
+				end
+			end);
+		end
+	end);
+	TABLE_TableIndirection["MainFrame%0"].InputChanged:Connect(function(input)
+		if ((input.UserInputType == Enum.UserInputType.MouseMovement) or (input.UserInputType == Enum.UserInputType.Touch)) then
+			TABLE_TableIndirection["dragInput%0"] = input;
+		end
+	end);
+	TABLE_TableIndirection["UserInputService%1"].InputChanged:Connect(function(input)
+		if ((input == TABLE_TableIndirection["dragInput%0"]) and TABLE_TableIndirection["dragging%0"]) then
+			update(input);
+		end
+	end);
+	if not getgenv().Network then
+		getgenv().Network = {BaseParts={},Velocity=Vector3.new(14.46262424, 14.46262424, 14.46262424)};
+		Network.RetainPart = function(Part)
+			if ((typeof(Part) == "Instance") and Part:IsA("BasePart") and Part:IsDescendantOf(workspace)) then
+				table.insert(Network.BaseParts, Part);
+				Part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0);
+				Part.CanCollide = false;
+			end
+		end;
+		local function EnablePartControl()
+			TABLE_TableIndirection["LocalPlayer%0"].ReplicationFocus = workspace;
+			TABLE_TableIndirection["RunService%1"].Heartbeat:Connect(function()
+				sethiddenproperty(TABLE_TableIndirection["LocalPlayer%0"], "SimulationRadius", math.huge);
+				for _, Part in pairs(Network.BaseParts) do
+					if Part:IsDescendantOf(workspace) then
+						Part.Velocity = Network.Velocity;
+					end
+				end
+			end);
+		end
+		EnablePartControl();
+	end
+	TABLE_TableIndirection["radius%0"] = 50;
+	TABLE_TableIndirection["height%0"] = 100;
+	TABLE_TableIndirection["rotationSpeed%0"] = 10;
+	TABLE_TableIndirection["attractionStrength%0"] = 1000;
+	TABLE_TableIndirection["ringPartsEnabled%0"] = false;
+	local function RetainPart(Part)
+		if (Part:IsA("BasePart") and not Part.Anchored and Part:IsDescendantOf(workspace)) then
+			if ((Part.Parent == TABLE_TableIndirection["LocalPlayer%0"].Character) or Part:IsDescendantOf(TABLE_TableIndirection["LocalPlayer%0"].Character)) then
+				return false;
+			end
+			Part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0);
+			Part.CanCollide = false;
+			return true;
+		end
+		return false;
+	end
+	TABLE_TableIndirection["parts%0"] = {};
+	local function addPart(part)
+		if RetainPart(part) then
+			if not table.find(TABLE_TableIndirection["parts%0"], part) then
+				table.insert(TABLE_TableIndirection["parts%0"], part);
+			end
+		end
+	end
+	local function removePart(part)
+		TABLE_TableIndirection["index%0"] = table.find(TABLE_TableIndirection["parts%0"], part);
+		if TABLE_TableIndirection["index%0"] then
+			table.remove(TABLE_TableIndirection["parts%0"], TABLE_TableIndirection["index%0"]);
+		end
+	end
+	for _, part in pairs(workspace:GetDescendants()) do
+		addPart(part);
+	end
+	workspace.DescendantAdded:Connect(addPart);
+	workspace.DescendantRemoving:Connect(removePart);
+	TABLE_TableIndirection["RunService%1"].Heartbeat:Connect(function()
+		if not TABLE_TableIndirection["ringPartsEnabled%0"] then
+			return;
+		end
+		TABLE_TableIndirection["humanoidRootPart%0"] = TABLE_TableIndirection["LocalPlayer%0"].Character and TABLE_TableIndirection["LocalPlayer%0"].Character:FindFirstChild("HumanoidRootPart");
+		if TABLE_TableIndirection["humanoidRootPart%0"] then
+			TABLE_TableIndirection["tornadoCenter%0"] = TABLE_TableIndirection["humanoidRootPart%0"].Position;
+			for _, part in pairs(TABLE_TableIndirection["parts%0"]) do
+				if (part.Parent and not part.Anchored) then
+					TABLE_TableIndirection["pos%0"] = part.Position;
+					TABLE_TableIndirection["distance%0"] = (Vector3.new(TABLE_TableIndirection["pos%0"].X, TABLE_TableIndirection["tornadoCenter%0"].Y, TABLE_TableIndirection["pos%0"].Z) - TABLE_TableIndirection["tornadoCenter%0"]).Magnitude;
+					TABLE_TableIndirection["angle%0"] = math.atan2(TABLE_TableIndirection["pos%0"].Z - TABLE_TableIndirection["tornadoCenter%0"].Z, TABLE_TableIndirection["pos%0"].X - TABLE_TableIndirection["tornadoCenter%0"].X);
+					TABLE_TableIndirection["newAngle%0"] = TABLE_TableIndirection["angle%0"] + math.rad(TABLE_TableIndirection["rotationSpeed%0"]);
+					TABLE_TableIndirection["targetPos%0"] = Vector3.new(TABLE_TableIndirection["tornadoCenter%0"].X + (math.cos(TABLE_TableIndirection["newAngle%0"]) * math.min(TABLE_TableIndirection["radius%0"], TABLE_TableIndirection["distance%0"])), TABLE_TableIndirection["tornadoCenter%0"].Y + (TABLE_TableIndirection["height%0"] * (math.abs(math.sin((TABLE_TableIndirection["pos%0"].Y - TABLE_TableIndirection["tornadoCenter%0"].Y) / TABLE_TableIndirection["height%0"])))), TABLE_TableIndirection["tornadoCenter%0"].Z + (math.sin(TABLE_TableIndirection["newAngle%0"]) * math.min(TABLE_TableIndirection["radius%0"], TABLE_TableIndirection["distance%0"])));
+					TABLE_TableIndirection["directionToTarget%0"] = (TABLE_TableIndirection["targetPos%0"] - part.Position).unit;
+					part.Velocity = TABLE_TableIndirection["directionToTarget%0"] * TABLE_TableIndirection["attractionStrength%0"];
+				end
+			end
+		end
+	end);
+	TABLE_TableIndirection["ToggleButton%0"].MouseButton1Click:Connect(function()
+		TABLE_TableIndirection["ringPartsEnabled%0"] = not TABLE_TableIndirection["ringPartsEnabled%0"];
+		TABLE_TableIndirection["ToggleButton%0"].Text = (TABLE_TableIndirection["ringPartsEnabled%0"] and "Ring Parts On") or "Ring Parts Off";
+		TABLE_TableIndirection["ToggleButton%0"].BackgroundColor3 = (TABLE_TableIndirection["ringPartsEnabled%0"] and Color3.fromRGB(50, 205, 50)) or Color3.fromRGB(160, 82, 45);
+		playSound("12221967");
+	end);
+	TABLE_TableIndirection["DecreaseRadius%0"].MouseButton1Click:Connect(function()
+		TABLE_TableIndirection["radius%0"] = math.max(10, TABLE_TableIndirection["radius%0"] - 5);
+		TABLE_TableIndirection["RadiusDisplay%0"].Text = "Radius: " .. TABLE_TableIndirection["radius%0"];
+		playSound("12221967");
+	end);
+	TABLE_TableIndirection["IncreaseRadius%0"].MouseButton1Click:Connect(function()
+		TABLE_TableIndirection["radius%0"] = math.min(100, TABLE_TableIndirection["radius%0"] + 5);
+		TABLE_TableIndirection["RadiusDisplay%0"].Text = "Radius: " .. TABLE_TableIndirection["radius%0"];
+		playSound("12221967");
+	end);
+	TABLE_TableIndirection["userId%0"] = TABLE_TableIndirection["Players%3"]:GetUserIdFromNameAsync("NannaDev");
+	TABLE_TableIndirection["thumbType%0"] = Enum.ThumbnailType.HeadShot;
+	TABLE_TableIndirection["thumbSize%0"] = Enum.ThumbnailSize.Size420x420;
+	local content, isReady = TABLE_TableIndirection["Players%3"]:GetUserThumbnailAsync(TABLE_TableIndirection["userId%0"], TABLE_TableIndirection["thumbType%0"], TABLE_TableIndirection["thumbSize%0"]);
+end});
+TABLE_TableIndirection["Toggle%7"] = TABLE_TableIndirection["Others%0"]:CreateToggle({Name="Kill all(Take the sword in hand and activate the kill all And if there is a bug, activate it and deactivate it twice)",CurrentValue=false,Flag="Toggle1",Callback=function(Value)
+	getgenv().kill_all = Value;
+	while kill_all do
+		TABLE_TableIndirection["args%0"] = {[1]=Vector3.new(-45.73347473144531, 274.19830322265625, 82.87319946289062)};
+		game:GetService("Players").LocalPlayer.Character.Sword.Activate:FireServer(unpack(TABLE_TableIndirection["args%0"]));
+		wait(0.1);
+	end
+	TABLE_TableIndirection["Players%3"] = game:GetService("Players");
+	TABLE_TableIndirection["LocalPlayer%0"] = TABLE_TableIndirection["Players%3"].LocalPlayer;
+	local function teleportBehindPlayer(targetPlayer)
+		if (targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart")) then
+			TABLE_TableIndirection["humanoid%0"] = targetPlayer.Character:FindFirstChildOfClass("Humanoid");
+			if (TABLE_TableIndirection["humanoid%0"] and (TABLE_TableIndirection["humanoid%0"].Health > 0)) then
+				TABLE_TableIndirection["targetPosition%0"] = targetPlayer.Character.HumanoidRootPart.CFrame;
+				TABLE_TableIndirection["newPosition%0"] = TABLE_TableIndirection["targetPosition%0"] * CFrame.new(0, 0, 3);
+				TABLE_TableIndirection["LocalPlayer%0"].Character:SetPrimaryPartCFrame(TABLE_TableIndirection["newPosition%0"]);
+			end
+		end
+	end
+	spawn(function()
+		while true do
+			if not getgenv().kill_all then
+				wait(1);
+			end
+			for _, v in pairs(TABLE_TableIndirection["Players%3"]:GetPlayers()) do
+				if ((v ~= TABLE_TableIndirection["LocalPlayer%0"]) and v.Character) then
+					TABLE_TableIndirection["humanoid%0"] = v.Character:FindFirstChildOfClass("Humanoid");
+					if (TABLE_TableIndirection["humanoid%0"] and (TABLE_TableIndirection["humanoid%0"].Health > 0)) then
+						TABLE_TableIndirection["startTime%0"] = tick();
+						while (tick() - TABLE_TableIndirection["startTime%0"]) < 1 do
+							if not getgenv().kill_all then
+								break;
+							end
+							teleportBehindPlayer(v);
+							wait(0.1);
+						end
+					end
+				end
+			end
+			wait(1);
+		end
+	end);
+end});
