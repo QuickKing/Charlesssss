@@ -1,5 +1,4 @@
 
-
 bit32 = {};
 local N = 32;
 local P = 2 ^ N;
@@ -104,1571 +103,1012 @@ bit32.arshift = function(x, s_amount)
 		return (x * (2 ^ -s_amount)) % P;
 	end
 end;
-local TABLE_TableIndirection = {};
-TABLE_TableIndirection["v0%0"] = loadstring(game:HttpGet("https://sirius.menu/rayfield"))();
-TABLE_TableIndirection["v1%0"] = TABLE_TableIndirection["v0%0"]:CreateWindow({Name="🏴‍☠️ Pilfering Pirates 🏴‍☠️",Icon=0,LoadingTitle="Blacklow Technologie",LoadingSubtitle="By Blacklow",Theme="Default",DisableRayfieldPrompts=false,DisableBuildWarnings=false,ConfigurationSaving={Enabled=true,FolderName=nil,FileName="Blacklow"},Discord={Enabled=true,Invite="zd9U983X",RememberJoins=true},KeySystem=true,KeySettings={Title="🔑 Blacklow Key system 🔑",Subtitle="Join Discord for key ",Note="Blacklow is free thanks for making the key system",FileName="Key",SaveKey=true,GrabKeyFromSite=false,Key={"d8$Lz2!tPqV&x@M7bNwK1#jF0mU"}}});
-TABLE_TableIndirection["v0%0"]:Notify({Title="❤️ Thank you ❤️",Content="Thank you for using Blacklow",Duration=6.5,Image=4483362458});
-TABLE_TableIndirection["v2%0"] = TABLE_TableIndirection["v1%0"]:CreateTab("👤 Player 👤", 4483362458);
-TABLE_TableIndirection["v2%0"]:CreateSection("Player Settings");
-TABLE_TableIndirection["v2%0"]:CreateSlider({Name="🏃 Walkspeed 🏃",Range={0,500},Increment=1,Suffix="Speed",CurrentValue=16,Flag="WalkSpeed",Callback=function(v74)
-	TABLE_TableIndirection["v75%0"] = game.Players.LocalPlayer;
-	if (TABLE_TableIndirection["v75%0"] and TABLE_TableIndirection["v75%0"].Character and TABLE_TableIndirection["v75%0"].Character:FindFirstChild("Humanoid")) then
-		TABLE_TableIndirection["v380%0"] = TABLE_TableIndirection["v75%0"].Character.Humanoid;
-		TABLE_TableIndirection["v380%0"].WalkSpeed = v74;
+local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))();
+local Window = Rayfield:CreateWindow({Name="🏴‍☠️ Pilfering Pirates 🏴‍☠️",Icon=0,LoadingTitle="Blacklow Technologie",LoadingSubtitle="By Blacklow",Theme="Default",DisableRayfieldPrompts=false,DisableBuildWarnings=false,ConfigurationSaving={Enabled=true,FolderName=nil,FileName="Blacklow"},Discord={Enabled=true,Invite="zd9U983X",RememberJoins=true},KeySystem=true,KeySettings={Title="🔑 Blacklow Key system 🔑",Subtitle="Join Discord for key ",Note="Blacklow is free thanks for making the key system",FileName="Key",SaveKey=true,GrabKeyFromSite=false,Key={"d8$Lz2!tPqV&x@M7bNwK1#jF0mU"}}});
+Rayfield:Notify({Title="❤️ Thank you ❤️",Content="Thank you for using Blacklow",Duration=6.5,Image=4483362458});
+local PlayerSetting = Window:CreateTab("👤 Player 👤", 4483362458);
+PlayerSetting:CreateSection("Player Settings");
+PlayerSetting:CreateSlider({Name="🏃 Walkspeed 🏃",Range={0,500},Increment=1,Suffix="Speed",CurrentValue=16,Flag="WalkSpeed",Callback=function(Value)
+	local player = game.Players.LocalPlayer;
+	if (player and player.Character and player.Character:FindFirstChild("Humanoid")) then
+		local humanoid = player.Character.Humanoid;
+		humanoid.WalkSpeed = Value;
 	end
 end});
-TABLE_TableIndirection["v2%0"]:CreateSlider({Name="🦸 JumpPower 🦸",Range={0,300},Increment=1,Suffix="Power",CurrentValue=50,Flag="JumpPower",Callback=function(v76)
-	TABLE_TableIndirection["FlatIdent_66556%0"] = 0;
-	TABLE_TableIndirection["v77%0"] = nil;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_66556%0"] == 0) then
-			TABLE_TableIndirection["v77%0"] = game.Players.LocalPlayer;
-			if (TABLE_TableIndirection["v77%0"] and TABLE_TableIndirection["v77%0"].Character and TABLE_TableIndirection["v77%0"].Character:FindFirstChild("Humanoid")) then
-				TABLE_TableIndirection["v382%0"] = TABLE_TableIndirection["v77%0"].Character.Humanoid;
-				TABLE_TableIndirection["v382%0"].JumpPower = v76;
-			end
-			break;
-		end
+PlayerSetting:CreateSlider({Name="🦸 JumpPower 🦸",Range={0,300},Increment=1,Suffix="Power",CurrentValue=50,Flag="JumpPower",Callback=function(Value)
+	local player = game.Players.LocalPlayer;
+	if (player and player.Character and player.Character:FindFirstChild("Humanoid")) then
+		local humanoid = player.Character.Humanoid;
+		humanoid.JumpPower = Value;
 	end
 end});
-TABLE_TableIndirection["v2%0"]:CreateToggle({Name="🌌 Infinite Jumps 🌌",CurrentValue=false,Flag="InfiniteJumps",Callback=function(v78)
-	TABLE_TableIndirection["FlatIdent_55D83%0"] = 0;
-	TABLE_TableIndirection["v79%0"] = nil;
-	TABLE_TableIndirection["v80%0"] = nil;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_55D83%0"] == 1) then
-			TABLE_TableIndirection["v80%0"] = TABLE_TableIndirection["v79%0"]:GetMouse();
-			if _G.jumpConnection then
-				_G.jumpConnection:Disconnect();
-			end
-			TABLE_TableIndirection["FlatIdent_55D83%0"] = 2;
-		end
-		if (TABLE_TableIndirection["FlatIdent_55D83%0"] == 2) then
-			_G.jumpConnection = TABLE_TableIndirection["v80%0"].KeyDown:Connect(function(v312)
-				if (_G.infinjump and (v312 == " ")) then
-					TABLE_TableIndirection["v402%0"] = TABLE_TableIndirection["v79%0"].Character and TABLE_TableIndirection["v79%0"].Character:FindFirstChildOfClass("Humanoid");
-					if TABLE_TableIndirection["v402%0"] then
-						TABLE_TableIndirection["v402%0"]:ChangeState("Jumping");
-					end
-				end
-			end);
-			break;
-		end
-		if (TABLE_TableIndirection["FlatIdent_55D83%0"] == 0) then
-			_G.infinjump = v78;
-			TABLE_TableIndirection["v79%0"] = game:GetService("Players").LocalPlayer;
-			TABLE_TableIndirection["FlatIdent_55D83%0"] = 1;
-		end
+PlayerSetting:CreateToggle({Name="🌌 Infinite Jumps 🌌",CurrentValue=false,Flag="InfiniteJumps",Callback=function(Value)
+	_G.infinjump = Value;
+	local plr = game:GetService("Players").LocalPlayer;
+	local m = plr:GetMouse();
+	if _G.jumpConnection then
+		_G.jumpConnection:Disconnect();
 	end
-end});
-TABLE_TableIndirection["v2%0"]:CreateToggle({Name="🌌 Gravity 🌌",CurrentValue=false,Flag="Gravity",Callback=function(v81)
-	game.Workspace.Gravity = (v81 and 0) or 196.2;
-end});
-TABLE_TableIndirection["v3%0"] = TABLE_TableIndirection["v1%0"]:CreateTab("🔫 Silent Aim 🔫", 4483362458);
-TABLE_TableIndirection["v3%0"]:CreateSection("Silent Aim Settings");
-TABLE_TableIndirection["v4%0"] = game.Players.LocalPlayer;
-TABLE_TableIndirection["v5%0"] = false;
-TABLE_TableIndirection["v6%0"] = true;
-TABLE_TableIndirection["v7%0"] = {};
-TABLE_TableIndirection["v8%0"] = 0.1;
-local function v9(v83, v84)
-	if (string.find(v84, "not a valid member of Model") or string.find(v84, "Weapon not found or doesn't support firing")) then
-		return;
-	end
-	TABLE_TableIndirection["v0%0"]:Notify({Title="❗ Silent Aim Error ❗",Content=("Error firing with " .. v83 .. ".\n" .. "❌ Issue: " .. v84 .. "\n" .. "📩 Contact support on Discord!"),Duration=5,Image=4483362458});
-end
-local function v10()
-	TABLE_TableIndirection["v85%0"] = nil;
-	TABLE_TableIndirection["v86%0"] = math.huge;
-	for v313, v314 in pairs(game.Players:GetPlayers()) do
-		if ((v314 ~= TABLE_TableIndirection["v4%0"]) and v314.Character and v314.Character:FindFirstChild("HumanoidRootPart")) then
-			if (not TABLE_TableIndirection["v6%0"] or (v314.Team ~= TABLE_TableIndirection["v4%0"].Team)) then
-				TABLE_TableIndirection["FlatIdent_61538%0"] = 0;
-				TABLE_TableIndirection["v442%0"] = nil;
-				while true do
-					if (TABLE_TableIndirection["FlatIdent_61538%0"] == 0) then
-						TABLE_TableIndirection["v442%0"] = (TABLE_TableIndirection["v4%0"].Character.HumanoidRootPart.Position - v314.Character.HumanoidRootPart.Position).Magnitude;
-						if (TABLE_TableIndirection["v442%0"] < TABLE_TableIndirection["v86%0"]) then
-							TABLE_TableIndirection["FlatIdent_7147%0"] = 0;
-							while true do
-								if (TABLE_TableIndirection["FlatIdent_7147%0"] == 0) then
-									TABLE_TableIndirection["v86%0"] = TABLE_TableIndirection["v442%0"];
-									TABLE_TableIndirection["v85%0"] = v314.Character.HumanoidRootPart;
-									break;
-								end
-							end
-						end
-						break;
-					end
-				end
+	_G.jumpConnection = m.KeyDown:Connect(function(k)
+		if (_G.infinjump and (k == " ")) then
+			local humanoid = plr.Character and plr.Character:FindFirstChildOfClass("Humanoid");
+			if humanoid then
+				humanoid:ChangeState("Jumping");
 			end
 		end
-	end
-	return TABLE_TableIndirection["v85%0"];
-end
-local function v11()
-	while TABLE_TableIndirection["v5%0"] do
-		TABLE_TableIndirection["FlatIdent_360E8%0"] = 0;
-		while true do
-			if (TABLE_TableIndirection["FlatIdent_360E8%0"] == 0) then
-				if (TABLE_TableIndirection["v4%0"].Character and TABLE_TableIndirection["v4%0"].Character:FindFirstChild("HumanoidRootPart")) then
-					TABLE_TableIndirection["v403%0"] = v10();
-					if TABLE_TableIndirection["v403%0"] then
-						for v454, v455 in ipairs(TABLE_TableIndirection["v7%0"]) do
-							TABLE_TableIndirection["FlatIdent_7B2D6%0"] = 0;
-							TABLE_TableIndirection["v456%0"] = nil;
-							TABLE_TableIndirection["v457%0"] = nil;
-							TABLE_TableIndirection["v458%0"] = nil;
-							while true do
-								if (TABLE_TableIndirection["FlatIdent_7B2D6%0"] == 0) then
-									TABLE_TableIndirection["v456%0"] = {[1]=TABLE_TableIndirection["v403%0"].Position};
-									TABLE_TableIndirection["v457%0"], TABLE_TableIndirection["v458%0"] = pcall(function()
-										if (v455 == "Paintball") then
-											game:GetService("Players").LocalPlayer.Character.Paintball.Activate:FireServer(unpack(TABLE_TableIndirection["v456%0"]));
-										elseif (v455 == "Superball") then
-											game:GetService("Players").LocalPlayer.Character.Superball.Activate:FireServer(unpack(TABLE_TableIndirection["v456%0"]));
-										elseif (v455 == "Flintlock") then
-											game:GetService("Players").LocalPlayer.Character.Flintlock.Activate:FireServer(unpack(TABLE_TableIndirection["v456%0"]));
-										else
-											TABLE_TableIndirection["FlatIdent_67C40%0"] = 0;
-											TABLE_TableIndirection["v593%0"] = nil;
-											while true do
-												if (TABLE_TableIndirection["FlatIdent_67C40%0"] == 0) then
-													TABLE_TableIndirection["v593%0"] = TABLE_TableIndirection["v4%0"].Character:FindFirstChild(v455);
-													if (TABLE_TableIndirection["v593%0"] and TABLE_TableIndirection["v593%0"]:FindFirstChild("Activate")) then
-														TABLE_TableIndirection["v593%0"].Activate:FireServer(unpack(TABLE_TableIndirection["v456%0"]));
-													else
-														error("Weapon not found or doesn't support firing");
-													end
-													break;
-												end
-											end
-										end
-									end);
-									TABLE_TableIndirection["FlatIdent_7B2D6%0"] = 1;
-								end
-								if (TABLE_TableIndirection["FlatIdent_7B2D6%0"] == 1) then
-									if not TABLE_TableIndirection["v457%0"] then
-										v9(v455, TABLE_TableIndirection["v458%0"]);
-									end
-									break;
-								end
-							end
-						end
-					end
-				end
-				wait(TABLE_TableIndirection["v8%0"]);
-				break;
-			end
-		end
-	end
-end
-TABLE_TableIndirection["v4%0"].CharacterAdded:Connect(function()
-	if TABLE_TableIndirection["v5%0"] then
-		v11();
-	end
-end);
-TABLE_TableIndirection["v3%0"]:CreateToggle({Name="Activated",CurrentValue=false,Flag="ActivatedSilentAim",Callback=function(v87)
-	TABLE_TableIndirection["FlatIdent_89ECE%0"] = 0;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_89ECE%0"] == 0) then
-			TABLE_TableIndirection["v5%0"] = v87;
-			if TABLE_TableIndirection["v5%0"] then
-				v11();
-			end
-			break;
-		end
-	end
-end});
-TABLE_TableIndirection["v3%0"]:CreateToggle({Name="Team Checked",CurrentValue=true,Flag="TeamChecked",Callback=function(v88)
-	TABLE_TableIndirection["v6%0"] = v88;
-end});
-TABLE_TableIndirection["v3%0"]:CreateDropdown({Name="Gun",Options={"Flintlock","Launcher","Superball","Paintball"},CurrentOption={"Flintlock"},MultipleOptions=true,Flag="GunSilentAim",Callback=function(v89)
-	TABLE_TableIndirection["v7%0"] = v89;
-end});
-TABLE_TableIndirection["v3%0"]:CreateSlider({Name="Fire Rate (sec)",Range={0.05,1.5},Increment=0.05,Suffix="sec",CurrentValue=0.05,Flag="FireRate",Callback=function(v90)
-	TABLE_TableIndirection["v8%0"] = v90;
-end});
-TABLE_TableIndirection["v12%0"] = TABLE_TableIndirection["v1%0"]:CreateTab("🖥️ Visual 🖥️", 4483362458);
-TABLE_TableIndirection["v13%0"] = TABLE_TableIndirection["v12%0"]:CreateSection("Utility");
-TABLE_TableIndirection["v14%0"] = TABLE_TableIndirection["v12%0"]:CreateButton({Name="Name esp",Callback=function()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/Lucasfin000/SpaceHub/main/UESP"))();
-end});
-TABLE_TableIndirection["v14%1"] = TABLE_TableIndirection["v12%0"]:CreateButton({Name="Tracer",Callback=function()
-	TABLE_TableIndirection["v91%0"] = game:GetService("Workspace");
-	TABLE_TableIndirection["v92%0"] = game:GetService("Players").LocalPlayer;
-	TABLE_TableIndirection["v93%0"] = TABLE_TableIndirection["v91%0"].CurrentCamera;
-	TABLE_TableIndirection["v94%0"] = true;
-	TABLE_TableIndirection["v95%0"] = Color3.fromRGB(0, 255, 50);
-	TABLE_TableIndirection["v96%0"] = 1.4;
-	TABLE_TableIndirection["v97%0"] = 1;
-	TABLE_TableIndirection["v98%0"] = true;
-	TABLE_TableIndirection["v99%0"] = Color3.fromRGB(0, 255, 50);
-	TABLE_TableIndirection["v100%0"] = 1.4;
-	TABLE_TableIndirection["v101%0"] = 1;
-	TABLE_TableIndirection["v102%0"] = false;
-	TABLE_TableIndirection["v103%0"] = false;
-	TABLE_TableIndirection["v104%0"] = Color3.fromRGB(227, 52, 52);
-	TABLE_TableIndirection["v105%0"] = Color3.fromRGB(88, 217, 24);
-	local function v106()
-		TABLE_TableIndirection["v315%0"] = Drawing.new("Line");
-		TABLE_TableIndirection["v315%0"].Visible = false;
-		TABLE_TableIndirection["v315%0"].From = Vector2.new(0, 0);
-		TABLE_TableIndirection["v315%0"].To = Vector2.new(1, 1);
-		TABLE_TableIndirection["v315%0"].Color = TABLE_TableIndirection["v95%0"];
-		TABLE_TableIndirection["v315%0"].Thickness = TABLE_TableIndirection["v96%0"];
-		TABLE_TableIndirection["v315%0"].Transparency = TABLE_TableIndirection["v97%0"];
-		return TABLE_TableIndirection["v315%0"];
-	end
-	for v322, v323 in pairs(game.Players:GetChildren()) do
-		TABLE_TableIndirection["v324%0"] = {line1=v106(),line2=v106(),line3=v106(),line4=v106(),line5=v106(),line6=v106(),line7=v106(),line8=v106(),line9=v106(),line10=v106(),line11=v106(),line12=v106(),Tracer=v106()};
-		TABLE_TableIndirection["v324%0"].Tracer.Color = TABLE_TableIndirection["v99%0"];
-		TABLE_TableIndirection["v324%0"].Tracer.Thickness = TABLE_TableIndirection["v100%0"];
-		TABLE_TableIndirection["v324%0"].Tracer.Transparency = TABLE_TableIndirection["v101%0"];
-		local function v328()
-			TABLE_TableIndirection["v384%0"] = nil;
-			v384 = game:GetService("RunService").RenderStepped:Connect(function()
-				if (TABLE_TableIndirection["v94%0"] and (v323.Character ~= nil) and (v323.Character:FindFirstChild("Humanoid") ~= nil) and (v323.Character:FindFirstChild("HumanoidRootPart") ~= nil) and (v323.Name ~= TABLE_TableIndirection["v92%0"].Name) and (v323.Character.Humanoid.Health > 0) and (v323.Character:FindFirstChild("Head") ~= nil)) then
-					local v443, v444 = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint(v323.Character.HumanoidRootPart.Position);
-					if v444 then
-						TABLE_TableIndirection["v474%0"] = v323.Character.Head.Size.Y / 2;
-						TABLE_TableIndirection["v475%0"] = Vector3.new(2, 3, 1.5) * TABLE_TableIndirection["v474%0"] * 2;
-						TABLE_TableIndirection["v476%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v323.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["v475%0"].X, TABLE_TableIndirection["v475%0"].Y, -TABLE_TableIndirection["v475%0"].Z)).p);
-						TABLE_TableIndirection["v477%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v323.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["v475%0"].X, TABLE_TableIndirection["v475%0"].Y, TABLE_TableIndirection["v475%0"].Z)).p);
-						TABLE_TableIndirection["v478%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v323.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["v475%0"].X, TABLE_TableIndirection["v475%0"].Y, TABLE_TableIndirection["v475%0"].Z)).p);
-						TABLE_TableIndirection["v479%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v323.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["v475%0"].X, TABLE_TableIndirection["v475%0"].Y, -TABLE_TableIndirection["v475%0"].Z)).p);
-						TABLE_TableIndirection["v480%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v323.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["v475%0"].X, -TABLE_TableIndirection["v475%0"].Y, -TABLE_TableIndirection["v475%0"].Z)).p);
-						TABLE_TableIndirection["v481%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v323.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["v475%0"].X, -TABLE_TableIndirection["v475%0"].Y, TABLE_TableIndirection["v475%0"].Z)).p);
-						TABLE_TableIndirection["v482%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v323.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["v475%0"].X, -TABLE_TableIndirection["v475%0"].Y, TABLE_TableIndirection["v475%0"].Z)).p);
-						TABLE_TableIndirection["v483%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v323.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["v475%0"].X, -TABLE_TableIndirection["v475%0"].Y, -TABLE_TableIndirection["v475%0"].Z)).p);
-						TABLE_TableIndirection["v324%0"].line1.From = Vector2.new(TABLE_TableIndirection["v476%0"].X, TABLE_TableIndirection["v476%0"].Y);
-						TABLE_TableIndirection["v324%0"].line1.To = Vector2.new(TABLE_TableIndirection["v477%0"].X, TABLE_TableIndirection["v477%0"].Y);
-						TABLE_TableIndirection["v324%0"].line2.From = Vector2.new(TABLE_TableIndirection["v477%0"].X, TABLE_TableIndirection["v477%0"].Y);
-						TABLE_TableIndirection["v324%0"].line2.To = Vector2.new(TABLE_TableIndirection["v478%0"].X, TABLE_TableIndirection["v478%0"].Y);
-						TABLE_TableIndirection["v324%0"].line3.From = Vector2.new(TABLE_TableIndirection["v478%0"].X, TABLE_TableIndirection["v478%0"].Y);
-						TABLE_TableIndirection["v324%0"].line3.To = Vector2.new(TABLE_TableIndirection["v479%0"].X, TABLE_TableIndirection["v479%0"].Y);
-						TABLE_TableIndirection["v324%0"].line4.From = Vector2.new(TABLE_TableIndirection["v479%0"].X, TABLE_TableIndirection["v479%0"].Y);
-						TABLE_TableIndirection["v324%0"].line4.To = Vector2.new(TABLE_TableIndirection["v476%0"].X, TABLE_TableIndirection["v476%0"].Y);
-						TABLE_TableIndirection["v324%0"].line5.From = Vector2.new(TABLE_TableIndirection["v480%0"].X, TABLE_TableIndirection["v480%0"].Y);
-						TABLE_TableIndirection["v324%0"].line5.To = Vector2.new(TABLE_TableIndirection["v481%0"].X, TABLE_TableIndirection["v481%0"].Y);
-						TABLE_TableIndirection["v324%0"].line6.From = Vector2.new(TABLE_TableIndirection["v481%0"].X, TABLE_TableIndirection["v481%0"].Y);
-						TABLE_TableIndirection["v324%0"].line6.To = Vector2.new(TABLE_TableIndirection["v482%0"].X, TABLE_TableIndirection["v482%0"].Y);
-						TABLE_TableIndirection["v324%0"].line7.From = Vector2.new(TABLE_TableIndirection["v482%0"].X, TABLE_TableIndirection["v482%0"].Y);
-						TABLE_TableIndirection["v324%0"].line7.To = Vector2.new(TABLE_TableIndirection["v483%0"].X, TABLE_TableIndirection["v483%0"].Y);
-						TABLE_TableIndirection["v324%0"].line8.From = Vector2.new(TABLE_TableIndirection["v483%0"].X, TABLE_TableIndirection["v483%0"].Y);
-						TABLE_TableIndirection["v324%0"].line8.To = Vector2.new(TABLE_TableIndirection["v480%0"].X, TABLE_TableIndirection["v480%0"].Y);
-						TABLE_TableIndirection["v324%0"].line9.From = Vector2.new(TABLE_TableIndirection["v480%0"].X, TABLE_TableIndirection["v480%0"].Y);
-						TABLE_TableIndirection["v324%0"].line9.To = Vector2.new(TABLE_TableIndirection["v476%0"].X, TABLE_TableIndirection["v476%0"].Y);
-						TABLE_TableIndirection["v324%0"].line10.From = Vector2.new(TABLE_TableIndirection["v481%0"].X, TABLE_TableIndirection["v481%0"].Y);
-						TABLE_TableIndirection["v324%0"].line10.To = Vector2.new(TABLE_TableIndirection["v477%0"].X, TABLE_TableIndirection["v477%0"].Y);
-						TABLE_TableIndirection["v324%0"].line11.From = Vector2.new(TABLE_TableIndirection["v482%0"].X, TABLE_TableIndirection["v482%0"].Y);
-						TABLE_TableIndirection["v324%0"].line11.To = Vector2.new(TABLE_TableIndirection["v478%0"].X, TABLE_TableIndirection["v478%0"].Y);
-						TABLE_TableIndirection["v324%0"].line12.From = Vector2.new(TABLE_TableIndirection["v483%0"].X, TABLE_TableIndirection["v483%0"].Y);
-						TABLE_TableIndirection["v324%0"].line12.To = Vector2.new(TABLE_TableIndirection["v479%0"].X, TABLE_TableIndirection["v479%0"].Y);
-						if TABLE_TableIndirection["v98%0"] then
-							TABLE_TableIndirection["v555%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v323.Character.HumanoidRootPart.CFrame * CFrame.new(0, -TABLE_TableIndirection["v475%0"].Y, 0)).p);
-							TABLE_TableIndirection["v324%0"].Tracer.From = Vector2.new(TABLE_TableIndirection["v93%0"].ViewportSize.X / 2, TABLE_TableIndirection["v93%0"].ViewportSize.Y);
-							TABLE_TableIndirection["v324%0"].Tracer.To = Vector2.new(TABLE_TableIndirection["v555%0"].X, TABLE_TableIndirection["v555%0"].Y);
-						end
-						if TABLE_TableIndirection["v103%0"] then
-							if (v323.TeamColor == TABLE_TableIndirection["v92%0"].TeamColor) then
-								for v581, v582 in pairs(TABLE_TableIndirection["v324%0"]) do
-									v582.Color = TABLE_TableIndirection["v105%0"];
-								end
-							else
-								for v584, v585 in pairs(TABLE_TableIndirection["v324%0"]) do
-									v585.Color = TABLE_TableIndirection["v104%0"];
-								end
-							end
-						end
-						if TABLE_TableIndirection["v102%0"] then
-							TABLE_TableIndirection["FlatIdent_60EA1%0"] = 0;
-							TABLE_TableIndirection["v558%0"] = nil;
-							TABLE_TableIndirection["v559%0"] = nil;
-							while true do
-								if (TABLE_TableIndirection["FlatIdent_60EA1%0"] == 1) then
-									for v567, v568 in pairs(TABLE_TableIndirection["v324%0"]) do
-										v568.Thickness = TABLE_TableIndirection["v559%0"];
-									end
-									break;
-								end
-								if (TABLE_TableIndirection["FlatIdent_60EA1%0"] == 0) then
-									TABLE_TableIndirection["v558%0"] = (TABLE_TableIndirection["v92%0"].Character.HumanoidRootPart.Position - v323.Character.HumanoidRootPart.Position).magnitude;
-									TABLE_TableIndirection["v559%0"] = math.clamp((1 / TABLE_TableIndirection["v558%0"]) * 100, 0.1, 4);
-									TABLE_TableIndirection["FlatIdent_60EA1%0"] = 1;
-								end
-							end
-						else
-							for v570, v571 in pairs(TABLE_TableIndirection["v324%0"]) do
-								v571.Thickness = TABLE_TableIndirection["v96%0"];
-							end
-						end
-						for v545, v546 in pairs(TABLE_TableIndirection["v324%0"]) do
-							if (v546 ~= TABLE_TableIndirection["v324%0"].Tracer) then
-								v546.Visible = true;
-							end
-						end
-						if TABLE_TableIndirection["v98%0"] then
-							TABLE_TableIndirection["v324%0"].Tracer.Visible = true;
-						end
-					else
-						for v547, v548 in pairs(TABLE_TableIndirection["v324%0"]) do
-							v548.Visible = false;
-						end
-					end
-				else
-					TABLE_TableIndirection["FlatIdent_6147E%0"] = 0;
-					while true do
-						if (TABLE_TableIndirection["FlatIdent_6147E%0"] == 0) then
-							for v459, v460 in pairs(TABLE_TableIndirection["v324%0"]) do
-								v460.Visible = false;
-							end
-							if (game.Players:FindFirstChild(v323.Name) == nil) then
-								TABLE_TableIndirection["v384%0"]:Disconnect();
-							end
-							break;
-						end
-					end
-				end
-			end);
-		end
-		coroutine.wrap(v328)();
-	end
-	game.Players.PlayerAdded:Connect(function(v329)
-		TABLE_TableIndirection["v330%0"] = {line1=v106(),line2=v106(),line3=v106(),line4=v106(),line5=v106(),line6=v106(),line7=v106(),line8=v106(),line9=v106(),line10=v106(),line11=v106(),line12=v106(),Tracer=v106()};
-		TABLE_TableIndirection["v330%0"].Tracer.Color = TABLE_TableIndirection["v99%0"];
-		TABLE_TableIndirection["v330%0"].Tracer.Thickness = TABLE_TableIndirection["v100%0"];
-		TABLE_TableIndirection["v330%0"].Tracer.Transparency = TABLE_TableIndirection["v101%0"];
-		local function v334()
-			TABLE_TableIndirection["v385%0"] = nil;
-			v385 = game:GetService("RunService").RenderStepped:Connect(function()
-				if (TABLE_TableIndirection["v94%0"] and (v329.Character ~= nil) and (v329.Character:FindFirstChild("Humanoid") ~= nil) and (v329.Character:FindFirstChild("HumanoidRootPart") ~= nil) and (v329.Name ~= TABLE_TableIndirection["v92%0"].Name) and (v329.Character.Humanoid.Health > 0) and (v329.Character:FindFirstChild("Head") ~= nil)) then
-					local v445, v446 = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint(v329.Character.HumanoidRootPart.Position);
-					if v446 then
-						TABLE_TableIndirection["v508%0"] = v329.Character.Head.Size.Y / 2;
-						TABLE_TableIndirection["v509%0"] = Vector3.new(2, 3, 1.5) * TABLE_TableIndirection["v508%0"] * 2;
-						TABLE_TableIndirection["v510%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v329.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["v509%0"].X, TABLE_TableIndirection["v509%0"].Y, -TABLE_TableIndirection["v509%0"].Z)).p);
-						TABLE_TableIndirection["v511%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v329.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["v509%0"].X, TABLE_TableIndirection["v509%0"].Y, TABLE_TableIndirection["v509%0"].Z)).p);
-						TABLE_TableIndirection["v512%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v329.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["v509%0"].X, TABLE_TableIndirection["v509%0"].Y, TABLE_TableIndirection["v509%0"].Z)).p);
-						TABLE_TableIndirection["v513%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v329.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["v509%0"].X, TABLE_TableIndirection["v509%0"].Y, -TABLE_TableIndirection["v509%0"].Z)).p);
-						TABLE_TableIndirection["v514%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v329.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["v509%0"].X, -TABLE_TableIndirection["v509%0"].Y, -TABLE_TableIndirection["v509%0"].Z)).p);
-						TABLE_TableIndirection["v515%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v329.Character.HumanoidRootPart.CFrame * CFrame.new(-TABLE_TableIndirection["v509%0"].X, -TABLE_TableIndirection["v509%0"].Y, TABLE_TableIndirection["v509%0"].Z)).p);
-						TABLE_TableIndirection["v516%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v329.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["v509%0"].X, -TABLE_TableIndirection["v509%0"].Y, TABLE_TableIndirection["v509%0"].Z)).p);
-						TABLE_TableIndirection["v517%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v329.Character.HumanoidRootPart.CFrame * CFrame.new(TABLE_TableIndirection["v509%0"].X, -TABLE_TableIndirection["v509%0"].Y, -TABLE_TableIndirection["v509%0"].Z)).p);
-						TABLE_TableIndirection["v330%0"].line1.From = Vector2.new(TABLE_TableIndirection["v510%0"].X, TABLE_TableIndirection["v510%0"].Y);
-						TABLE_TableIndirection["v330%0"].line1.To = Vector2.new(TABLE_TableIndirection["v511%0"].X, TABLE_TableIndirection["v511%0"].Y);
-						TABLE_TableIndirection["v330%0"].line2.From = Vector2.new(TABLE_TableIndirection["v511%0"].X, TABLE_TableIndirection["v511%0"].Y);
-						TABLE_TableIndirection["v330%0"].line2.To = Vector2.new(TABLE_TableIndirection["v512%0"].X, TABLE_TableIndirection["v512%0"].Y);
-						TABLE_TableIndirection["v330%0"].line3.From = Vector2.new(TABLE_TableIndirection["v512%0"].X, TABLE_TableIndirection["v512%0"].Y);
-						TABLE_TableIndirection["v330%0"].line3.To = Vector2.new(TABLE_TableIndirection["v513%0"].X, TABLE_TableIndirection["v513%0"].Y);
-						TABLE_TableIndirection["v330%0"].line4.From = Vector2.new(TABLE_TableIndirection["v513%0"].X, TABLE_TableIndirection["v513%0"].Y);
-						TABLE_TableIndirection["v330%0"].line4.To = Vector2.new(TABLE_TableIndirection["v510%0"].X, TABLE_TableIndirection["v510%0"].Y);
-						TABLE_TableIndirection["v330%0"].line5.From = Vector2.new(TABLE_TableIndirection["v514%0"].X, TABLE_TableIndirection["v514%0"].Y);
-						TABLE_TableIndirection["v330%0"].line5.To = Vector2.new(TABLE_TableIndirection["v515%0"].X, TABLE_TableIndirection["v515%0"].Y);
-						TABLE_TableIndirection["v330%0"].line6.From = Vector2.new(TABLE_TableIndirection["v515%0"].X, TABLE_TableIndirection["v515%0"].Y);
-						TABLE_TableIndirection["v330%0"].line6.To = Vector2.new(TABLE_TableIndirection["v516%0"].X, TABLE_TableIndirection["v516%0"].Y);
-						TABLE_TableIndirection["v330%0"].line7.From = Vector2.new(TABLE_TableIndirection["v516%0"].X, TABLE_TableIndirection["v516%0"].Y);
-						TABLE_TableIndirection["v330%0"].line7.To = Vector2.new(TABLE_TableIndirection["v517%0"].X, TABLE_TableIndirection["v517%0"].Y);
-						TABLE_TableIndirection["v330%0"].line8.From = Vector2.new(TABLE_TableIndirection["v517%0"].X, TABLE_TableIndirection["v517%0"].Y);
-						TABLE_TableIndirection["v330%0"].line8.To = Vector2.new(TABLE_TableIndirection["v514%0"].X, TABLE_TableIndirection["v514%0"].Y);
-						TABLE_TableIndirection["v330%0"].line9.From = Vector2.new(TABLE_TableIndirection["v514%0"].X, TABLE_TableIndirection["v514%0"].Y);
-						TABLE_TableIndirection["v330%0"].line9.To = Vector2.new(TABLE_TableIndirection["v510%0"].X, TABLE_TableIndirection["v510%0"].Y);
-						TABLE_TableIndirection["v330%0"].line10.From = Vector2.new(TABLE_TableIndirection["v515%0"].X, TABLE_TableIndirection["v515%0"].Y);
-						TABLE_TableIndirection["v330%0"].line10.To = Vector2.new(TABLE_TableIndirection["v511%0"].X, TABLE_TableIndirection["v511%0"].Y);
-						TABLE_TableIndirection["v330%0"].line11.From = Vector2.new(TABLE_TableIndirection["v516%0"].X, TABLE_TableIndirection["v516%0"].Y);
-						TABLE_TableIndirection["v330%0"].line11.To = Vector2.new(TABLE_TableIndirection["v512%0"].X, TABLE_TableIndirection["v512%0"].Y);
-						TABLE_TableIndirection["v330%0"].line12.From = Vector2.new(TABLE_TableIndirection["v517%0"].X, TABLE_TableIndirection["v517%0"].Y);
-						TABLE_TableIndirection["v330%0"].line12.To = Vector2.new(TABLE_TableIndirection["v513%0"].X, TABLE_TableIndirection["v513%0"].Y);
-						if TABLE_TableIndirection["v98%0"] then
-							TABLE_TableIndirection["FlatIdent_1076E%0"] = 0;
-							TABLE_TableIndirection["v561%0"] = nil;
-							while true do
-								if (1 == TABLE_TableIndirection["FlatIdent_1076E%0"]) then
-									TABLE_TableIndirection["v330%0"].Tracer.To = Vector2.new(TABLE_TableIndirection["v561%0"].X, TABLE_TableIndirection["v561%0"].Y);
-									break;
-								end
-								if (TABLE_TableIndirection["FlatIdent_1076E%0"] == 0) then
-									TABLE_TableIndirection["v561%0"] = TABLE_TableIndirection["v93%0"]:WorldToViewportPoint((v329.Character.HumanoidRootPart.CFrame * CFrame.new(0, -TABLE_TableIndirection["v509%0"].Y, 0)).p);
-									TABLE_TableIndirection["v330%0"].Tracer.From = Vector2.new(TABLE_TableIndirection["v93%0"].ViewportSize.X / 2, TABLE_TableIndirection["v93%0"].ViewportSize.Y);
-									TABLE_TableIndirection["FlatIdent_1076E%0"] = 1;
-								end
-							end
-						end
-						if TABLE_TableIndirection["v103%0"] then
-							if (v329.TeamColor == TABLE_TableIndirection["v92%0"].TeamColor) then
-								for v587, v588 in pairs(TABLE_TableIndirection["v330%0"]) do
-									v588.Color = TABLE_TableIndirection["v105%0"];
-								end
-							else
-								for v590, v591 in pairs(TABLE_TableIndirection["v330%0"]) do
-									v591.Color = TABLE_TableIndirection["v104%0"];
-								end
-							end
-						end
-						if TABLE_TableIndirection["v102%0"] then
-							TABLE_TableIndirection["FlatIdent_A36C%0"] = 0;
-							TABLE_TableIndirection["v564%0"] = nil;
-							TABLE_TableIndirection["v565%0"] = nil;
-							while true do
-								if (TABLE_TableIndirection["FlatIdent_A36C%0"] == 0) then
-									TABLE_TableIndirection["v564%0"] = (TABLE_TableIndirection["v92%0"].Character.HumanoidRootPart.Position - v329.Character.HumanoidRootPart.Position).magnitude;
-									TABLE_TableIndirection["v565%0"] = math.clamp((1 / TABLE_TableIndirection["v564%0"]) * 100, 0.1, 4);
-									TABLE_TableIndirection["FlatIdent_A36C%0"] = 1;
-								end
-								if (TABLE_TableIndirection["FlatIdent_A36C%0"] == 1) then
-									for v574, v575 in pairs(TABLE_TableIndirection["v330%0"]) do
-										v575.Thickness = TABLE_TableIndirection["v565%0"];
-									end
-									break;
-								end
-							end
-						else
-							for v577, v578 in pairs(TABLE_TableIndirection["v330%0"]) do
-								v578.Thickness = TABLE_TableIndirection["v96%0"];
-							end
-						end
-						for v550, v551 in pairs(TABLE_TableIndirection["v330%0"]) do
-							if (v551 ~= TABLE_TableIndirection["v330%0"].Tracer) then
-								v551.Visible = true;
-							end
-						end
-						if TABLE_TableIndirection["v98%0"] then
-							TABLE_TableIndirection["v330%0"].Tracer.Visible = true;
-						end
-					else
-						for v552, v553 in pairs(TABLE_TableIndirection["v330%0"]) do
-							v553.Visible = false;
-						end
-					end
-				else
-					TABLE_TableIndirection["FlatIdent_6EF7B%0"] = 0;
-					while true do
-						if (TABLE_TableIndirection["FlatIdent_6EF7B%0"] == 0) then
-							for v462, v463 in pairs(TABLE_TableIndirection["v330%0"]) do
-								v463.Visible = false;
-							end
-							if (game.Players:FindFirstChild(v329.Name) == nil) then
-								TABLE_TableIndirection["v385%0"]:Disconnect();
-							end
-							break;
-						end
-					end
-				end
-			end);
-		end
-		coroutine.wrap(v334)();
 	end);
 end});
-TABLE_TableIndirection["v14%2"] = TABLE_TableIndirection["v12%0"]:CreateButton({Name="Xray",Callback=function()
-	TABLE_TableIndirection["v107%0"] = game:GetService("Workspace");
-	local function v108(v335)
-		for v386, v387 in ipairs(TABLE_TableIndirection["v107%0"]:GetDescendants()) do
-			if v387:IsA("Part") then
-				v387.Transparency = v335;
+PlayerSetting:CreateToggle({Name="🌌 Gravity 🌌",CurrentValue=false,Flag="Gravity",Callback=function(Value)
+	game.Workspace.Gravity = (Value and 0) or 196.2;
+end});
+local SilentAimTab = Window:CreateTab("🔫 Silent Aim 🔫", 4483362458);
+SilentAimTab:CreateSection("Silent Aim Settings");
+local player = game.Players.LocalPlayer;
+local SilentAim = false;
+local TeamChecked = true;
+local SelectedGuns = {};
+local FireRate = 0.1;
+local function notifyError(gun, err)
+	if (string.find(err, "not a valid member of Model") or string.find(err, "Weapon not found or doesn't support firing")) then
+		return;
+	end
+	Rayfield:Notify({Title="❗ Silent Aim Error ❗",Content=("Error firing with " .. gun .. ".\n" .. "❌ Issue: " .. err .. "\n" .. "📩 Contact support on Discord!"),Duration=5,Image=4483362458});
+end
+local function getClosestEnemy()
+	local closestEnemy = nil;
+	local minDistance = math.huge;
+	for _, plr in pairs(game.Players:GetPlayers()) do
+		if ((plr ~= player) and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart")) then
+			if (not TeamChecked or (plr.Team ~= player.Team)) then
+				local distance = (player.Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).Magnitude;
+				if (distance < minDistance) then
+					minDistance = distance;
+					closestEnemy = plr.Character.HumanoidRootPart;
+				end
 			end
 		end
 	end
-	v108(0.8);
+	return closestEnemy;
+end
+local function fireAtEnemy()
+	while SilentAim do
+		if (player.Character and player.Character:FindFirstChild("HumanoidRootPart")) then
+			local target = getClosestEnemy();
+			if target then
+				for _, gun in ipairs(SelectedGuns) do
+					local args = {[1]=target.Position};
+					local success, err = pcall(function()
+						if (gun == "Paintball") then
+							game:GetService("Players").LocalPlayer.Character.Paintball.Activate:FireServer(unpack(args));
+						elseif (gun == "Superball") then
+							game:GetService("Players").LocalPlayer.Character.Superball.Activate:FireServer(unpack(args));
+						elseif (gun == "Flintlock") then
+							game:GetService("Players").LocalPlayer.Character.Flintlock.Activate:FireServer(unpack(args));
+						else
+							local weapon = player.Character:FindFirstChild(gun);
+							if (weapon and weapon:FindFirstChild("Activate")) then
+								weapon.Activate:FireServer(unpack(args));
+							else
+								error("Weapon not found or doesn't support firing");
+							end
+						end
+					end);
+					if not success then
+						notifyError(gun, err);
+					end
+				end
+			end
+		end
+		wait(FireRate);
+	end
+end
+player.CharacterAdded:Connect(function()
+	if SilentAim then
+		fireAtEnemy();
+	end
+end);
+SilentAimTab:CreateToggle({Name="Activated",CurrentValue=false,Flag="ActivatedSilentAim",Callback=function(Value)
+	SilentAim = Value;
+	if SilentAim then
+		fireAtEnemy();
+	end
 end});
-TABLE_TableIndirection["v14%3"] = TABLE_TableIndirection["v12%0"]:CreateButton({Name="Rtx",Callback=function()
+SilentAimTab:CreateToggle({Name="Team Checked",CurrentValue=true,Flag="TeamChecked",Callback=function(Value)
+	TeamChecked = Value;
+end});
+SilentAimTab:CreateDropdown({Name="Gun",Options={"Flintlock","Launcher","Superball","Paintball"},CurrentOption={"Flintlock"},MultipleOptions=true,Flag="GunSilentAim",Callback=function(Options)
+	SelectedGuns = Options;
+end});
+SilentAimTab:CreateSlider({Name="Fire Rate (sec)",Range={0.05,1.5},Increment=0.05,Suffix="sec",CurrentValue=0.05,Flag="FireRate",Callback=function(Value)
+	FireRate = Value;
+end});
+local Visual = Window:CreateTab("🖥️ Visual 🖥️", 4483362458);
+local Section = Visual:CreateSection("Utility");
+local Button = Visual:CreateButton({Name="Name esp",Callback=function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Lucasfin000/SpaceHub/main/UESP"))();
+end});
+local Button = Visual:CreateButton({Name="Tracer",Callback=function()
+	local workspace = game:GetService("Workspace");
+	local player = game:GetService("Players").LocalPlayer;
+	local camera = workspace.CurrentCamera;
+	local on = true;
+	local Box_Color = Color3.fromRGB(0, 255, 50);
+	local Box_Thickness = 1.4;
+	local Box_Transparency = 1;
+	local Tracers = true;
+	local Tracer_Color = Color3.fromRGB(0, 255, 50);
+	local Tracer_Thickness = 1.4;
+	local Tracer_Transparency = 1;
+	local Autothickness = false;
+	local Team_Check = false;
+	local red = Color3.fromRGB(227, 52, 52);
+	local green = Color3.fromRGB(88, 217, 24);
+	local function NewLine()
+		local line = Drawing.new("Line");
+		line.Visible = false;
+		line.From = Vector2.new(0, 0);
+		line.To = Vector2.new(1, 1);
+		line.Color = Box_Color;
+		line.Thickness = Box_Thickness;
+		line.Transparency = Box_Transparency;
+		return line;
+	end
+	for i, v in pairs(game.Players:GetChildren()) do
+		local lines = {line1=NewLine(),line2=NewLine(),line3=NewLine(),line4=NewLine(),line5=NewLine(),line6=NewLine(),line7=NewLine(),line8=NewLine(),line9=NewLine(),line10=NewLine(),line11=NewLine(),line12=NewLine(),Tracer=NewLine()};
+		lines.Tracer.Color = Tracer_Color;
+		lines.Tracer.Thickness = Tracer_Thickness;
+		lines.Tracer.Transparency = Tracer_Transparency;
+		local function ESP()
+			local connection;
+			connection = game:GetService("RunService").RenderStepped:Connect(function()
+				if (on and (v.Character ~= nil) and (v.Character:FindFirstChild("Humanoid") ~= nil) and (v.Character:FindFirstChild("HumanoidRootPart") ~= nil) and (v.Name ~= player.Name) and (v.Character.Humanoid.Health > 0) and (v.Character:FindFirstChild("Head") ~= nil)) then
+					local pos, vis = camera:WorldToViewportPoint(v.Character.HumanoidRootPart.Position);
+					if vis then
+						local Scale = v.Character.Head.Size.Y / 2;
+						local Size = Vector3.new(2, 3, 1.5) * Scale * 2;
+						local Top1 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, Size.Y, -Size.Z)).p);
+						local Top2 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, Size.Y, Size.Z)).p);
+						local Top3 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, Size.Z)).p);
+						local Top4 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, -Size.Z)).p);
+						local Bottom1 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, -Size.Y, -Size.Z)).p);
+						local Bottom2 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, -Size.Y, Size.Z)).p);
+						local Bottom3 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, -Size.Y, Size.Z)).p);
+						local Bottom4 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, -Size.Y, -Size.Z)).p);
+						lines.line1.From = Vector2.new(Top1.X, Top1.Y);
+						lines.line1.To = Vector2.new(Top2.X, Top2.Y);
+						lines.line2.From = Vector2.new(Top2.X, Top2.Y);
+						lines.line2.To = Vector2.new(Top3.X, Top3.Y);
+						lines.line3.From = Vector2.new(Top3.X, Top3.Y);
+						lines.line3.To = Vector2.new(Top4.X, Top4.Y);
+						lines.line4.From = Vector2.new(Top4.X, Top4.Y);
+						lines.line4.To = Vector2.new(Top1.X, Top1.Y);
+						lines.line5.From = Vector2.new(Bottom1.X, Bottom1.Y);
+						lines.line5.To = Vector2.new(Bottom2.X, Bottom2.Y);
+						lines.line6.From = Vector2.new(Bottom2.X, Bottom2.Y);
+						lines.line6.To = Vector2.new(Bottom3.X, Bottom3.Y);
+						lines.line7.From = Vector2.new(Bottom3.X, Bottom3.Y);
+						lines.line7.To = Vector2.new(Bottom4.X, Bottom4.Y);
+						lines.line8.From = Vector2.new(Bottom4.X, Bottom4.Y);
+						lines.line8.To = Vector2.new(Bottom1.X, Bottom1.Y);
+						lines.line9.From = Vector2.new(Bottom1.X, Bottom1.Y);
+						lines.line9.To = Vector2.new(Top1.X, Top1.Y);
+						lines.line10.From = Vector2.new(Bottom2.X, Bottom2.Y);
+						lines.line10.To = Vector2.new(Top2.X, Top2.Y);
+						lines.line11.From = Vector2.new(Bottom3.X, Bottom3.Y);
+						lines.line11.To = Vector2.new(Top3.X, Top3.Y);
+						lines.line12.From = Vector2.new(Bottom4.X, Bottom4.Y);
+						lines.line12.To = Vector2.new(Top4.X, Top4.Y);
+						if Tracers then
+							local trace = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(0, -Size.Y, 0)).p);
+							lines.Tracer.From = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y);
+							lines.Tracer.To = Vector2.new(trace.X, trace.Y);
+						end
+						if Team_Check then
+							if (v.TeamColor == player.TeamColor) then
+								for u, x in pairs(lines) do
+									x.Color = green;
+								end
+							else
+								for u, x in pairs(lines) do
+									x.Color = red;
+								end
+							end
+						end
+						if Autothickness then
+							local distance = (player.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude;
+							local value = math.clamp((1 / distance) * 100, 0.1, 4);
+							for u, x in pairs(lines) do
+								x.Thickness = value;
+							end
+						else
+							for u, x in pairs(lines) do
+								x.Thickness = Box_Thickness;
+							end
+						end
+						for u, x in pairs(lines) do
+							if (x ~= lines.Tracer) then
+								x.Visible = true;
+							end
+						end
+						if Tracers then
+							lines.Tracer.Visible = true;
+						end
+					else
+						for u, x in pairs(lines) do
+							x.Visible = false;
+						end
+					end
+				else
+					for u, x in pairs(lines) do
+						x.Visible = false;
+					end
+					if (game.Players:FindFirstChild(v.Name) == nil) then
+						connection:Disconnect();
+					end
+				end
+			end);
+		end
+		coroutine.wrap(ESP)();
+	end
+	game.Players.PlayerAdded:Connect(function(newplr)
+		local lines = {line1=NewLine(),line2=NewLine(),line3=NewLine(),line4=NewLine(),line5=NewLine(),line6=NewLine(),line7=NewLine(),line8=NewLine(),line9=NewLine(),line10=NewLine(),line11=NewLine(),line12=NewLine(),Tracer=NewLine()};
+		lines.Tracer.Color = Tracer_Color;
+		lines.Tracer.Thickness = Tracer_Thickness;
+		lines.Tracer.Transparency = Tracer_Transparency;
+		local function ESP()
+			local connection;
+			connection = game:GetService("RunService").RenderStepped:Connect(function()
+				if (on and (newplr.Character ~= nil) and (newplr.Character:FindFirstChild("Humanoid") ~= nil) and (newplr.Character:FindFirstChild("HumanoidRootPart") ~= nil) and (newplr.Name ~= player.Name) and (newplr.Character.Humanoid.Health > 0) and (newplr.Character:FindFirstChild("Head") ~= nil)) then
+					local pos, vis = camera:WorldToViewportPoint(newplr.Character.HumanoidRootPart.Position);
+					if vis then
+						local Scale = newplr.Character.Head.Size.Y / 2;
+						local Size = Vector3.new(2, 3, 1.5) * Scale * 2;
+						local Top1 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, Size.Y, -Size.Z)).p);
+						local Top2 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, Size.Y, Size.Z)).p);
+						local Top3 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, Size.Z)).p);
+						local Top4 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, -Size.Z)).p);
+						local Bottom1 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, -Size.Y, -Size.Z)).p);
+						local Bottom2 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, -Size.Y, Size.Z)).p);
+						local Bottom3 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, -Size.Y, Size.Z)).p);
+						local Bottom4 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, -Size.Y, -Size.Z)).p);
+						lines.line1.From = Vector2.new(Top1.X, Top1.Y);
+						lines.line1.To = Vector2.new(Top2.X, Top2.Y);
+						lines.line2.From = Vector2.new(Top2.X, Top2.Y);
+						lines.line2.To = Vector2.new(Top3.X, Top3.Y);
+						lines.line3.From = Vector2.new(Top3.X, Top3.Y);
+						lines.line3.To = Vector2.new(Top4.X, Top4.Y);
+						lines.line4.From = Vector2.new(Top4.X, Top4.Y);
+						lines.line4.To = Vector2.new(Top1.X, Top1.Y);
+						lines.line5.From = Vector2.new(Bottom1.X, Bottom1.Y);
+						lines.line5.To = Vector2.new(Bottom2.X, Bottom2.Y);
+						lines.line6.From = Vector2.new(Bottom2.X, Bottom2.Y);
+						lines.line6.To = Vector2.new(Bottom3.X, Bottom3.Y);
+						lines.line7.From = Vector2.new(Bottom3.X, Bottom3.Y);
+						lines.line7.To = Vector2.new(Bottom4.X, Bottom4.Y);
+						lines.line8.From = Vector2.new(Bottom4.X, Bottom4.Y);
+						lines.line8.To = Vector2.new(Bottom1.X, Bottom1.Y);
+						lines.line9.From = Vector2.new(Bottom1.X, Bottom1.Y);
+						lines.line9.To = Vector2.new(Top1.X, Top1.Y);
+						lines.line10.From = Vector2.new(Bottom2.X, Bottom2.Y);
+						lines.line10.To = Vector2.new(Top2.X, Top2.Y);
+						lines.line11.From = Vector2.new(Bottom3.X, Bottom3.Y);
+						lines.line11.To = Vector2.new(Top3.X, Top3.Y);
+						lines.line12.From = Vector2.new(Bottom4.X, Bottom4.Y);
+						lines.line12.To = Vector2.new(Top4.X, Top4.Y);
+						if Tracers then
+							local trace = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(0, -Size.Y, 0)).p);
+							lines.Tracer.From = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y);
+							lines.Tracer.To = Vector2.new(trace.X, trace.Y);
+						end
+						if Team_Check then
+							if (newplr.TeamColor == player.TeamColor) then
+								for u, x in pairs(lines) do
+									x.Color = green;
+								end
+							else
+								for u, x in pairs(lines) do
+									x.Color = red;
+								end
+							end
+						end
+						if Autothickness then
+							local distance = (player.Character.HumanoidRootPart.Position - newplr.Character.HumanoidRootPart.Position).magnitude;
+							local value = math.clamp((1 / distance) * 100, 0.1, 4);
+							for u, x in pairs(lines) do
+								x.Thickness = value;
+							end
+						else
+							for u, x in pairs(lines) do
+								x.Thickness = Box_Thickness;
+							end
+						end
+						for u, x in pairs(lines) do
+							if (x ~= lines.Tracer) then
+								x.Visible = true;
+							end
+						end
+						if Tracers then
+							lines.Tracer.Visible = true;
+						end
+					else
+						for u, x in pairs(lines) do
+							x.Visible = false;
+						end
+					end
+				else
+					for u, x in pairs(lines) do
+						x.Visible = false;
+					end
+					if (game.Players:FindFirstChild(newplr.Name) == nil) then
+						connection:Disconnect();
+					end
+				end
+			end);
+		end
+		coroutine.wrap(ESP)();
+	end);
+end});
+local Button = Visual:CreateButton({Name="Xray",Callback=function()
+	local workspace = game:GetService("Workspace");
+	local function setTransparencyForBlocks(transparency)
+		for _, object in ipairs(workspace:GetDescendants()) do
+			if object:IsA("Part") then
+				object.Transparency = transparency;
+			end
+		end
+	end
+	setTransparencyForBlocks(0.8);
+end});
+local Button = Visual:CreateButton({Name="Rtx",Callback=function()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/Biom49/Script/refs/heads/main/Rtx"))();
 end});
-TABLE_TableIndirection["v15%0"] = TABLE_TableIndirection["v12%0"]:CreateToggle({Name="Fps",CurrentValue=false,Flag="Toggle1",Callback=function(v109)
-	TABLE_TableIndirection["FlatIdent_5CA49%0"] = 0;
-	TABLE_TableIndirection["v110%0"] = nil;
-	TABLE_TableIndirection["v111%0"] = nil;
-	TABLE_TableIndirection["v115%0"] = nil;
-	TABLE_TableIndirection["v125%0"] = nil;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_5CA49%0"] == 2) then
-			TABLE_TableIndirection["v115%0"].BackgroundTransparency = 1;
-			TABLE_TableIndirection["v115%0"].TextColor3 = Color3.fromRGB(255, 255, 255);
-			TABLE_TableIndirection["v115%0"].Font = Enum.Font.GothamBold;
-			TABLE_TableIndirection["v115%0"].TextSize = 24;
-			TABLE_TableIndirection["FlatIdent_5CA49%0"] = 3;
-		end
-		if (TABLE_TableIndirection["FlatIdent_5CA49%0"] == 3) then
-			TABLE_TableIndirection["v115%0"].Parent = TABLE_TableIndirection["v111%0"];
-			TABLE_TableIndirection["v125%0"] = nil;
-			TABLE_TableIndirection["v125%0"] = function()
-				TABLE_TableIndirection["v336%0"] = tick();
-				TABLE_TableIndirection["v337%0"] = 0;
-				game:GetService("RunService").Heartbeat:Connect(function()
-					TABLE_TableIndirection["FlatIdent_7FAC9%0"] = 0;
-					while true do
-						if (0 == TABLE_TableIndirection["FlatIdent_7FAC9%0"]) then
-							TABLE_TableIndirection["v337%0"] = TABLE_TableIndirection["v337%0"] + 1;
-							if ((tick() - TABLE_TableIndirection["v336%0"]) >= 1) then
-								TABLE_TableIndirection["FlatIdent_455BF%0"] = 0;
-								TABLE_TableIndirection["v434%0"] = nil;
-								while true do
-									if (TABLE_TableIndirection["FlatIdent_455BF%0"] == 1) then
-										TABLE_TableIndirection["v336%0"] = tick();
-										TABLE_TableIndirection["v337%0"] = 0;
-										break;
-									end
-									if (TABLE_TableIndirection["FlatIdent_455BF%0"] == 0) then
-										TABLE_TableIndirection["v434%0"] = TABLE_TableIndirection["v337%0"];
-										TABLE_TableIndirection["v115%0"].Text = "FPS: " .. TABLE_TableIndirection["v434%0"];
-										TABLE_TableIndirection["FlatIdent_455BF%0"] = 1;
-									end
-								end
-							end
-							break;
-						end
-					end
-				end);
-			end;
-			if v109 then
-				TABLE_TableIndirection["v125%0"]();
-			elseif TABLE_TableIndirection["v115%0"] then
-				TABLE_TableIndirection["v115%0"]:Destroy();
+local Toggle = Visual:CreateToggle({Name="Fps",CurrentValue=false,Flag="Toggle1",Callback=function(Value)
+	local player = game.Players.LocalPlayer;
+	local screenGui = player:WaitForChild("PlayerGui"):FindFirstChild("ScreenGui") or Instance.new("ScreenGui");
+	screenGui.Name = "ScreenGui";
+	screenGui.Parent = player.PlayerGui;
+	local fpsLabel = screenGui:FindFirstChild("FpsLabel") or Instance.new("TextLabel");
+	fpsLabel.Name = "FpsLabel";
+	fpsLabel.Size = UDim2.new(0, 200, 0, 50);
+	fpsLabel.Position = UDim2.new(0, 10, 0, 10);
+	fpsLabel.BackgroundTransparency = 1;
+	fpsLabel.TextColor3 = Color3.fromRGB(255, 255, 255);
+	fpsLabel.Font = Enum.Font.GothamBold;
+	fpsLabel.TextSize = 24;
+	fpsLabel.Parent = screenGui;
+	local function updateFps()
+		local lastTime = tick();
+		local frameCount = 0;
+		game:GetService("RunService").Heartbeat:Connect(function()
+			frameCount = frameCount + 1;
+			if ((tick() - lastTime) >= 1) then
+				local fps = frameCount;
+				fpsLabel.Text = "FPS: " .. fps;
+				lastTime = tick();
+				frameCount = 0;
 			end
-			break;
-		end
-		if (TABLE_TableIndirection["FlatIdent_5CA49%0"] == 1) then
-			TABLE_TableIndirection["v115%0"] = TABLE_TableIndirection["v111%0"]:FindFirstChild("FpsLabel") or Instance.new("TextLabel");
-			TABLE_TableIndirection["v115%0"].Name = "FpsLabel";
-			TABLE_TableIndirection["v115%0"].Size = UDim2.new(0, 200, 0, 50);
-			TABLE_TableIndirection["v115%0"].Position = UDim2.new(0, 10, 0, 10);
-			TABLE_TableIndirection["FlatIdent_5CA49%0"] = 2;
-		end
-		if (TABLE_TableIndirection["FlatIdent_5CA49%0"] == 0) then
-			TABLE_TableIndirection["v110%0"] = game.Players.LocalPlayer;
-			TABLE_TableIndirection["v111%0"] = TABLE_TableIndirection["v110%0"]:WaitForChild("PlayerGui"):FindFirstChild("ScreenGui") or Instance.new("ScreenGui");
-			TABLE_TableIndirection["v111%0"].Name = "ScreenGui";
-			TABLE_TableIndirection["v111%0"].Parent = TABLE_TableIndirection["v110%0"].PlayerGui;
-			TABLE_TableIndirection["FlatIdent_5CA49%0"] = 1;
+		end);
+	end
+	if Value then
+		updateFps();
+	elseif fpsLabel then
+		fpsLabel:Destroy();
+	end
+end});
+local Slider = Visual:CreateSlider({Name="FOV",Range={0,120},Increment=1,Suffix="°",CurrentValue=70,Flag="FOVSlider",Callback=function(Value)
+	local player = game.Players.LocalPlayer;
+	if (player and player.Character) then
+		local camera = game.Workspace.CurrentCamera;
+		if camera then
+			camera.FieldOfView = Value;
 		end
 	end
 end});
-TABLE_TableIndirection["v16%0"] = TABLE_TableIndirection["v12%0"]:CreateSlider({Name="FOV",Range={0,120},Increment=1,Suffix="°",CurrentValue=70,Flag="FOVSlider",Callback=function(v126)
-	TABLE_TableIndirection["FlatIdent_703C8%0"] = 0;
-	TABLE_TableIndirection["v127%0"] = nil;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_703C8%0"] == 0) then
-			TABLE_TableIndirection["v127%0"] = game.Players.LocalPlayer;
-			if (TABLE_TableIndirection["v127%0"] and TABLE_TableIndirection["v127%0"].Character) then
-				TABLE_TableIndirection["FlatIdent_9147D%0"] = 0;
-				TABLE_TableIndirection["v388%0"] = nil;
-				while true do
-					if (TABLE_TableIndirection["FlatIdent_9147D%0"] == 0) then
-						TABLE_TableIndirection["v388%0"] = game.Workspace.CurrentCamera;
-						if TABLE_TableIndirection["v388%0"] then
-							TABLE_TableIndirection["v388%0"].FieldOfView = v126;
-						end
-						break;
-					end
-				end
-			end
-			break;
-		end
-	end
-end});
-TABLE_TableIndirection["v17%0"] = TABLE_TableIndirection["v1%0"]:CreateTab("🤖 Aimbot 🤖", 4483362458);
-TABLE_TableIndirection["v18%0"] = false;
-TABLE_TableIndirection["v19%0"] = false;
-TABLE_TableIndirection["v20%0"] = false;
-TABLE_TableIndirection["v21%0"] = false;
-TABLE_TableIndirection["v22%0"] = false;
-TABLE_TableIndirection["v23%0"] = nil;
-TABLE_TableIndirection["v24%0"] = "Torse";
-TABLE_TableIndirection["v25%0"] = game:GetService("UserInputService");
-TABLE_TableIndirection["v26%0"] = game:GetService("RunService");
-TABLE_TableIndirection["v27%0"] = game:GetService("Players");
-TABLE_TableIndirection["v28%0"] = game:GetService("Workspace");
-local function v29(v128)
-	for v338, v339 in pairs(TABLE_TableIndirection["v27%0"]:GetPlayers()) do
-		if (v339.Character == v128) then
-			return v339;
+local Aimbot = Window:CreateTab("🤖 Aimbot 🤖", 4483362458);
+local AimbotActived = false;
+local AimbotActived2 = false;
+local AimbotTeamCheck = false;
+local WallCheck = false;
+local DeadCheck = false;
+local closestPlayer = nil;
+local selectedPart = "Torse";
+local UserInputService = game:GetService("UserInputService");
+local RunService = game:GetService("RunService");
+local Players = game:GetService("Players");
+local Workspace = game:GetService("Workspace");
+local function getPlayerFromCharacter(character)
+	for _, player in pairs(Players:GetPlayers()) do
+		if (player.Character == character) then
+			return player;
 		end
 	end
 	return nil;
 end
-local function v30(v129, v130)
-	TABLE_TableIndirection["FlatIdent_6A83E%0"] = 0;
-	TABLE_TableIndirection["v131%0"] = nil;
-	TABLE_TableIndirection["v132%0"] = nil;
-	TABLE_TableIndirection["v133%0"] = nil;
-	TABLE_TableIndirection["v134%0"] = nil;
-	TABLE_TableIndirection["v135%0"] = nil;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_6A83E%0"] == 1) then
-			TABLE_TableIndirection["v133%0"] = (TABLE_TableIndirection["v132%0"] - TABLE_TableIndirection["v131%0"]).unit;
-			TABLE_TableIndirection["v134%0"] = Ray.new(TABLE_TableIndirection["v131%0"], TABLE_TableIndirection["v133%0"] * (TABLE_TableIndirection["v131%0"] - TABLE_TableIndirection["v132%0"]).Magnitude);
-			TABLE_TableIndirection["FlatIdent_6A83E%0"] = 2;
-		end
-		if (TABLE_TableIndirection["FlatIdent_6A83E%0"] == 2) then
-			TABLE_TableIndirection["v135%0"] = TABLE_TableIndirection["v28%0"]:FindPartOnRay(TABLE_TableIndirection["v134%0"], v129.Character);
-			return TABLE_TableIndirection["v135%0"] ~= nil;
-		end
-		if (TABLE_TableIndirection["FlatIdent_6A83E%0"] == 0) then
-			TABLE_TableIndirection["v131%0"] = v129.Character.HumanoidRootPart.Position;
-			TABLE_TableIndirection["v132%0"] = v130.Character.HumanoidRootPart.Position;
-			TABLE_TableIndirection["FlatIdent_6A83E%0"] = 1;
-		end
-	end
+local function isPlayerBehindWall(localPlayer, targetPlayer)
+	local localPosition = localPlayer.Character.HumanoidRootPart.Position;
+	local targetPosition = targetPlayer.Character.HumanoidRootPart.Position;
+	local direction = (targetPosition - localPosition).unit;
+	local ray = Ray.new(localPosition, direction * (localPosition - targetPosition).Magnitude);
+	local hit = Workspace:FindPartOnRay(ray, localPlayer.Character);
+	return hit ~= nil;
 end
-local function v31(v136)
-	return v136.Character and v136.Character:FindFirstChild("Humanoid") and (v136.Character.Humanoid.Health <= 0);
+local function isPlayerDead(player)
+	return player.Character and player.Character:FindFirstChild("Humanoid") and (player.Character.Humanoid.Health <= 0);
 end
-local function v32()
-	TABLE_TableIndirection["v137%0"] = TABLE_TableIndirection["v27%0"].LocalPlayer;
-	TABLE_TableIndirection["v138%0"] = math.huge;
-	TABLE_TableIndirection["v139%0"] = nil;
-	for v340, v341 in pairs(TABLE_TableIndirection["v27%0"]:GetPlayers()) do
-		if ((v341 ~= TABLE_TableIndirection["v137%0"]) and v341.Character and v341.Character:FindFirstChild("HumanoidRootPart")) then
-			TABLE_TableIndirection["FlatIdent_66799%0"] = 0;
-			TABLE_TableIndirection["v404%0"] = nil;
-			TABLE_TableIndirection["v405%0"] = nil;
-			TABLE_TableIndirection["v406%0"] = nil;
-			while true do
-				if (TABLE_TableIndirection["FlatIdent_66799%0"] == 0) then
-					if (TABLE_TableIndirection["v20%0"] and (v341.Team == TABLE_TableIndirection["v137%0"].Team)) then
-						continue;
-					end
-					if (TABLE_TableIndirection["v22%0"] and v31(v341)) then
-						continue;
-					end
-					TABLE_TableIndirection["FlatIdent_66799%0"] = 1;
-				end
-				if (TABLE_TableIndirection["FlatIdent_66799%0"] == 2) then
-					TABLE_TableIndirection["v405%0"] = TABLE_TableIndirection["v137%0"].Character.HumanoidRootPart.Position;
-					TABLE_TableIndirection["v406%0"] = (TABLE_TableIndirection["v404%0"] - TABLE_TableIndirection["v405%0"]).Magnitude;
-					TABLE_TableIndirection["FlatIdent_66799%0"] = 3;
-				end
-				if (TABLE_TableIndirection["FlatIdent_66799%0"] == 3) then
-					if (TABLE_TableIndirection["v406%0"] < TABLE_TableIndirection["v138%0"]) then
-						TABLE_TableIndirection["v138%0"] = TABLE_TableIndirection["v406%0"];
-						TABLE_TableIndirection["v139%0"] = v341;
-					end
-					break;
-				end
-				if (TABLE_TableIndirection["FlatIdent_66799%0"] == 1) then
-					TABLE_TableIndirection["v404%0"] = v341.Character.HumanoidRootPart.Position;
-					if ((TABLE_TableIndirection["v404%0"].X <= -1.253283977508545) and (TABLE_TableIndirection["v404%0"].Y <= -370.7654113769531) and (TABLE_TableIndirection["v404%0"].Z <= -5.06936502456665)) then
-						continue;
-					end
-					TABLE_TableIndirection["FlatIdent_66799%0"] = 2;
-				end
+local function getClosestPlayer()
+	local localPlayer = Players.LocalPlayer;
+	local closestDistance = math.huge;
+	local closestPlayer = nil;
+	for _, player in pairs(Players:GetPlayers()) do
+		if ((player ~= localPlayer) and player.Character and player.Character:FindFirstChild("HumanoidRootPart")) then
+			if (AimbotTeamCheck and (player.Team == localPlayer.Team)) then
+				continue;
+			end
+			if (DeadCheck and isPlayerDead(player)) then
+				continue;
+			end
+			local playerPosition = player.Character.HumanoidRootPart.Position;
+			if ((playerPosition.X <= -1.253283977508545) and (playerPosition.Y <= -370.7654113769531) and (playerPosition.Z <= -5.06936502456665)) then
+				continue;
+			end
+			local localPosition = localPlayer.Character.HumanoidRootPart.Position;
+			local distance = (playerPosition - localPosition).Magnitude;
+			if (distance < closestDistance) then
+				closestDistance = distance;
+				closestPlayer = player;
 			end
 		end
 	end
-	return TABLE_TableIndirection["v139%0"];
+	return closestPlayer;
 end
-local function v33(v140)
-	if (TABLE_TableIndirection["v24%0"] == "Torse") then
-		return v140.Character:FindFirstChild("UpperTorso") or v140.Character:FindFirstChild("LowerTorso");
-	elseif (TABLE_TableIndirection["v24%0"] == "Head") then
-		return v140.Character:FindFirstChild("Head");
+local function getTargetPart(player)
+	if (selectedPart == "Torse") then
+		return player.Character:FindFirstChild("UpperTorso") or player.Character:FindFirstChild("LowerTorso");
+	elseif (selectedPart == "Head") then
+		return player.Character:FindFirstChild("Head");
 	end
 	return nil;
 end
-local function v34(v141)
-	TABLE_TableIndirection["FlatIdent_35A31%0"] = 0;
-	TABLE_TableIndirection["v142%0"] = nil;
-	TABLE_TableIndirection["v143%0"] = nil;
-	TABLE_TableIndirection["v144%0"] = nil;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_35A31%0"] == 0) then
-			TABLE_TableIndirection["v142%0"] = TABLE_TableIndirection["v28%0"].CurrentCamera;
-			TABLE_TableIndirection["v143%0"] = (v141 - TABLE_TableIndirection["v142%0"].CFrame.Position).unit;
-			TABLE_TableIndirection["FlatIdent_35A31%0"] = 1;
-		end
-		if (TABLE_TableIndirection["FlatIdent_35A31%0"] == 1) then
-			TABLE_TableIndirection["v144%0"] = CFrame.new(TABLE_TableIndirection["v142%0"].CFrame.Position, TABLE_TableIndirection["v142%0"].CFrame.Position + TABLE_TableIndirection["v143%0"]);
-			TABLE_TableIndirection["v142%0"].CFrame = TABLE_TableIndirection["v142%0"].CFrame:Lerp(TABLE_TableIndirection["v144%0"], 0.2);
-			break;
-		end
-	end
+local function aimAtTarget(targetPosition)
+	local camera = Workspace.CurrentCamera;
+	local direction = (targetPosition - camera.CFrame.Position).unit;
+	local targetCFrame = CFrame.new(camera.CFrame.Position, camera.CFrame.Position + direction);
+	camera.CFrame = camera.CFrame:Lerp(targetCFrame, 0.2);
 end
-TABLE_TableIndirection["v25%0"].InputBegan:Connect(function(v146)
-	if (v146.UserInputType == Enum.UserInputType.MouseButton2) then
-		if TABLE_TableIndirection["v18%0"] then
-			TABLE_TableIndirection["FlatIdent_253F0%0"] = 0;
-			while true do
-				if (0 == TABLE_TableIndirection["FlatIdent_253F0%0"]) then
-					TABLE_TableIndirection["v19%0"] = true;
-					TABLE_TableIndirection["v23%0"] = v32();
-					break;
-				end
-			end
+UserInputService.InputBegan:Connect(function(input)
+	if (input.UserInputType == Enum.UserInputType.MouseButton2) then
+		if AimbotActived then
+			AimbotActived2 = true;
+			closestPlayer = getClosestPlayer();
 		end
 	end
 end);
-TABLE_TableIndirection["v25%0"].InputEnded:Connect(function(v147)
-	if (v147.UserInputType == Enum.UserInputType.MouseButton2) then
-		TABLE_TableIndirection["FlatIdent_64E40%0"] = 0;
-		while true do
-			if (TABLE_TableIndirection["FlatIdent_64E40%0"] == 0) then
-				TABLE_TableIndirection["v19%0"] = false;
-				TABLE_TableIndirection["v23%0"] = nil;
-				break;
-			end
-		end
+UserInputService.InputEnded:Connect(function(input)
+	if (input.UserInputType == Enum.UserInputType.MouseButton2) then
+		AimbotActived2 = false;
+		closestPlayer = nil;
 	end
 end);
-TABLE_TableIndirection["v26%0"].RenderStepped:Connect(function()
-	if (TABLE_TableIndirection["v18%0"] and TABLE_TableIndirection["v19%0"] and TABLE_TableIndirection["v23%0"]) then
-		if TABLE_TableIndirection["v23%0"].Character then
-			TABLE_TableIndirection["FlatIdent_8D1A5%0"] = 0;
-			TABLE_TableIndirection["v437%0"] = nil;
-			while true do
-				if (0 == TABLE_TableIndirection["FlatIdent_8D1A5%0"]) then
-					TABLE_TableIndirection["v437%0"] = v33(TABLE_TableIndirection["v23%0"]);
-					if TABLE_TableIndirection["v437%0"] then
-						TABLE_TableIndirection["FlatIdent_8B523%0"] = 0;
-						while true do
-							if (TABLE_TableIndirection["FlatIdent_8B523%0"] == 0) then
-								if (TABLE_TableIndirection["v21%0"] and v30(TABLE_TableIndirection["v27%0"].LocalPlayer, TABLE_TableIndirection["v23%0"])) then
-									return;
-								end
-								v34(TABLE_TableIndirection["v437%0"].Position);
-								break;
-							end
-						end
-					end
-					break;
-				end
-			end
-		end
-	end
-end);
-TABLE_TableIndirection["v15%1"] = TABLE_TableIndirection["v17%0"]:CreateToggle({Name="Aimbot",CurrentValue=false,Flag="Toggle1",Callback=function(v148)
-	TABLE_TableIndirection["v18%0"] = v148;
-end});
-TABLE_TableIndirection["v15%2"] = TABLE_TableIndirection["v17%0"]:CreateToggle({Name="Aim assist (do not activate it at the same time as the aimbot)",CurrentValue=false,Flag="Toggle1",Callback=function(v149)
-	TABLE_TableIndirection["FlatIdent_20FB0%0"] = 0;
-	TABLE_TableIndirection["v150%0"] = nil;
-	TABLE_TableIndirection["v151%0"] = nil;
-	TABLE_TableIndirection["v152%0"] = nil;
-	TABLE_TableIndirection["v153%0"] = nil;
-	TABLE_TableIndirection["v154%0"] = nil;
-	TABLE_TableIndirection["v155%0"] = nil;
-	TABLE_TableIndirection["v156%0"] = nil;
-	TABLE_TableIndirection["v157%0"] = nil;
-	TABLE_TableIndirection["v158%0"] = nil;
-	while true do
-		if (0 == TABLE_TableIndirection["FlatIdent_20FB0%0"]) then
-			TABLE_TableIndirection["v150%0"] = game:GetService("Players");
-			TABLE_TableIndirection["v151%0"] = game:GetService("UserInputService");
-			TABLE_TableIndirection["v152%0"] = game:GetService("RunService");
-			TABLE_TableIndirection["FlatIdent_20FB0%0"] = 1;
-		end
-		if (2 == TABLE_TableIndirection["FlatIdent_20FB0%0"]) then
-			TABLE_TableIndirection["v156%0"] = nil;
-			TABLE_TableIndirection["v156%0"] = function()
-				TABLE_TableIndirection["v342%0"] = nil;
-				TABLE_TableIndirection["v343%0"] = math.huge;
-				TABLE_TableIndirection["v344%0"] = TABLE_TableIndirection["v155%0"].Character;
-				TABLE_TableIndirection["v345%0"] = TABLE_TableIndirection["v344%0"] and TABLE_TableIndirection["v344%0"]:FindFirstChild("Head");
-				if not TABLE_TableIndirection["v345%0"] then
-					return nil;
-				end
-				for v389, v390 in pairs(TABLE_TableIndirection["v150%0"]:GetPlayers()) do
-					if ((v390 ~= TABLE_TableIndirection["v155%0"]) and (v390.Team ~= TABLE_TableIndirection["v155%0"].Team)) then
-						TABLE_TableIndirection["FlatIdent_5F1CB%0"] = 0;
-						TABLE_TableIndirection["v438%0"] = nil;
-						TABLE_TableIndirection["v439%0"] = nil;
-						while true do
-							if (TABLE_TableIndirection["FlatIdent_5F1CB%0"] == 0) then
-								TABLE_TableIndirection["v438%0"] = v390.Character;
-								TABLE_TableIndirection["v439%0"] = TABLE_TableIndirection["v438%0"] and TABLE_TableIndirection["v438%0"]:FindFirstChild("Head");
-								TABLE_TableIndirection["FlatIdent_5F1CB%0"] = 1;
-							end
-							if (TABLE_TableIndirection["FlatIdent_5F1CB%0"] == 1) then
-								if TABLE_TableIndirection["v439%0"] then
-									TABLE_TableIndirection["FlatIdent_4D434%0"] = 0;
-									TABLE_TableIndirection["v465%0"] = nil;
-									while true do
-										if (TABLE_TableIndirection["FlatIdent_4D434%0"] == 0) then
-											TABLE_TableIndirection["v465%0"] = (TABLE_TableIndirection["v439%0"].Position - TABLE_TableIndirection["v345%0"].Position).Magnitude;
-											if (TABLE_TableIndirection["v465%0"] < TABLE_TableIndirection["v343%0"]) then
-												TABLE_TableIndirection["FlatIdent_74B46%0"] = 0;
-												while true do
-													if (TABLE_TableIndirection["FlatIdent_74B46%0"] == 0) then
-														TABLE_TableIndirection["v342%0"] = v390;
-														TABLE_TableIndirection["v343%0"] = TABLE_TableIndirection["v465%0"];
-														break;
-													end
-												end
-											end
-											break;
-										end
-									end
-								end
-								break;
-							end
-						end
-					end
-				end
-				return TABLE_TableIndirection["v342%0"];
-			end;
-			TABLE_TableIndirection["v157%0"] = nil;
-			TABLE_TableIndirection["FlatIdent_20FB0%0"] = 3;
-		end
-		if (TABLE_TableIndirection["FlatIdent_20FB0%0"] == 3) then
-			TABLE_TableIndirection["v157%0"] = function(v346)
-				if (not v346 or not v346.Character) then
+RunService.RenderStepped:Connect(function()
+	if (AimbotActived and AimbotActived2 and closestPlayer) then
+		if closestPlayer.Character then
+			local targetPart = getTargetPart(closestPlayer);
+			if targetPart then
+				if (WallCheck and isPlayerBehindWall(Players.LocalPlayer, closestPlayer)) then
 					return;
 				end
-				TABLE_TableIndirection["v347%0"] = v346.Character:FindFirstChild("Head");
-				TABLE_TableIndirection["v348%0"] = workspace.CurrentCamera;
-				if TABLE_TableIndirection["v347%0"] then
-					TABLE_TableIndirection["FlatIdent_30B1F%0"] = 0;
-					TABLE_TableIndirection["v407%0"] = nil;
-					while true do
-						if (TABLE_TableIndirection["FlatIdent_30B1F%0"] == 0) then
-							TABLE_TableIndirection["v407%0"] = CFrame.new(TABLE_TableIndirection["v348%0"].CFrame.Position, TABLE_TableIndirection["v347%0"].Position);
-							TABLE_TableIndirection["v348%0"].CFrame = TABLE_TableIndirection["v348%0"].CFrame:Lerp(TABLE_TableIndirection["v407%0"], 0.1);
-							break;
-						end
-					end
-				end
-			end;
-			TABLE_TableIndirection["v158%0"] = false;
-			TABLE_TableIndirection["v151%0"].InputBegan:Connect(function(v349)
-				if (v349.UserInputType == Enum.UserInputType.MouseButton2) then
-					TABLE_TableIndirection["FlatIdent_8CB90%0"] = 0;
-					while true do
-						if (TABLE_TableIndirection["FlatIdent_8CB90%0"] == 0) then
-							TABLE_TableIndirection["v158%0"] = true;
-							if TABLE_TableIndirection["v153%0"] then
-								TABLE_TableIndirection["v154%0"] = TABLE_TableIndirection["v156%0"]();
-							end
-							break;
-						end
-					end
-				end
-			end);
-			TABLE_TableIndirection["FlatIdent_20FB0%0"] = 4;
-		end
-		if (1 == TABLE_TableIndirection["FlatIdent_20FB0%0"]) then
-			TABLE_TableIndirection["v153%0"] = v149;
-			TABLE_TableIndirection["v154%0"] = nil;
-			TABLE_TableIndirection["v155%0"] = TABLE_TableIndirection["v150%0"].LocalPlayer;
-			TABLE_TableIndirection["FlatIdent_20FB0%0"] = 2;
-		end
-		if (TABLE_TableIndirection["FlatIdent_20FB0%0"] == 4) then
-			TABLE_TableIndirection["v151%0"].InputEnded:Connect(function(v350)
-				if (v350.UserInputType == Enum.UserInputType.MouseButton2) then
-					TABLE_TableIndirection["FlatIdent_2BE02%0"] = 0;
-					while true do
-						if (TABLE_TableIndirection["FlatIdent_2BE02%0"] == 0) then
-							TABLE_TableIndirection["v158%0"] = false;
-							TABLE_TableIndirection["v154%0"] = nil;
-							break;
-						end
-					end
-				end
-			end);
-			TABLE_TableIndirection["v152%0"].RenderStepped:Connect(function()
-				if (TABLE_TableIndirection["v153%0"] and TABLE_TableIndirection["v158%0"] and TABLE_TableIndirection["v154%0"]) then
-					TABLE_TableIndirection["v157%0"](TABLE_TableIndirection["v154%0"]);
-				end
-			end);
-			break;
-		end
-	end
-end});
-TABLE_TableIndirection["v15%3"] = TABLE_TableIndirection["v17%0"]:CreateToggle({Name="Check Team",CurrentValue=false,Flag="Toggle2",Callback=function(v159)
-	TABLE_TableIndirection["v20%0"] = v159;
-end});
-TABLE_TableIndirection["v15%4"] = TABLE_TableIndirection["v17%0"]:CreateToggle({Name="Wall Check",CurrentValue=false,Flag="Toggle3",Callback=function(v160)
-	TABLE_TableIndirection["v21%0"] = v160;
-end});
-TABLE_TableIndirection["v15%5"] = TABLE_TableIndirection["v17%0"]:CreateToggle({Name="Dead Check",CurrentValue=false,Flag="Toggle4",Callback=function(v161)
-	TABLE_TableIndirection["v22%0"] = v161;
-end});
-TABLE_TableIndirection["v35%0"] = TABLE_TableIndirection["v17%0"]:CreateKeybind({Name="Activate Aimbot",CurrentKeybind="X",HoldToInteract=false,Flag="Keybind1",Callback=function(v162)
-	TABLE_TableIndirection["v18%0"] = v162;
-end});
-TABLE_TableIndirection["v36%0"] = TABLE_TableIndirection["v17%0"]:CreateDropdown({Name="Select Part",Options={"Torse","Head"},CurrentOption="Torse",MultipleOptions=false,Flag="Dropdown1",Callback=function(v163)
-	TABLE_TableIndirection["v24%0"] = v163[1];
-end});
-TABLE_TableIndirection["v37%0"] = false;
-TABLE_TableIndirection["v38%0"] = 300;
-TABLE_TableIndirection["v39%0"] = 0;
-TABLE_TableIndirection["v40%0"] = Color3.fromRGB(255, 255, 255);
-TABLE_TableIndirection["v41%0"] = 1;
-TABLE_TableIndirection["v4%1"] = game.Players.LocalPlayer;
-TABLE_TableIndirection["v42%0"] = TABLE_TableIndirection["v4%1"]:WaitForChild("PlayerGui");
-TABLE_TableIndirection["v43%0"] = Instance.new("ScreenGui");
-TABLE_TableIndirection["v43%0"].Name = "PovGui";
-TABLE_TableIndirection["v43%0"].Parent = TABLE_TableIndirection["v42%0"];
-TABLE_TableIndirection["v46%0"] = Instance.new("Frame");
-TABLE_TableIndirection["v46%0"].Name = "PovFrame";
-TABLE_TableIndirection["v46%0"].Size = UDim2.new(0, TABLE_TableIndirection["v38%0"], 0, TABLE_TableIndirection["v38%0"]);
-TABLE_TableIndirection["v46%0"].AnchorPoint = Vector2.new(0.5, 0.5);
-TABLE_TableIndirection["v46%0"].BackgroundTransparency = 1;
-TABLE_TableIndirection["v46%0"].Parent = TABLE_TableIndirection["v43%0"];
-TABLE_TableIndirection["v46%0"].Visible = TABLE_TableIndirection["v37%0"];
-TABLE_TableIndirection["v53%0"] = Instance.new("UICorner");
-TABLE_TableIndirection["v53%0"].CornerRadius = UDim.new(1, 0);
-TABLE_TableIndirection["v53%0"].Parent = TABLE_TableIndirection["v46%0"];
-TABLE_TableIndirection["v56%0"] = Instance.new("UIStroke");
-TABLE_TableIndirection["v56%0"].Thickness = TABLE_TableIndirection["v41%0"];
-TABLE_TableIndirection["v56%0"].Color = TABLE_TableIndirection["v40%0"];
-TABLE_TableIndirection["v56%0"].Transparency = TABLE_TableIndirection["v39%0"];
-TABLE_TableIndirection["v56%0"].Parent = TABLE_TableIndirection["v46%0"];
-game:GetService("RunService").RenderStepped:Connect(function()
-	if TABLE_TableIndirection["v37%0"] then
-		TABLE_TableIndirection["FlatIdent_4058F%0"] = 0;
-		TABLE_TableIndirection["v391%0"] = nil;
-		while true do
-			if (TABLE_TableIndirection["FlatIdent_4058F%0"] == 0) then
-				TABLE_TableIndirection["v391%0"] = TABLE_TableIndirection["v4%1"]:GetMouse();
-				TABLE_TableIndirection["v46%0"].Position = UDim2.new(0, TABLE_TableIndirection["v391%0"].X, 0, TABLE_TableIndirection["v391%0"].Y);
-				break;
+				aimAtTarget(targetPart.Position);
 			end
 		end
 	end
 end);
-TABLE_TableIndirection["v61%0"] = TABLE_TableIndirection["v17%0"]:CreateSection("Pov");
-TABLE_TableIndirection["v15%6"] = TABLE_TableIndirection["v17%0"]:CreateToggle({Name="Pov",CurrentValue=false,Flag="Toggle1",Callback=function(v165)
-	TABLE_TableIndirection["FlatIdent_494F6%0"] = 0;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_494F6%0"] == 0) then
-			TABLE_TableIndirection["v37%0"] = v165;
-			TABLE_TableIndirection["v46%0"].Visible = TABLE_TableIndirection["v37%0"];
-			break;
+local Toggle = Aimbot:CreateToggle({Name="Aimbot",CurrentValue=false,Flag="Toggle1",Callback=function(Value)
+	AimbotActived = Value;
+end});
+local Toggle = Aimbot:CreateToggle({Name="Aim assist (do not activate it at the same time as the aimbot)",CurrentValue=false,Flag="Toggle1",Callback=function(Value)
+	local Players = game:GetService("Players");
+	local UserInputService = game:GetService("UserInputService");
+	local RunService = game:GetService("RunService");
+	local SilentAim = Value;
+	local targetPlayer = nil;
+	local localPlayer = Players.LocalPlayer;
+	local function getClosestPlayer()
+		local closestPlayer = nil;
+		local shortestDistance = math.huge;
+		local character = localPlayer.Character;
+		local head = character and character:FindFirstChild("Head");
+		if not head then
+			return nil;
+		end
+		for _, player in pairs(Players:GetPlayers()) do
+			if ((player ~= localPlayer) and (player.Team ~= localPlayer.Team)) then
+				local playerCharacter = player.Character;
+				local playerHead = playerCharacter and playerCharacter:FindFirstChild("Head");
+				if playerHead then
+					local distance = (playerHead.Position - head.Position).Magnitude;
+					if (distance < shortestDistance) then
+						closestPlayer = player;
+						shortestDistance = distance;
+					end
+				end
+			end
+		end
+		return closestPlayer;
+	end
+	local function aimAtPlayer(player)
+		if (not player or not player.Character) then
+			return;
+		end
+		local targetHead = player.Character:FindFirstChild("Head");
+		local camera = workspace.CurrentCamera;
+		if targetHead then
+			local targetCFrame = CFrame.new(camera.CFrame.Position, targetHead.Position);
+			camera.CFrame = camera.CFrame:Lerp(targetCFrame, 0.1);
 		end
 	end
-end});
-TABLE_TableIndirection["v62%0"] = TABLE_TableIndirection["v17%0"]:CreateSlider({Name="Pov size",Range={0,500},Increment=10,Suffix="px",CurrentValue=TABLE_TableIndirection["v38%0"],Flag="Slider1",Callback=function(v167)
-	TABLE_TableIndirection["FlatIdent_17AE1%0"] = 0;
-	while true do
-		if (0 == TABLE_TableIndirection["FlatIdent_17AE1%0"]) then
-			TABLE_TableIndirection["v38%0"] = v167;
-			TABLE_TableIndirection["v46%0"].Size = UDim2.new(0, TABLE_TableIndirection["v38%0"], 0, TABLE_TableIndirection["v38%0"]);
-			break;
+	local rightMouseDown = false;
+	UserInputService.InputBegan:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseButton2) then
+			rightMouseDown = true;
+			if SilentAim then
+				targetPlayer = getClosestPlayer();
+			end
 		end
-	end
-end});
-TABLE_TableIndirection["v63%0"] = TABLE_TableIndirection["v17%0"]:CreateSlider({Name="Pov Border",Range={0,50},Increment=1,Suffix="px",CurrentValue=TABLE_TableIndirection["v41%0"],Flag="Slider3",Callback=function(v169)
-	TABLE_TableIndirection["FlatIdent_581C8%0"] = 0;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_581C8%0"] == 0) then
-			TABLE_TableIndirection["v41%0"] = v169;
-			TABLE_TableIndirection["v56%0"].Thickness = TABLE_TableIndirection["v41%0"];
-			break;
+	end);
+	UserInputService.InputEnded:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseButton2) then
+			rightMouseDown = false;
+			targetPlayer = nil;
 		end
-	end
-end});
-TABLE_TableIndirection["v64%0"] = TABLE_TableIndirection["v17%0"]:CreateSlider({Name="Pov Transparency",Range={0,1},Increment=0.1,Suffix="Transparency",CurrentValue=TABLE_TableIndirection["v39%0"],Flag="Slider2",Callback=function(v171)
-	TABLE_TableIndirection["FlatIdent_1B881%0"] = 0;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_1B881%0"] == 0) then
-			TABLE_TableIndirection["v39%0"] = v171;
-			TABLE_TableIndirection["v56%0"].Transparency = TABLE_TableIndirection["v39%0"];
-			break;
+	end);
+	RunService.RenderStepped:Connect(function()
+		if (SilentAim and rightMouseDown and targetPlayer) then
+			aimAtPlayer(targetPlayer);
 		end
+	end);
+end});
+local Toggle = Aimbot:CreateToggle({Name="Check Team",CurrentValue=false,Flag="Toggle2",Callback=function(Value)
+	AimbotTeamCheck = Value;
+end});
+local Toggle = Aimbot:CreateToggle({Name="Wall Check",CurrentValue=false,Flag="Toggle3",Callback=function(Value)
+	WallCheck = Value;
+end});
+local Toggle = Aimbot:CreateToggle({Name="Dead Check",CurrentValue=false,Flag="Toggle4",Callback=function(Value)
+	DeadCheck = Value;
+end});
+local Keybind = Aimbot:CreateKeybind({Name="Activate Aimbot",CurrentKeybind="X",HoldToInteract=false,Flag="Keybind1",Callback=function(Keybind)
+	AimbotActived = Keybind;
+end});
+local Dropdown = Aimbot:CreateDropdown({Name="Select Part",Options={"Torse","Head"},CurrentOption="Torse",MultipleOptions=false,Flag="Dropdown1",Callback=function(Options)
+	selectedPart = Options[1];
+end});
+local PovActive = false;
+local PovSize = 300;
+local PovTransparency = 0;
+local PovColor = Color3.fromRGB(255, 255, 255);
+local PovBorderSize = 1;
+local player = game.Players.LocalPlayer;
+local playerGui = player:WaitForChild("PlayerGui");
+local screenGui = Instance.new("ScreenGui");
+screenGui.Name = "PovGui";
+screenGui.Parent = playerGui;
+local povFrame = Instance.new("Frame");
+povFrame.Name = "PovFrame";
+povFrame.Size = UDim2.new(0, PovSize, 0, PovSize);
+povFrame.AnchorPoint = Vector2.new(0.5, 0.5);
+povFrame.BackgroundTransparency = 1;
+povFrame.Parent = screenGui;
+povFrame.Visible = PovActive;
+local uiCorner = Instance.new("UICorner");
+uiCorner.CornerRadius = UDim.new(1, 0);
+uiCorner.Parent = povFrame;
+local uiStroke = Instance.new("UIStroke");
+uiStroke.Thickness = PovBorderSize;
+uiStroke.Color = PovColor;
+uiStroke.Transparency = PovTransparency;
+uiStroke.Parent = povFrame;
+game:GetService("RunService").RenderStepped:Connect(function()
+	if PovActive then
+		local mouse = player:GetMouse();
+		povFrame.Position = UDim2.new(0, mouse.X, 0, mouse.Y);
 	end
+end);
+local Setting = Aimbot:CreateSection("Pov");
+local Toggle = Aimbot:CreateToggle({Name="Pov",CurrentValue=false,Flag="Toggle1",Callback=function(Value)
+	PovActive = Value;
+	povFrame.Visible = PovActive;
 end});
-TABLE_TableIndirection["v65%0"] = TABLE_TableIndirection["v17%0"]:CreateColorPicker({Name="Pov color",Color=TABLE_TableIndirection["v40%0"],Flag="ColorPicker1",Callback=function(v173)
-	TABLE_TableIndirection["v40%0"] = v173;
-	TABLE_TableIndirection["v56%0"].Color = TABLE_TableIndirection["v40%0"];
+local SliderSize = Aimbot:CreateSlider({Name="Pov size",Range={0,500},Increment=10,Suffix="px",CurrentValue=PovSize,Flag="Slider1",Callback=function(Value)
+	PovSize = Value;
+	povFrame.Size = UDim2.new(0, PovSize, 0, PovSize);
 end});
-TABLE_TableIndirection["v66%0"] = TABLE_TableIndirection["v17%0"]:CreateToggle({Name="Multicolor",CurrentValue=false,Flag="Toggle2",Callback=function(v175)
+local SliderBorder = Aimbot:CreateSlider({Name="Pov Border",Range={0,50},Increment=1,Suffix="px",CurrentValue=PovBorderSize,Flag="Slider3",Callback=function(Value)
+	PovBorderSize = Value;
+	uiStroke.Thickness = PovBorderSize;
+end});
+local SliderTransparency = Aimbot:CreateSlider({Name="Pov Transparency",Range={0,1},Increment=0.1,Suffix="Transparency",CurrentValue=PovTransparency,Flag="Slider2",Callback=function(Value)
+	PovTransparency = Value;
+	uiStroke.Transparency = PovTransparency;
+end});
+local ColorPicker = Aimbot:CreateColorPicker({Name="Pov color",Color=PovColor,Flag="ColorPicker1",Callback=function(Value)
+	PovColor = Value;
+	uiStroke.Color = PovColor;
+end});
+local ToggleMultiColor = Aimbot:CreateToggle({Name="Multicolor",CurrentValue=false,Flag="Toggle2",Callback=function(Value)
 	while wait() do
-		if v175 then
-			TABLE_TableIndirection["v409%0"] = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255));
-			TABLE_TableIndirection["v56%0"].Color = TABLE_TableIndirection["v409%0"];
+		if Value then
+			local randomColor = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255));
+			uiStroke.Color = randomColor;
 			wait(0.1);
 		end
 	end
 end});
-TABLE_TableIndirection["v67%0"] = TABLE_TableIndirection["v1%0"]:CreateTab("Others", "rewind");
-TABLE_TableIndirection["v13%1"] = TABLE_TableIndirection["v67%0"]:CreateSection("Utility");
-TABLE_TableIndirection["v68%0"] = game:GetService("ReplicatedStorage");
-TABLE_TableIndirection["v27%1"] = game:GetService("Players");
-TABLE_TableIndirection["v69%0"] = game:GetService("StarterGui");
-TABLE_TableIndirection["v4%2"] = TABLE_TableIndirection["v27%1"].LocalPlayer;
-local function v70(v176, v177, v178)
-	TABLE_TableIndirection["v69%0"]:SetCore("SendNotification", {Title=v176,Text=v177,Duration=(v178 or 3)});
+local Others = Window:CreateTab("Others", "rewind");
+local Section = Others:CreateSection("Utility");
+local ReplicatedStorage = game:GetService("ReplicatedStorage");
+local Players = game:GetService("Players");
+local StarterGui = game:GetService("StarterGui");
+local player = Players.LocalPlayer;
+local function notify(title, text, duration)
+	StarterGui:SetCore("SendNotification", {Title=title,Text=text,Duration=(duration or 3)});
 end
-TABLE_TableIndirection["v14%4"] = TABLE_TableIndirection["v67%0"]:CreateButton({Name="Spawn Boat/Plane (Must take the boat in his hand before making it appear)",Callback=function()
-	TABLE_TableIndirection["FlatIdent_25A9F%0"] = 0;
-	TABLE_TableIndirection["v179%0"] = nil;
-	TABLE_TableIndirection["v180%0"] = nil;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_25A9F%0"] == 0) then
-			TABLE_TableIndirection["v179%0"], TABLE_TableIndirection["v180%0"] = pcall(function()
-				TABLE_TableIndirection["FlatIdent_4BE81%0"] = 0;
-				TABLE_TableIndirection["v351%0"] = nil;
-				TABLE_TableIndirection["v352%0"] = nil;
-				TABLE_TableIndirection["v353%0"] = nil;
-				TABLE_TableIndirection["v354%0"] = nil;
-				TABLE_TableIndirection["v355%0"] = nil;
-				TABLE_TableIndirection["v356%0"] = nil;
-				while true do
-					if (TABLE_TableIndirection["FlatIdent_4BE81%0"] == 3) then
-						TABLE_TableIndirection["v356%0"] = {[1]=TABLE_TableIndirection["v355%0"]};
-						TABLE_TableIndirection["v352%0"].Boat.Activate:FireServer(unpack(TABLE_TableIndirection["v356%0"]));
-						break;
-					end
-					if (TABLE_TableIndirection["FlatIdent_4BE81%0"] == 0) then
-						TABLE_TableIndirection["v351%0"] = game:GetService("Players").LocalPlayer;
-						TABLE_TableIndirection["v352%0"] = TABLE_TableIndirection["v351%0"].Character;
-						TABLE_TableIndirection["FlatIdent_4BE81%0"] = 1;
-					end
-					if (TABLE_TableIndirection["FlatIdent_4BE81%0"] == 2) then
-						TABLE_TableIndirection["v355%0"] = TABLE_TableIndirection["v353%0"] + TABLE_TableIndirection["v354%0"];
-						if not TABLE_TableIndirection["v352%0"]:FindFirstChild("Boat") then
-							TABLE_TableIndirection["FlatIdent_C79F%0"] = 0;
-							while true do
-								if (0 == TABLE_TableIndirection["FlatIdent_C79F%0"]) then
-									v70("Error", "You don't have a boat in your inventory", 3);
-									return;
-								end
-							end
-						end
-						TABLE_TableIndirection["FlatIdent_4BE81%0"] = 3;
-					end
-					if (TABLE_TableIndirection["FlatIdent_4BE81%0"] == 1) then
-						TABLE_TableIndirection["v353%0"] = TABLE_TableIndirection["v352%0"].PrimaryPart.Position;
-						TABLE_TableIndirection["v354%0"] = Vector3.new(5, 0, 5);
-						TABLE_TableIndirection["FlatIdent_4BE81%0"] = 2;
-					end
-				end
-			end);
-			if not TABLE_TableIndirection["v179%0"] then
-				v70("Error", "An error occurred: " .. TABLE_TableIndirection["v180%0"], 3);
-			end
-			break;
+local Button = Others:CreateButton({Name="Spawn Boat/Plane (Must take the boat in his hand before making it appear)",Callback=function()
+	local success, err = pcall(function()
+		local player = game:GetService("Players").LocalPlayer;
+		local character = player.Character;
+		local playerPosition = character.PrimaryPart.Position;
+		local spawnOffset = Vector3.new(5, 0, 5);
+		local spawnPosition = playerPosition + spawnOffset;
+		if not character:FindFirstChild("Boat") then
+			notify("Error", "You don't have a boat in your inventory", 3);
+			return;
 		end
+		local args = {[1]=spawnPosition};
+		character.Boat.Activate:FireServer(unpack(args));
+	end);
+	if not success then
+		notify("Error", "An error occurred: " .. err, 3);
 	end
 end});
-TABLE_TableIndirection["v71%0"] = game:GetService("TeleportService");
-TABLE_TableIndirection["v27%2"] = game:GetService("Players");
-TABLE_TableIndirection["v4%3"] = TABLE_TableIndirection["v27%2"].LocalPlayer;
-TABLE_TableIndirection["v72%0"] = game.PlaceId;
-TABLE_TableIndirection["v14%5"] = TABLE_TableIndirection["v67%0"]:CreateButton({Name="ServerHop",Callback=function()
-	TABLE_TableIndirection["v71%0"]:Teleport(TABLE_TableIndirection["v72%0"], TABLE_TableIndirection["v4%3"]);
+local TeleportService = game:GetService("TeleportService");
+local Players = game:GetService("Players");
+local player = Players.LocalPlayer;
+local placeId = game.PlaceId;
+local Button = Others:CreateButton({Name="ServerHop",Callback=function()
+	TeleportService:Teleport(placeId, player);
 end});
-TABLE_TableIndirection["v14%6"] = TABLE_TableIndirection["v67%0"]:CreateButton({Name="SuperRingV3(GravityGun/Telekinisi)",Callback=function()
-	TABLE_TableIndirection["v181%0"] = game:GetService("Players");
-	TABLE_TableIndirection["v182%0"] = game:GetService("RunService");
-	TABLE_TableIndirection["v183%0"] = game:GetService("UserInputService");
-	TABLE_TableIndirection["v184%0"] = game:GetService("SoundService");
-	TABLE_TableIndirection["v185%0"] = game:GetService("StarterGui");
-	TABLE_TableIndirection["v186%0"] = game:GetService("TextChatService");
-	TABLE_TableIndirection["v187%0"] = TABLE_TableIndirection["v181%0"].LocalPlayer;
-	local function v188(v357)
-		TABLE_TableIndirection["FlatIdent_47A85%0"] = 0;
-		TABLE_TableIndirection["v358%0"] = nil;
-		while true do
-			if (2 == TABLE_TableIndirection["FlatIdent_47A85%0"]) then
-				TABLE_TableIndirection["v358%0"].Ended:Connect(function()
-					TABLE_TableIndirection["v358%0"]:Destroy();
-				end);
-				break;
-			end
-			if (TABLE_TableIndirection["FlatIdent_47A85%0"] == 1) then
-				TABLE_TableIndirection["v358%0"].Parent = TABLE_TableIndirection["v184%0"];
-				TABLE_TableIndirection["v358%0"]:Play();
-				TABLE_TableIndirection["FlatIdent_47A85%0"] = 2;
-			end
-			if (TABLE_TableIndirection["FlatIdent_47A85%0"] == 0) then
-				TABLE_TableIndirection["v358%0"] = Instance.new("Sound");
-				TABLE_TableIndirection["v358%0"].SoundId = "rbxassetid://" .. v357;
-				TABLE_TableIndirection["FlatIdent_47A85%0"] = 1;
-			end
-		end
+local Button = Others:CreateButton({Name="SuperRingV3(GravityGun/Telekinisi)",Callback=function()
+	local Players = game:GetService("Players");
+	local RunService = game:GetService("RunService");
+	local UserInputService = game:GetService("UserInputService");
+	local SoundService = game:GetService("SoundService");
+	local StarterGui = game:GetService("StarterGui");
+	local TextChatService = game:GetService("TextChatService");
+	local LocalPlayer = Players.LocalPlayer;
+	local function playSound(soundId)
+		local sound = Instance.new("Sound");
+		sound.SoundId = "rbxassetid://" .. soundId;
+		sound.Parent = SoundService;
+		sound:Play();
+		sound.Ended:Connect(function()
+			sound:Destroy();
+		end);
 	end
-	v188("2865227271");
-	TABLE_TableIndirection["v189%0"] = Instance.new("ScreenGui");
-	TABLE_TableIndirection["v189%0"].Name = "SuperRingPartsGUI";
-	TABLE_TableIndirection["v189%0"].ResetOnSpawn = false;
-	TABLE_TableIndirection["v189%0"].Parent = TABLE_TableIndirection["v187%0"]:WaitForChild("PlayerGui");
-	TABLE_TableIndirection["v193%0"] = Instance.new("Frame");
-	TABLE_TableIndirection["v193%0"].Size = UDim2.new(0, 220, 0, 190);
-	TABLE_TableIndirection["v193%0"].Position = UDim2.new(0.5, -110, 0.5, -95);
-	TABLE_TableIndirection["v193%0"].BackgroundColor3 = Color3.fromRGB(205, 170, 125);
-	TABLE_TableIndirection["v193%0"].BorderSizePixel = 0;
-	TABLE_TableIndirection["v193%0"].Parent = TABLE_TableIndirection["v189%0"];
-	TABLE_TableIndirection["v199%0"] = Instance.new("UICorner");
-	TABLE_TableIndirection["v199%0"].CornerRadius = UDim.new(0, 20);
-	TABLE_TableIndirection["v199%0"].Parent = TABLE_TableIndirection["v193%0"];
-	TABLE_TableIndirection["v202%0"] = Instance.new("TextLabel");
-	TABLE_TableIndirection["v202%0"].Size = UDim2.new(1, 0, 0, 40);
-	TABLE_TableIndirection["v202%0"].Position = UDim2.new(0, 0, 0, 0);
-	TABLE_TableIndirection["v202%0"].Text = "Super Ring Parts v3";
-	TABLE_TableIndirection["v202%0"].TextColor3 = Color3.fromRGB(101, 67, 33);
-	TABLE_TableIndirection["v202%0"].BackgroundColor3 = Color3.fromRGB(222, 184, 135);
-	TABLE_TableIndirection["v202%0"].Font = Enum.Font.Fondamento;
-	TABLE_TableIndirection["v202%0"].TextSize = 22;
-	TABLE_TableIndirection["v202%0"].Parent = TABLE_TableIndirection["v193%0"];
-	TABLE_TableIndirection["v212%0"] = Instance.new("UICorner");
-	TABLE_TableIndirection["v212%0"].CornerRadius = UDim.new(0, 20);
-	TABLE_TableIndirection["v212%0"].Parent = TABLE_TableIndirection["v202%0"];
-	TABLE_TableIndirection["v215%0"] = Instance.new("TextButton");
-	TABLE_TableIndirection["v215%0"].Size = UDim2.new(0.8, 0, 0, 35);
-	TABLE_TableIndirection["v215%0"].Position = UDim2.new(0.1, 0, 0.3, 0);
-	TABLE_TableIndirection["v215%0"].Text = "Ring Parts Off";
-	TABLE_TableIndirection["v215%0"].BackgroundColor3 = Color3.fromRGB(160, 82, 45);
-	TABLE_TableIndirection["v215%0"].TextColor3 = Color3.fromRGB(255, 248, 220);
-	TABLE_TableIndirection["v215%0"].Font = Enum.Font.Fondamento;
-	TABLE_TableIndirection["v215%0"].TextSize = 18;
-	TABLE_TableIndirection["v215%0"].Parent = TABLE_TableIndirection["v193%0"];
-	TABLE_TableIndirection["v224%0"] = Instance.new("UICorner");
-	TABLE_TableIndirection["v224%0"].CornerRadius = UDim.new(0, 10);
-	TABLE_TableIndirection["v224%0"].Parent = TABLE_TableIndirection["v215%0"];
-	TABLE_TableIndirection["v227%0"] = Instance.new("TextButton");
-	TABLE_TableIndirection["v227%0"].Size = UDim2.new(0.2, 0, 0, 35);
-	TABLE_TableIndirection["v227%0"].Position = UDim2.new(0.1, 0, 0.6, 0);
-	TABLE_TableIndirection["v227%0"].Text = "<";
-	TABLE_TableIndirection["v227%0"].BackgroundColor3 = Color3.fromRGB(139, 69, 19);
-	TABLE_TableIndirection["v227%0"].TextColor3 = Color3.fromRGB(255, 248, 220);
-	TABLE_TableIndirection["v227%0"].Font = Enum.Font.Fondamento;
-	TABLE_TableIndirection["v227%0"].TextSize = 18;
-	TABLE_TableIndirection["v227%0"].Parent = TABLE_TableIndirection["v193%0"];
-	TABLE_TableIndirection["v236%0"] = Instance.new("UICorner");
-	TABLE_TableIndirection["v236%0"].CornerRadius = UDim.new(0, 10);
-	TABLE_TableIndirection["v236%0"].Parent = TABLE_TableIndirection["v227%0"];
-	TABLE_TableIndirection["v239%0"] = Instance.new("TextButton");
-	TABLE_TableIndirection["v239%0"].Size = UDim2.new(0.2, 0, 0, 35);
-	TABLE_TableIndirection["v239%0"].Position = UDim2.new(0.7, 0, 0.6, 0);
-	TABLE_TableIndirection["v239%0"].Text = ">";
-	TABLE_TableIndirection["v239%0"].BackgroundColor3 = Color3.fromRGB(139, 69, 19);
-	TABLE_TableIndirection["v239%0"].TextColor3 = Color3.fromRGB(255, 248, 220);
-	TABLE_TableIndirection["v239%0"].Font = Enum.Font.Fondamento;
-	TABLE_TableIndirection["v239%0"].TextSize = 18;
-	TABLE_TableIndirection["v239%0"].Parent = TABLE_TableIndirection["v193%0"];
-	TABLE_TableIndirection["v248%0"] = Instance.new("UICorner");
-	TABLE_TableIndirection["v248%0"].CornerRadius = UDim.new(0, 10);
-	TABLE_TableIndirection["v248%0"].Parent = TABLE_TableIndirection["v239%0"];
-	TABLE_TableIndirection["v251%0"] = Instance.new("TextLabel");
-	TABLE_TableIndirection["v251%0"].Size = UDim2.new(0.4, 0, 0, 35);
-	TABLE_TableIndirection["v251%0"].Position = UDim2.new(0.3, 0, 0.6, 0);
-	TABLE_TableIndirection["v251%0"].Text = "Radius: 50";
-	TABLE_TableIndirection["v251%0"].BackgroundColor3 = Color3.fromRGB(210, 180, 140);
-	TABLE_TableIndirection["v251%0"].TextColor3 = Color3.fromRGB(101, 67, 33);
-	TABLE_TableIndirection["v251%0"].Font = Enum.Font.Fondamento;
-	TABLE_TableIndirection["v251%0"].TextSize = 18;
-	TABLE_TableIndirection["v251%0"].Parent = TABLE_TableIndirection["v193%0"];
-	TABLE_TableIndirection["v260%0"] = Instance.new("UICorner");
-	TABLE_TableIndirection["v260%0"].CornerRadius = UDim.new(0, 10);
-	TABLE_TableIndirection["v260%0"].Parent = TABLE_TableIndirection["v251%0"];
-	TABLE_TableIndirection["v263%0"] = Instance.new("TextLabel");
-	TABLE_TableIndirection["v263%0"].Size = UDim2.new(1, 0, 0, 20);
-	TABLE_TableIndirection["v263%0"].Position = UDim2.new(0, 0, 1, -20);
-	TABLE_TableIndirection["v263%0"].Text = "Super Ring [V3] - Cracked By Projeto LKB";
-	TABLE_TableIndirection["v263%0"].TextColor3 = Color3.fromRGB(101, 67, 33);
-	TABLE_TableIndirection["v263%0"].BackgroundTransparency = 1;
-	TABLE_TableIndirection["v263%0"].Font = Enum.Font.Fondamento;
-	TABLE_TableIndirection["v263%0"].TextSize = 14;
-	TABLE_TableIndirection["v263%0"].Parent = TABLE_TableIndirection["v193%0"];
-	TABLE_TableIndirection["v272%0"] = Instance.new("TextButton");
-	TABLE_TableIndirection["v272%0"].Size = UDim2.new(0, 30, 0, 30);
-	TABLE_TableIndirection["v272%0"].Position = UDim2.new(1, -35, 0, 5);
-	TABLE_TableIndirection["v272%0"].Text = "-";
-	TABLE_TableIndirection["v272%0"].BackgroundColor3 = Color3.fromRGB(139, 69, 19);
-	TABLE_TableIndirection["v272%0"].TextColor3 = Color3.fromRGB(255, 248, 220);
-	TABLE_TableIndirection["v272%0"].Font = Enum.Font.Fondamento;
-	TABLE_TableIndirection["v272%0"].TextSize = 18;
-	TABLE_TableIndirection["v272%0"].Parent = TABLE_TableIndirection["v193%0"];
-	TABLE_TableIndirection["v281%0"] = Instance.new("UICorner");
-	TABLE_TableIndirection["v281%0"].CornerRadius = UDim.new(0, 15);
-	TABLE_TableIndirection["v281%0"].Parent = TABLE_TableIndirection["v272%0"];
-	TABLE_TableIndirection["v284%0"] = false;
-	TABLE_TableIndirection["v272%0"].MouseButton1Click:Connect(function()
-		TABLE_TableIndirection["v284%0"] = not TABLE_TableIndirection["v284%0"];
-		if TABLE_TableIndirection["v284%0"] then
-			TABLE_TableIndirection["FlatIdent_634AF%0"] = 0;
-			while true do
-				if (0 == TABLE_TableIndirection["FlatIdent_634AF%0"]) then
-					TABLE_TableIndirection["v193%0"]:TweenSize(UDim2.new(0, 220, 0, 40), "Out", "Quad", 0.3, true);
-					TABLE_TableIndirection["v272%0"].Text = "+";
-					TABLE_TableIndirection["FlatIdent_634AF%0"] = 1;
-				end
-				if (TABLE_TableIndirection["FlatIdent_634AF%0"] == 3) then
-					TABLE_TableIndirection["v263%0"].Visible = false;
-					break;
-				end
-				if (TABLE_TableIndirection["FlatIdent_634AF%0"] == 1) then
-					TABLE_TableIndirection["v215%0"].Visible = false;
-					TABLE_TableIndirection["v227%0"].Visible = false;
-					TABLE_TableIndirection["FlatIdent_634AF%0"] = 2;
-				end
-				if (TABLE_TableIndirection["FlatIdent_634AF%0"] == 2) then
-					TABLE_TableIndirection["v239%0"].Visible = false;
-					TABLE_TableIndirection["v251%0"].Visible = false;
-					TABLE_TableIndirection["FlatIdent_634AF%0"] = 3;
-				end
-			end
+	playSound("2865227271");
+	local ScreenGui = Instance.new("ScreenGui");
+	ScreenGui.Name = "SuperRingPartsGUI";
+	ScreenGui.ResetOnSpawn = false;
+	ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui");
+	local MainFrame = Instance.new("Frame");
+	MainFrame.Size = UDim2.new(0, 220, 0, 190);
+	MainFrame.Position = UDim2.new(0.5, -110, 0.5, -95);
+	MainFrame.BackgroundColor3 = Color3.fromRGB(205, 170, 125);
+	MainFrame.BorderSizePixel = 0;
+	MainFrame.Parent = ScreenGui;
+	local UICorner = Instance.new("UICorner");
+	UICorner.CornerRadius = UDim.new(0, 20);
+	UICorner.Parent = MainFrame;
+	local Title = Instance.new("TextLabel");
+	Title.Size = UDim2.new(1, 0, 0, 40);
+	Title.Position = UDim2.new(0, 0, 0, 0);
+	Title.Text = "Super Ring Parts v3";
+	Title.TextColor3 = Color3.fromRGB(101, 67, 33);
+	Title.BackgroundColor3 = Color3.fromRGB(222, 184, 135);
+	Title.Font = Enum.Font.Fondamento;
+	Title.TextSize = 22;
+	Title.Parent = MainFrame;
+	local TitleCorner = Instance.new("UICorner");
+	TitleCorner.CornerRadius = UDim.new(0, 20);
+	TitleCorner.Parent = Title;
+	local ToggleButton = Instance.new("TextButton");
+	ToggleButton.Size = UDim2.new(0.8, 0, 0, 35);
+	ToggleButton.Position = UDim2.new(0.1, 0, 0.3, 0);
+	ToggleButton.Text = "Ring Parts Off";
+	ToggleButton.BackgroundColor3 = Color3.fromRGB(160, 82, 45);
+	ToggleButton.TextColor3 = Color3.fromRGB(255, 248, 220);
+	ToggleButton.Font = Enum.Font.Fondamento;
+	ToggleButton.TextSize = 18;
+	ToggleButton.Parent = MainFrame;
+	local ToggleCorner = Instance.new("UICorner");
+	ToggleCorner.CornerRadius = UDim.new(0, 10);
+	ToggleCorner.Parent = ToggleButton;
+	local DecreaseRadius = Instance.new("TextButton");
+	DecreaseRadius.Size = UDim2.new(0.2, 0, 0, 35);
+	DecreaseRadius.Position = UDim2.new(0.1, 0, 0.6, 0);
+	DecreaseRadius.Text = "<";
+	DecreaseRadius.BackgroundColor3 = Color3.fromRGB(139, 69, 19);
+	DecreaseRadius.TextColor3 = Color3.fromRGB(255, 248, 220);
+	DecreaseRadius.Font = Enum.Font.Fondamento;
+	DecreaseRadius.TextSize = 18;
+	DecreaseRadius.Parent = MainFrame;
+	local DecreaseCorner = Instance.new("UICorner");
+	DecreaseCorner.CornerRadius = UDim.new(0, 10);
+	DecreaseCorner.Parent = DecreaseRadius;
+	local IncreaseRadius = Instance.new("TextButton");
+	IncreaseRadius.Size = UDim2.new(0.2, 0, 0, 35);
+	IncreaseRadius.Position = UDim2.new(0.7, 0, 0.6, 0);
+	IncreaseRadius.Text = ">";
+	IncreaseRadius.BackgroundColor3 = Color3.fromRGB(139, 69, 19);
+	IncreaseRadius.TextColor3 = Color3.fromRGB(255, 248, 220);
+	IncreaseRadius.Font = Enum.Font.Fondamento;
+	IncreaseRadius.TextSize = 18;
+	IncreaseRadius.Parent = MainFrame;
+	local IncreaseCorner = Instance.new("UICorner");
+	IncreaseCorner.CornerRadius = UDim.new(0, 10);
+	IncreaseCorner.Parent = IncreaseRadius;
+	local RadiusDisplay = Instance.new("TextLabel");
+	RadiusDisplay.Size = UDim2.new(0.4, 0, 0, 35);
+	RadiusDisplay.Position = UDim2.new(0.3, 0, 0.6, 0);
+	RadiusDisplay.Text = "Radius: 50";
+	RadiusDisplay.BackgroundColor3 = Color3.fromRGB(210, 180, 140);
+	RadiusDisplay.TextColor3 = Color3.fromRGB(101, 67, 33);
+	RadiusDisplay.Font = Enum.Font.Fondamento;
+	RadiusDisplay.TextSize = 18;
+	RadiusDisplay.Parent = MainFrame;
+	local RadiusCorner = Instance.new("UICorner");
+	RadiusCorner.CornerRadius = UDim.new(0, 10);
+	RadiusCorner.Parent = RadiusDisplay;
+	local Watermark = Instance.new("TextLabel");
+	Watermark.Size = UDim2.new(1, 0, 0, 20);
+	Watermark.Position = UDim2.new(0, 0, 1, -20);
+	Watermark.Text = "Super Ring [V3] - Cracked By Projeto LKB";
+	Watermark.TextColor3 = Color3.fromRGB(101, 67, 33);
+	Watermark.BackgroundTransparency = 1;
+	Watermark.Font = Enum.Font.Fondamento;
+	Watermark.TextSize = 14;
+	Watermark.Parent = MainFrame;
+	local MinimizeButton = Instance.new("TextButton");
+	MinimizeButton.Size = UDim2.new(0, 30, 0, 30);
+	MinimizeButton.Position = UDim2.new(1, -35, 0, 5);
+	MinimizeButton.Text = "-";
+	MinimizeButton.BackgroundColor3 = Color3.fromRGB(139, 69, 19);
+	MinimizeButton.TextColor3 = Color3.fromRGB(255, 248, 220);
+	MinimizeButton.Font = Enum.Font.Fondamento;
+	MinimizeButton.TextSize = 18;
+	MinimizeButton.Parent = MainFrame;
+	local MinimizeCorner = Instance.new("UICorner");
+	MinimizeCorner.CornerRadius = UDim.new(0, 15);
+	MinimizeCorner.Parent = MinimizeButton;
+	local minimized = false;
+	MinimizeButton.MouseButton1Click:Connect(function()
+		minimized = not minimized;
+		if minimized then
+			MainFrame:TweenSize(UDim2.new(0, 220, 0, 40), "Out", "Quad", 0.3, true);
+			MinimizeButton.Text = "+";
+			ToggleButton.Visible = false;
+			DecreaseRadius.Visible = false;
+			IncreaseRadius.Visible = false;
+			RadiusDisplay.Visible = false;
+			Watermark.Visible = false;
 		else
-			TABLE_TableIndirection["FlatIdent_63AE4%0"] = 0;
-			while true do
-				if (1 == TABLE_TableIndirection["FlatIdent_63AE4%0"]) then
-					TABLE_TableIndirection["v215%0"].Visible = true;
-					TABLE_TableIndirection["v227%0"].Visible = true;
-					TABLE_TableIndirection["FlatIdent_63AE4%0"] = 2;
-				end
-				if (TABLE_TableIndirection["FlatIdent_63AE4%0"] == 0) then
-					TABLE_TableIndirection["v193%0"]:TweenSize(UDim2.new(0, 220, 0, 190), "Out", "Quad", 0.3, true);
-					TABLE_TableIndirection["v272%0"].Text = "-";
-					TABLE_TableIndirection["FlatIdent_63AE4%0"] = 1;
-				end
-				if (TABLE_TableIndirection["FlatIdent_63AE4%0"] == 3) then
-					TABLE_TableIndirection["v263%0"].Visible = true;
-					break;
-				end
-				if (TABLE_TableIndirection["FlatIdent_63AE4%0"] == 2) then
-					TABLE_TableIndirection["v239%0"].Visible = true;
-					TABLE_TableIndirection["v251%0"].Visible = true;
-					TABLE_TableIndirection["FlatIdent_63AE4%0"] = 3;
-				end
-			end
+			MainFrame:TweenSize(UDim2.new(0, 220, 0, 190), "Out", "Quad", 0.3, true);
+			MinimizeButton.Text = "-";
+			ToggleButton.Visible = true;
+			DecreaseRadius.Visible = true;
+			IncreaseRadius.Visible = true;
+			RadiusDisplay.Visible = true;
+			Watermark.Visible = true;
 		end
-		v188("12221967");
+		playSound("12221967");
 	end);
-	TABLE_TableIndirection["v285%0"] = nil;
-	TABLE_TableIndirection["v286%0"] = nil;
-	TABLE_TableIndirection["v287%0"] = nil;
-	TABLE_TableIndirection["v288%0"] = nil;
-	local function v289(v361)
-		TABLE_TableIndirection["FlatIdent_44603%0"] = 0;
-		TABLE_TableIndirection["v362%0"] = nil;
-		while true do
-			if (TABLE_TableIndirection["FlatIdent_44603%0"] == 0) then
-				TABLE_TableIndirection["v362%0"] = v361.Position - TABLE_TableIndirection["v287%0"];
-				TABLE_TableIndirection["v193%0"].Position = UDim2.new(TABLE_TableIndirection["v288%0"].X.Scale, TABLE_TableIndirection["v288%0"].X.Offset + TABLE_TableIndirection["v362%0"].X, TABLE_TableIndirection["v288%0"].Y.Scale, TABLE_TableIndirection["v288%0"].Y.Offset + TABLE_TableIndirection["v362%0"].Y);
-				break;
-			end
-		end
+	local dragging;
+	local dragInput;
+	local dragStart;
+	local startPos;
+	local function update(input)
+		local delta = input.Position - dragStart;
+		MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y);
 	end
-	TABLE_TableIndirection["v193%0"].InputBegan:Connect(function(v364)
-		if ((v364.UserInputType == Enum.UserInputType.MouseButton1) or (v364.UserInputType == Enum.UserInputType.Touch)) then
-			TABLE_TableIndirection["v285%0"] = true;
-			TABLE_TableIndirection["v287%0"] = v364.Position;
-			TABLE_TableIndirection["v288%0"] = TABLE_TableIndirection["v193%0"].Position;
-			v364.Changed:Connect(function()
-				if (v364.UserInputState == Enum.UserInputState.End) then
-					TABLE_TableIndirection["v285%0"] = false;
+	MainFrame.InputBegan:Connect(function(input)
+		if ((input.UserInputType == Enum.UserInputType.MouseButton1) or (input.UserInputType == Enum.UserInputType.Touch)) then
+			dragging = true;
+			dragStart = input.Position;
+			startPos = MainFrame.Position;
+			input.Changed:Connect(function()
+				if (input.UserInputState == Enum.UserInputState.End) then
+					dragging = false;
 				end
 			end);
 		end
 	end);
-	TABLE_TableIndirection["v193%0"].InputChanged:Connect(function(v365)
-		if ((v365.UserInputType == Enum.UserInputType.MouseMovement) or (v365.UserInputType == Enum.UserInputType.Touch)) then
-			TABLE_TableIndirection["v286%0"] = v365;
+	MainFrame.InputChanged:Connect(function(input)
+		if ((input.UserInputType == Enum.UserInputType.MouseMovement) or (input.UserInputType == Enum.UserInputType.Touch)) then
+			dragInput = input;
 		end
 	end);
-	TABLE_TableIndirection["v183%0"].InputChanged:Connect(function(v366)
-		if ((v366 == TABLE_TableIndirection["v286%0"]) and TABLE_TableIndirection["v285%0"]) then
-			v289(v366);
+	UserInputService.InputChanged:Connect(function(input)
+		if ((input == dragInput) and dragging) then
+			update(input);
 		end
 	end);
 	if not getgenv().Network then
-		TABLE_TableIndirection["FlatIdent_5724B%0"] = 0;
-		TABLE_TableIndirection["v395%0"] = nil;
-		while true do
-			if (0 == TABLE_TableIndirection["FlatIdent_5724B%0"]) then
-				getgenv().Network = {BaseParts={},Velocity=Vector3.new(14.46262424, 14.46262424, 14.46262424)};
-				Network.RetainPart = function(v425)
-					if ((typeof(v425) == "Instance") and v425:IsA("BasePart") and v425:IsDescendantOf(workspace)) then
-						table.insert(Network.BaseParts, v425);
-						v425.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0);
-						v425.CanCollide = false;
+		getgenv().Network = {BaseParts={},Velocity=Vector3.new(14.46262424, 14.46262424, 14.46262424)};
+		Network.RetainPart = function(Part)
+			if ((typeof(Part) == "Instance") and Part:IsA("BasePart") and Part:IsDescendantOf(workspace)) then
+				table.insert(Network.BaseParts, Part);
+				Part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0);
+				Part.CanCollide = false;
+			end
+		end;
+		local function EnablePartControl()
+			LocalPlayer.ReplicationFocus = workspace;
+			RunService.Heartbeat:Connect(function()
+				sethiddenproperty(LocalPlayer, "SimulationRadius", math.huge);
+				for _, Part in pairs(Network.BaseParts) do
+					if Part:IsDescendantOf(workspace) then
+						Part.Velocity = Network.Velocity;
 					end
-				end;
-				TABLE_TableIndirection["FlatIdent_5724B%0"] = 1;
-			end
-			if (TABLE_TableIndirection["FlatIdent_5724B%0"] == 1) then
-				TABLE_TableIndirection["v395%0"] = nil;
-				TABLE_TableIndirection["v395%0"] = function()
-					TABLE_TableIndirection["v187%0"].ReplicationFocus = workspace;
-					TABLE_TableIndirection["v182%0"].Heartbeat:Connect(function()
-						sethiddenproperty(TABLE_TableIndirection["v187%0"], "SimulationRadius", math.huge);
-						for v449, v450 in pairs(Network.BaseParts) do
-							if v450:IsDescendantOf(workspace) then
-								v450.Velocity = Network.Velocity;
-							end
-						end
-					end);
-				end;
-				TABLE_TableIndirection["FlatIdent_5724B%0"] = 2;
-			end
-			if (TABLE_TableIndirection["FlatIdent_5724B%0"] == 2) then
-				TABLE_TableIndirection["v395%0"]();
-				break;
-			end
-		end
-	end
-	TABLE_TableIndirection["v290%0"] = 50;
-	TABLE_TableIndirection["v291%0"] = 100;
-	TABLE_TableIndirection["v292%0"] = 10;
-	TABLE_TableIndirection["v293%0"] = 1000;
-	TABLE_TableIndirection["v294%0"] = false;
-	local function v295(v367)
-		TABLE_TableIndirection["FlatIdent_89C1C%0"] = 0;
-		while true do
-			if (TABLE_TableIndirection["FlatIdent_89C1C%0"] == 0) then
-				if (v367:IsA("BasePart") and not v367.Anchored and v367:IsDescendantOf(workspace)) then
-					TABLE_TableIndirection["FlatIdent_480B4%0"] = 0;
-					while true do
-						if (1 == TABLE_TableIndirection["FlatIdent_480B4%0"]) then
-							v367.CanCollide = false;
-							return true;
-						end
-						if (TABLE_TableIndirection["FlatIdent_480B4%0"] == 0) then
-							if ((v367.Parent == TABLE_TableIndirection["v187%0"].Character) or v367:IsDescendantOf(TABLE_TableIndirection["v187%0"].Character)) then
-								return false;
-							end
-							v367.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0);
-							TABLE_TableIndirection["FlatIdent_480B4%0"] = 1;
-						end
-					end
-				end
-				return false;
-			end
-		end
-	end
-	TABLE_TableIndirection["v296%0"] = {};
-	local function v297(v368)
-		if v295(v368) then
-			if not table.find(TABLE_TableIndirection["v296%0"], v368) then
-				table.insert(TABLE_TableIndirection["v296%0"], v368);
-			end
-		end
-	end
-	local function v298(v369)
-		TABLE_TableIndirection["FlatIdent_5962D%0"] = 0;
-		TABLE_TableIndirection["v370%0"] = nil;
-		while true do
-			if (0 == TABLE_TableIndirection["FlatIdent_5962D%0"]) then
-				TABLE_TableIndirection["v370%0"] = table.find(TABLE_TableIndirection["v296%0"], v369);
-				if TABLE_TableIndirection["v370%0"] then
-					table.remove(TABLE_TableIndirection["v296%0"], TABLE_TableIndirection["v370%0"]);
-				end
-				break;
-			end
-		end
-	end
-	for v371, v372 in pairs(workspace:GetDescendants()) do
-		v297(v372);
-	end
-	workspace.DescendantAdded:Connect(v297);
-	workspace.DescendantRemoving:Connect(v298);
-	TABLE_TableIndirection["v182%0"].Heartbeat:Connect(function()
-		TABLE_TableIndirection["FlatIdent_82AB4%0"] = 0;
-		TABLE_TableIndirection["v373%0"] = nil;
-		while true do
-			if (TABLE_TableIndirection["FlatIdent_82AB4%0"] == 1) then
-				if TABLE_TableIndirection["v373%0"] then
-					TABLE_TableIndirection["v429%0"] = TABLE_TableIndirection["v373%0"].Position;
-					for v440, v441 in pairs(TABLE_TableIndirection["v296%0"]) do
-						if (v441.Parent and not v441.Anchored) then
-							TABLE_TableIndirection["FlatIdent_5EF9%0"] = 0;
-							TABLE_TableIndirection["v466%0"] = nil;
-							TABLE_TableIndirection["v467%0"] = nil;
-							TABLE_TableIndirection["v468%0"] = nil;
-							TABLE_TableIndirection["v469%0"] = nil;
-							TABLE_TableIndirection["v470%0"] = nil;
-							TABLE_TableIndirection["v471%0"] = nil;
-							while true do
-								if (TABLE_TableIndirection["FlatIdent_5EF9%0"] == 3) then
-									v441.Velocity = TABLE_TableIndirection["v471%0"] * TABLE_TableIndirection["v293%0"];
-									break;
-								end
-								if (TABLE_TableIndirection["FlatIdent_5EF9%0"] == 0) then
-									TABLE_TableIndirection["v466%0"] = v441.Position;
-									TABLE_TableIndirection["v467%0"] = (Vector3.new(TABLE_TableIndirection["v466%0"].X, TABLE_TableIndirection["v429%0"].Y, TABLE_TableIndirection["v466%0"].Z) - TABLE_TableIndirection["v429%0"]).Magnitude;
-									TABLE_TableIndirection["FlatIdent_5EF9%0"] = 1;
-								end
-								if (TABLE_TableIndirection["FlatIdent_5EF9%0"] == 1) then
-									TABLE_TableIndirection["v468%0"] = math.atan2(TABLE_TableIndirection["v466%0"].Z - TABLE_TableIndirection["v429%0"].Z, TABLE_TableIndirection["v466%0"].X - TABLE_TableIndirection["v429%0"].X);
-									TABLE_TableIndirection["v469%0"] = TABLE_TableIndirection["v468%0"] + math.rad(TABLE_TableIndirection["v292%0"]);
-									TABLE_TableIndirection["FlatIdent_5EF9%0"] = 2;
-								end
-								if (2 == TABLE_TableIndirection["FlatIdent_5EF9%0"]) then
-									TABLE_TableIndirection["v470%0"] = Vector3.new(TABLE_TableIndirection["v429%0"].X + (math.cos(TABLE_TableIndirection["v469%0"]) * math.min(TABLE_TableIndirection["v290%0"], TABLE_TableIndirection["v467%0"])), TABLE_TableIndirection["v429%0"].Y + (TABLE_TableIndirection["v291%0"] * (math.abs(math.sin((TABLE_TableIndirection["v466%0"].Y - TABLE_TableIndirection["v429%0"].Y) / TABLE_TableIndirection["v291%0"])))), TABLE_TableIndirection["v429%0"].Z + (math.sin(TABLE_TableIndirection["v469%0"]) * math.min(TABLE_TableIndirection["v290%0"], TABLE_TableIndirection["v467%0"])));
-									TABLE_TableIndirection["v471%0"] = (TABLE_TableIndirection["v470%0"] - v441.Position).unit;
-									TABLE_TableIndirection["FlatIdent_5EF9%0"] = 3;
-								end
-							end
-						end
-					end
-				end
-				break;
-			end
-			if (TABLE_TableIndirection["FlatIdent_82AB4%0"] == 0) then
-				if not TABLE_TableIndirection["v294%0"] then
-					return;
-				end
-				TABLE_TableIndirection["v373%0"] = TABLE_TableIndirection["v187%0"].Character and TABLE_TableIndirection["v187%0"].Character:FindFirstChild("HumanoidRootPart");
-				TABLE_TableIndirection["FlatIdent_82AB4%0"] = 1;
-			end
-		end
-	end);
-	TABLE_TableIndirection["v215%0"].MouseButton1Click:Connect(function()
-		TABLE_TableIndirection["v294%0"] = not TABLE_TableIndirection["v294%0"];
-		TABLE_TableIndirection["v215%0"].Text = (TABLE_TableIndirection["v294%0"] and "Ring Parts On") or "Ring Parts Off";
-		TABLE_TableIndirection["v215%0"].BackgroundColor3 = (TABLE_TableIndirection["v294%0"] and Color3.fromRGB(50, 205, 50)) or Color3.fromRGB(160, 82, 45);
-		v188("12221967");
-	end);
-	TABLE_TableIndirection["v227%0"].MouseButton1Click:Connect(function()
-		TABLE_TableIndirection["v290%0"] = math.max(10, TABLE_TableIndirection["v290%0"] - 5);
-		TABLE_TableIndirection["v251%0"].Text = "Radius: " .. TABLE_TableIndirection["v290%0"];
-		v188("12221967");
-	end);
-	TABLE_TableIndirection["v239%0"].MouseButton1Click:Connect(function()
-		TABLE_TableIndirection["v290%0"] = math.min(100, TABLE_TableIndirection["v290%0"] + 5);
-		TABLE_TableIndirection["v251%0"].Text = "Radius: " .. TABLE_TableIndirection["v290%0"];
-		v188("12221967");
-	end);
-	TABLE_TableIndirection["v299%0"] = TABLE_TableIndirection["v181%0"]:GetUserIdFromNameAsync("NannaDev");
-	TABLE_TableIndirection["v300%0"] = Enum.ThumbnailType.HeadShot;
-	TABLE_TableIndirection["v301%0"] = Enum.ThumbnailSize.Size420x420;
-	local v302, v303 = TABLE_TableIndirection["v181%0"]:GetUserThumbnailAsync(TABLE_TableIndirection["v299%0"], TABLE_TableIndirection["v300%0"], TABLE_TableIndirection["v301%0"]);
-end});
-TABLE_TableIndirection["v15%7"] = TABLE_TableIndirection["v67%0"]:CreateToggle({Name="Kill all(Take the sword in hand and activate the kill all And if there is a bug, activate it and deactivate it twice)",CurrentValue=false,Flag="Toggle1",Callback=function(v304)
-	TABLE_TableIndirection["FlatIdent_12B6E%0"] = 0;
-	TABLE_TableIndirection["v306%0"] = nil;
-	TABLE_TableIndirection["v307%0"] = nil;
-	TABLE_TableIndirection["v308%0"] = nil;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_12B6E%0"] == 0) then
-			getgenv().kill_all = v304;
-			while kill_all do
-				TABLE_TableIndirection["FlatIdent_2593F%0"] = 0;
-				TABLE_TableIndirection["v378%0"] = nil;
-				while true do
-					if (TABLE_TableIndirection["FlatIdent_2593F%0"] == 0) then
-						TABLE_TableIndirection["v378%0"] = {[1]=Vector3.new(-45.73347473144531, 274.19830322265625, 82.87319946289062)};
-						game:GetService("Players").LocalPlayer.Character.Sword.Activate:FireServer(unpack(TABLE_TableIndirection["v378%0"]));
-						TABLE_TableIndirection["FlatIdent_2593F%0"] = 1;
-					end
-					if (TABLE_TableIndirection["FlatIdent_2593F%0"] == 1) then
-						wait(0.1);
-						break;
-					end
-				end
-			end
-			TABLE_TableIndirection["FlatIdent_12B6E%0"] = 1;
-		end
-		if (TABLE_TableIndirection["FlatIdent_12B6E%0"] == 2) then
-			TABLE_TableIndirection["v308%0"] = nil;
-			TABLE_TableIndirection["v308%0"] = function(v379)
-				if (v379 and v379.Character and v379.Character:FindFirstChild("HumanoidRootPart")) then
-					TABLE_TableIndirection["FlatIdent_7DB9E%0"] = 0;
-					TABLE_TableIndirection["v430%0"] = nil;
-					while true do
-						if (TABLE_TableIndirection["FlatIdent_7DB9E%0"] == 0) then
-							TABLE_TableIndirection["v430%0"] = v379.Character:FindFirstChildOfClass("Humanoid");
-							if (TABLE_TableIndirection["v430%0"] and (TABLE_TableIndirection["v430%0"].Health > 0)) then
-								TABLE_TableIndirection["v451%0"] = v379.Character.HumanoidRootPart.CFrame;
-								TABLE_TableIndirection["v452%0"] = TABLE_TableIndirection["v451%0"] * CFrame.new(0, 0, 3);
-								TABLE_TableIndirection["v307%0"].Character:SetPrimaryPartCFrame(TABLE_TableIndirection["v452%0"]);
-							end
-							break;
-						end
-					end
-				end
-			end;
-			TABLE_TableIndirection["FlatIdent_12B6E%0"] = 3;
-		end
-		if (TABLE_TableIndirection["FlatIdent_12B6E%0"] == 1) then
-			TABLE_TableIndirection["v306%0"] = game:GetService("Players");
-			TABLE_TableIndirection["v307%0"] = TABLE_TableIndirection["v306%0"].LocalPlayer;
-			TABLE_TableIndirection["FlatIdent_12B6E%0"] = 2;
-		end
-		if (TABLE_TableIndirection["FlatIdent_12B6E%0"] == 3) then
-			spawn(function()
-				while true do
-					if not getgenv().kill_all then
-						wait(1);
-					end
-					for v431, v432 in pairs(TABLE_TableIndirection["v306%0"]:GetPlayers()) do
-						if ((v432 ~= TABLE_TableIndirection["v307%0"]) and v432.Character) then
-							TABLE_TableIndirection["FlatIdent_651C5%0"] = 0;
-							TABLE_TableIndirection["v453%0"] = nil;
-							while true do
-								if (TABLE_TableIndirection["FlatIdent_651C5%0"] == 0) then
-									TABLE_TableIndirection["v453%0"] = v432.Character:FindFirstChildOfClass("Humanoid");
-									if (TABLE_TableIndirection["v453%0"] and (TABLE_TableIndirection["v453%0"].Health > 0)) then
-										TABLE_TableIndirection["FlatIdent_458D1%0"] = 0;
-										TABLE_TableIndirection["v544%0"] = nil;
-										while true do
-											if (TABLE_TableIndirection["FlatIdent_458D1%0"] == 0) then
-												TABLE_TableIndirection["v544%0"] = tick();
-												while (tick() - TABLE_TableIndirection["v544%0"]) < 1 do
-													if not getgenv().kill_all then
-														break;
-													end
-													TABLE_TableIndirection["v308%0"](v432);
-													wait(0.1);
-												end
-												break;
-											end
-										end
-									end
-									break;
-								end
-							end
-						end
-					end
-					wait(1);
 				end
 			end);
-			break;
 		end
+		EnablePartControl();
 	end
-end});
-TABLE_TableIndirection["v4%4"] = game.Players.LocalPlayer;
-TABLE_TableIndirection["v73%0"] = TABLE_TableIndirection["v4%4"].Character or TABLE_TableIndirection["v4%4"].CharacterAdded:Wait();
-TABLE_TableIndirection["v14%7"] = TABLE_TableIndirection["v67%0"]:CreateButton({Name="Get Super Fire Ball",Callback=function()
-	TABLE_TableIndirection["FlatIdent_21387%0"] = 0;
-	TABLE_TableIndirection["v309%0"] = nil;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_21387%0"] == 0) then
-			TABLE_TableIndirection["v309%0"] = TABLE_TableIndirection["v73%0"]:FindFirstChild("HumanoidRootPart");
-			if TABLE_TableIndirection["v309%0"] then
-				TABLE_TableIndirection["v396%0"] = TABLE_TableIndirection["v309%0"].CFrame;
-				TABLE_TableIndirection["v309%0"].CFrame = CFrame.new(656.09, 255.76, -124.65);
-				wait(0.5);
-				TABLE_TableIndirection["v309%0"].CFrame = TABLE_TableIndirection["v396%0"];
+	local radius = 50;
+	local height = 100;
+	local rotationSpeed = 10;
+	local attractionStrength = 1000;
+	local ringPartsEnabled = false;
+	local function RetainPart(Part)
+		if (Part:IsA("BasePart") and not Part.Anchored and Part:IsDescendantOf(workspace)) then
+			if ((Part.Parent == LocalPlayer.Character) or Part:IsDescendantOf(LocalPlayer.Character)) then
+				return false;
 			end
-			break;
+			Part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0);
+			Part.CanCollide = false;
+			return true;
 		end
+		return false;
 	end
-end});
-TABLE_TableIndirection["v14%8"] = TABLE_TableIndirection["v67%0"]:CreateButton({Name="Get invisible Sword",Callback=function()
-	TABLE_TableIndirection["v310%0"] = TABLE_TableIndirection["v73%0"]:FindFirstChild("HumanoidRootPart");
-	if TABLE_TableIndirection["v310%0"] then
-		TABLE_TableIndirection["FlatIdent_7126B%0"] = 0;
-		TABLE_TableIndirection["v398%0"] = nil;
-		while true do
-			if (TABLE_TableIndirection["FlatIdent_7126B%0"] == 1) then
-				wait(0.5);
-				TABLE_TableIndirection["FlatIdent_7126B%0"] = 2;
-			end
-			if (TABLE_TableIndirection["FlatIdent_7126B%0"] == 2) then
-				TABLE_TableIndirection["v310%0"].CFrame = TABLE_TableIndirection["v398%0"];
-				break;
-			end
-			if (0 == TABLE_TableIndirection["FlatIdent_7126B%0"]) then
-				TABLE_TableIndirection["v398%0"] = TABLE_TableIndirection["v310%0"].CFrame;
-				TABLE_TableIndirection["v310%0"].CFrame = CFrame.new(-263.3, 277.97, -426.01);
-				TABLE_TableIndirection["FlatIdent_7126B%0"] = 1;
+	local parts = {};
+	local function addPart(part)
+		if RetainPart(part) then
+			if not table.find(parts, part) then
+				table.insert(parts, part);
 			end
 		end
 	end
-end});
-TABLE_TableIndirection["v14%9"] = TABLE_TableIndirection["v67%0"]:CreateButton({Name="Get Super Paintball",Callback=function()
-	TABLE_TableIndirection["FlatIdent_D14D%0"] = 0;
-	TABLE_TableIndirection["v311%0"] = nil;
-	while true do
-		if (TABLE_TableIndirection["FlatIdent_D14D%0"] == 0) then
-			TABLE_TableIndirection["v311%0"] = TABLE_TableIndirection["v73%0"]:FindFirstChild("HumanoidRootPart");
-			if TABLE_TableIndirection["v311%0"] then
-				TABLE_TableIndirection["v400%0"] = TABLE_TableIndirection["v311%0"].CFrame;
-				TABLE_TableIndirection["v311%0"].CFrame = CFrame.new(-143.53, 265.96, 482.11);
-				wait(0.5);
-				TABLE_TableIndirection["v311%0"].CFrame = TABLE_TableIndirection["v400%0"];
-			end
-			break;
+	local function removePart(part)
+		local index = table.find(parts, part);
+		if index then
+			table.remove(parts, index);
 		end
+	end
+	for _, part in pairs(workspace:GetDescendants()) do
+		addPart(part);
+	end
+	workspace.DescendantAdded:Connect(addPart);
+	workspace.DescendantRemoving:Connect(removePart);
+	RunService.Heartbeat:Connect(function()
+		if not ringPartsEnabled then
+			return;
+		end
+		local humanoidRootPart = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart");
+		if humanoidRootPart then
+			local tornadoCenter = humanoidRootPart.Position;
+			for _, part in pairs(parts) do
+				if (part.Parent and not part.Anchored) then
+					local pos = part.Position;
+					local distance = (Vector3.new(pos.X, tornadoCenter.Y, pos.Z) - tornadoCenter).Magnitude;
+					local angle = math.atan2(pos.Z - tornadoCenter.Z, pos.X - tornadoCenter.X);
+					local newAngle = angle + math.rad(rotationSpeed);
+					local targetPos = Vector3.new(tornadoCenter.X + (math.cos(newAngle) * math.min(radius, distance)), tornadoCenter.Y + (height * (math.abs(math.sin((pos.Y - tornadoCenter.Y) / height)))), tornadoCenter.Z + (math.sin(newAngle) * math.min(radius, distance)));
+					local directionToTarget = (targetPos - part.Position).unit;
+					part.Velocity = directionToTarget * attractionStrength;
+				end
+			end
+		end
+	end);
+	ToggleButton.MouseButton1Click:Connect(function()
+		ringPartsEnabled = not ringPartsEnabled;
+		ToggleButton.Text = (ringPartsEnabled and "Ring Parts On") or "Ring Parts Off";
+		ToggleButton.BackgroundColor3 = (ringPartsEnabled and Color3.fromRGB(50, 205, 50)) or Color3.fromRGB(160, 82, 45);
+		playSound("12221967");
+	end);
+	DecreaseRadius.MouseButton1Click:Connect(function()
+		radius = math.max(10, radius - 5);
+		RadiusDisplay.Text = "Radius: " .. radius;
+		playSound("12221967");
+	end);
+	IncreaseRadius.MouseButton1Click:Connect(function()
+		radius = math.min(100, radius + 5);
+		RadiusDisplay.Text = "Radius: " .. radius;
+		playSound("12221967");
+	end);
+	local userId = Players:GetUserIdFromNameAsync("NannaDev");
+	local thumbType = Enum.ThumbnailType.HeadShot;
+	local thumbSize = Enum.ThumbnailSize.Size420x420;
+	local content, isReady = Players:GetUserThumbnailAsync(userId, thumbType, thumbSize);
+end});
+local Toggle = Others:CreateToggle({Name="Kill all (Take the sword in hand and activate the kill all. If there is a bug, activate and deactivate it twice)",CurrentValue=false,Flag="Toggle1",Callback=function(Value)
+	getgenv().kill_all = Value;
+	spawn(function()
+		while getgenv().kill_all do
+			local sword = game:GetService("Players").LocalPlayer.Character:FindFirstChild("Sword");
+			if (sword and sword:FindFirstChild("Activate")) then
+				local args = {Vector3.new(-45.733, 274.198, 82.873)};
+				sword.Activate:FireServer(unpack(args));
+			end
+			wait(0.1);
+		end
+	end);
+	local Players = game:GetService("Players");
+	local LocalPlayer = Players.LocalPlayer;
+	local function teleportBehindPlayer(targetPlayer)
+		if (targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart")) then
+			local humanoid = targetPlayer.Character:FindFirstChildOfClass("Humanoid");
+			if (humanoid and (humanoid.Health > 0)) then
+				local targetPosition = targetPlayer.Character.HumanoidRootPart.CFrame;
+				local newPosition = targetPosition * CFrame.new(0, 0, 3);
+				if (LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")) then
+					LocalPlayer.Character:SetPrimaryPartCFrame(newPosition);
+				end
+			end
+		end
+	end
+	spawn(function()
+		while getgenv().kill_all do
+			for _, v in pairs(Players:GetPlayers()) do
+				if ((v ~= LocalPlayer) and v.Character) then
+					local humanoid = v.Character:FindFirstChildOfClass("Humanoid");
+					if (humanoid and (humanoid.Health > 0)) then
+						local startTime = tick();
+						while ((tick() - startTime) < 1) and getgenv().kill_all do
+							teleportBehindPlayer(v);
+							wait(0.1);
+						end
+					end
+				end
+			end
+			wait(1);
+		end
+	end);
+end});
+local player = game.Players.LocalPlayer;
+local character = player.Character or player.CharacterAdded:Wait();
+local Button = Others:CreateButton({Name="Get Super Fire Ball",Callback=function()
+	local humanoidRootPart = character:FindFirstChild("HumanoidRootPart");
+	if humanoidRootPart then
+		local oldPosition = humanoidRootPart.CFrame;
+		humanoidRootPart.CFrame = CFrame.new(656.09, 255.76, -124.65);
+		wait(0.5);
+		humanoidRootPart.CFrame = oldPosition;
+	end
+end});
+local Button = Others:CreateButton({Name="Get invisible Sword",Callback=function()
+	local humanoidRootPart = character:FindFirstChild("HumanoidRootPart");
+	if humanoidRootPart then
+		local oldPosition = humanoidRootPart.CFrame;
+		humanoidRootPart.CFrame = CFrame.new(-263.3, 277.97, -426.01);
+		wait(0.5);
+		humanoidRootPart.CFrame = oldPosition;
+	end
+end});
+local Button = Others:CreateButton({Name="Get Super Paintball",Callback=function()
+	local humanoidRootPart = character:FindFirstChild("HumanoidRootPart");
+	if humanoidRootPart then
+		local oldPosition = humanoidRootPart.CFrame;
+		humanoidRootPart.CFrame = CFrame.new(-143.53, 265.96, 482.11);
+		wait(0.5);
+		humanoidRootPart.CFrame = oldPosition;
 	end
 end});
