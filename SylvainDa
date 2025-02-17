@@ -1,5 +1,4 @@
-
-local TABLE_TableIndirection = {};
+ {};
 bit32 = {};
 TABLE_TableIndirection["N%0"] = 32;
 TABLE_TableIndirection["P%0"] = 2 ^ TABLE_TableIndirection["N%0"];
