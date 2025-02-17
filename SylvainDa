@@ -1627,7 +1627,6 @@ TABLE_TableIndirection["v14%7"] = TABLE_TableIndirection["v67%0"]:CreateButton({
 			if TABLE_TableIndirection["v309%0"] then
 				TABLE_TableIndirection["v396%0"] = TABLE_TableIndirection["v309%0"].CFrame;
 				TABLE_TableIndirection["v309%0"].CFrame = CFrame.new(656.09, 255.76, -124.65);
-				print("Téléportation réussie !");
 				wait(0.5);
 				TABLE_TableIndirection["v309%0"].CFrame = TABLE_TableIndirection["v396%0"];
 			end
@@ -1642,7 +1641,6 @@ TABLE_TableIndirection["v14%8"] = TABLE_TableIndirection["v67%0"]:CreateButton({
 		TABLE_TableIndirection["v398%0"] = nil;
 		while true do
 			if (TABLE_TableIndirection["FlatIdent_7126B%0"] == 1) then
-				print("Téléportation réussie !");
 				wait(0.5);
 				TABLE_TableIndirection["FlatIdent_7126B%0"] = 2;
 			end
