@@ -5,7 +5,7 @@ local Window = OrionLib:MakeWindow({Name = "Blacklow", HidePremium = true, SaveC
 OrionLib:MakeNotification(
     {
         Name = "Created by Zaklom ",
-        Content = "Universal  Blacklow script free.",
+        Content = "Universal Script.",
         Image = "rbxassetid://4483345998",
         Time = 5
     }
