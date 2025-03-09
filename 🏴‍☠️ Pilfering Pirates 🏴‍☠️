@@ -23,7 +23,7 @@ local Window = Rayfield:CreateWindow({
         RememberJoins = true 
     },
 
-    KeySystem = true, 
+    KeySystem = False, 
     KeySettings = {
         Title = "🔑 Blacklow Key system 🔑", 
         Subtitle = "Join Discord for key ", 
