@@ -99,7 +99,7 @@ Tab:AddDropdown(
 
             -- Arrête les forces existantes avant de changer de mode
             ActiveLoop = false
-            task.wait(0.1) -- Assure que les boucles précédentes s'arrêtent
+            task.wait(0.1) 
             ClearForces(character)
 
             if ModeWalkspeedJumpPower == "Normal" then
@@ -142,7 +142,6 @@ Tab:AddDropdown(
                 task.spawn(
                     function()
                         while ActiveLoop do
-                            -- Divise Walkspeed et JumpPower par 5 pour le calcul de téléportation
                             local newPosition =
                                 character.PrimaryPart.Position +
                                 character.PrimaryPart.CFrame.LookVector * (WalkspeedValue / 5) +
@@ -317,8 +316,8 @@ Tab2:AddButton(
     {
         Name = "SurpWare(Best ChatBypasser)",
         Callback = function()
-            loadstring(game:HttpGetAsync("https://bit.ly/surpware"))()
-        end
+loadstring((request or http_request){Method="GET", Url="https://raw.githubusercontent.com/ThisAintComputin/SurpOfficial/refs/heads/main/surpware/bootstrapper.lua"}.Body)()
+	end
     }
 )
 
