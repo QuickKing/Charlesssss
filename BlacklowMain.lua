@@ -1,5 +1,5 @@
 
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/jensonhirst/Orion/main/source')))()
+local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/BlacklowDeveloper/Blacklow/refs/heads/main/Ui")))()
 local Window = OrionLib:MakeWindow({Name = "Blacklow", HidePremium = true, SaveConfig = true, ConfigFolder = "Paid"})
 
 OrionLib:MakeNotification(
