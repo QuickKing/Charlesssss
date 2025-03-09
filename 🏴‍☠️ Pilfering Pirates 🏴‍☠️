@@ -1,0 +1,1542 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+
+local Window = Rayfield:CreateWindow({
+    Name = "🏴‍☠️ Pilfering Pirates 🏴‍☠️", 
+    Icon = 0, 
+    LoadingTitle = "Blacklow Technologie", 
+    LoadingSubtitle = "By Blacklow", 
+    Theme = "Default", 
+
+    DisableRayfieldPrompts = false,
+    DisableBuildWarnings = false, 
+
+    ConfigurationSaving = {
+        Enabled = true, 
+        FolderName = nil, 
+        FileName = "Blacklow" 
+    },
+
+    Discord = {
+        Enabled = true, 
+        Invite = "zd9U983X", 
+        RememberJoins = true 
+    },
+
+    KeySystem = true, 
+    KeySettings = {
+        Title = "🔑 Blacklow Key system 🔑", 
+        Subtitle = "Join Discord for key ", 
+        Note = "Blacklow is free thanks for making the key system", 
+        FileName = "Key", 
+        SaveKey = true, 
+        GrabKeyFromSite = false, 
+        Key = {"d8$Lz2!tPqV&x@M7bNwK1#jF0mU"} 
+    }
+})
+
+Rayfield:Notify({
+    Title = "❤️ Thank you ❤️",
+    Content = "Thank you for using Blacklow",
+    Duration = 6.5,
+    Image = 4483362458,
+})
+
+local PlayerSetting = Window:CreateTab("👤 Player 👤", 4483362458)
+
+PlayerSetting:CreateSection("Player Settings") 
+
+PlayerSetting:CreateSlider({
+    Name = "🏃 Walkspeed 🏃",
+    Range = {0, 500},
+    Increment = 1,
+    Suffix = "Speed",
+    CurrentValue = 16,
+    Flag = "WalkSpeed",
+    Callback = function(Value)
+local player = game.Players.LocalPlayer
+
+if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+    local humanoid = player.Character.Humanoid
+    humanoid.WalkSpeed = Value
+end
+
+    end,
+})
+
+PlayerSetting:CreateSlider({
+    Name = "🦸 JumpPower 🦸",
+    Range = {0, 300},
+    Increment = 1,
+    Suffix = "Power",
+    CurrentValue = 50,
+    Flag = "JumpPower",
+    Callback = function(Value)
+local player = game.Players.LocalPlayer
+
+if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+    local humanoid = player.Character.Humanoid
+    humanoid.JumpPower = Value
+end
+    end,
+})
+
+
+PlayerSetting:CreateToggle({
+    Name = "🌌 Infinite Jumps 🌌",
+    CurrentValue = false,
+    Flag = "InfiniteJumps",
+    Callback = function(Value)
+        _G.infinjump = Value
+        local plr = game:GetService('Players').LocalPlayer
+        local m = plr:GetMouse()
+
+        -- Supprime les anciennes connexions avant d'en créer une nouvelle
+        if _G.jumpConnection then
+            _G.jumpConnection:Disconnect()
+        end
+
+        _G.jumpConnection = m.KeyDown:Connect(function(k)
+            if _G.infinjump and k == " " then
+                local humanoid = plr.Character and plr.Character:FindFirstChildOfClass('Humanoid')
+                if humanoid then
+                    humanoid:ChangeState('Jumping')
+                end
+            end
+        end)
+    end,
+})
+
+
+PlayerSetting:CreateToggle({
+   Name = "🌌 Gravity 🌌",
+   CurrentValue = false,
+   Flag = "Gravity",
+   Callback = function(Value)
+       game.Workspace.Gravity = Value and 0 or 196.2
+   end,
+})
+
+local SilentAimTab = Window:CreateTab("🔫 Silent Aim 🔫", 4483362458)
+SilentAimTab:CreateSection("Silent Aim Settings")
+
+local player = game.Players.LocalPlayer
+local SilentAim = false
+local TeamChecked = true
+local SelectedGuns = {}
+local FireRate = 0.1 -- Par défaut, 0.1s entre chaque tir
+
+local function notifyError(gun, err)
+    if string.find(err, "not a valid member of Model") or string.find(err, "Weapon not found or doesn't support firing") then 
+        return 
+    end  
+    Rayfield:Notify({
+        Title = "❗ Silent Aim Error ❗",
+        Content = "Error firing with " .. gun .. ".\n" .. 
+                  "❌ Issue: " .. err .. "\n" .. 
+                  "📩 Contact support on Discord!",
+        Duration = 5,
+        Image = 4483362458,
+    })
+end
+
+local function getClosestEnemy()
+    local closestEnemy = nil
+    local minDistance = math.huge
+    for _, plr in pairs(game.Players:GetPlayers()) do
+        if plr ~= player and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
+            if not TeamChecked or plr.Team ~= player.Team then
+                local distance = (player.Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).Magnitude
+                if distance < minDistance then
+                    minDistance = distance
+                    closestEnemy = plr.Character.HumanoidRootPart
+                end
+            end
+        end
+    end
+    return closestEnemy
+end
+
+local function fireAtEnemy()
+    while SilentAim do
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local target = getClosestEnemy()
+            if target then
+                for _, gun in ipairs(SelectedGuns) do
+                    local args = { [1] = target.Position }
+
+                    local success, err = pcall(function()
+                        if gun == "Paintball" then
+                            game:GetService("Players").LocalPlayer.Character.Paintball.Activate:FireServer(unpack(args))
+                        elseif gun == "Superball" then
+                            game:GetService("Players").LocalPlayer.Character.Superball.Activate:FireServer(unpack(args))
+                        elseif gun == "Flintlock" then
+                            game:GetService("Players").LocalPlayer.Character.Flintlock.Activate:FireServer(unpack(args))
+                        else
+                            local weapon = player.Character:FindFirstChild(gun)
+                            if weapon and weapon:FindFirstChild("Activate") then
+                                weapon.Activate:FireServer(unpack(args))
+                            else
+                                error("Weapon not found or doesn't support firing")
+                            end
+                        end
+                    end)
+
+                    if not success then
+                        notifyError(gun, err)
+                    end
+                end
+            end
+        end
+        wait(FireRate)
+    end
+end
+
+-- Event listener to handle player respawn and re-enable Silent Aim
+player.CharacterAdded:Connect(function()
+    if SilentAim then
+        fireAtEnemy()
+    end
+end)
+
+SilentAimTab:CreateToggle({
+   Name = "Activated",
+   CurrentValue = false,
+   Flag = "ActivatedSilentAim",
+   Callback = function(Value)
+       SilentAim = Value
+       if SilentAim then
+           fireAtEnemy()
+       end
+   end,
+})
+
+SilentAimTab:CreateToggle({
+   Name = "Team Checked",
+   CurrentValue = true,
+   Flag = "TeamChecked",
+   Callback = function(Value)
+       TeamChecked = Value
+   end,
+})
+
+SilentAimTab:CreateDropdown({
+   Name = "Gun",
+   Options = {"Flintlock", "Launcher", "Superball", "Paintball"},
+   CurrentOption = {"Flintlock"},
+   MultipleOptions = true,
+   Flag = "GunSilentAim",
+   Callback = function(Options)
+       SelectedGuns = Options
+   end,
+})
+
+SilentAimTab:CreateSlider({
+   Name = "Fire Rate (sec)",
+   Range = {0.05, 1.5}, 
+   Increment = 0.05,
+   Suffix = "sec",
+   CurrentValue = 0.05,
+   Flag = "FireRate",
+   Callback = function(Value)
+       FireRate = Value
+   end,
+})  
+
+
+local Visual = Window:CreateTab("🖥️ Visual 🖥️", 4483362458) 
+
+local Section = Visual:CreateSection("Utility")
+
+
+local Button = Visual:CreateButton({
+   Name = "Name esp",
+   Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/Lucasfin000/SpaceHub/main/UESP'))()
+   end,
+})
+
+
+local Button = Visual:CreateButton({
+   Name = "Tracer",
+   Callback = function()
+--// Made by Blissful#4992
+--// Locals:
+local workspace = game:GetService("Workspace")
+local player = game:GetService("Players").LocalPlayer
+local camera = workspace.CurrentCamera
+
+--// Settings:
+local on = true -- Use this if your making gui
+
+local Box_Color = Color3.fromRGB(0, 255, 50)
+local Box_Thickness = 1.4
+local Box_Transparency = 1 -- 1 Visible, 0 Not Visible
+
+local Tracers = true
+local Tracer_Color = Color3.fromRGB(0, 255, 50)
+local Tracer_Thickness = 1.4
+local Tracer_Transparency = 1 -- 1 Visible, 0 Not Visible
+
+local Autothickness = false -- Makes screen less encumbered
+
+local Team_Check = false
+local red = Color3.fromRGB(227, 52, 52)
+local green = Color3.fromRGB(88, 217, 24)
+
+local function NewLine()
+    local line = Drawing.new("Line")
+    line.Visible = false
+    line.From = Vector2.new(0, 0)
+    line.To = Vector2.new(1, 1)
+    line.Color = Box_Color
+    line.Thickness = Box_Thickness
+    line.Transparency = Box_Transparency
+    return line
+end
+
+--// Main Function:
+for i, v in pairs(game.Players:GetChildren()) do
+    --// Lines for 3D box (12)
+    local lines = {
+        line1 = NewLine(),
+        line2 = NewLine(),
+        line3 = NewLine(),
+        line4 = NewLine(),
+        line5 = NewLine(),
+        line6 = NewLine(),
+        line7 = NewLine(),
+        line8 = NewLine(),
+        line9 = NewLine(),
+        line10 = NewLine(),
+        line11 = NewLine(),
+        line12 = NewLine(),
+        Tracer = NewLine()
+    }
+
+    lines.Tracer.Color = Tracer_Color
+    lines.Tracer.Thickness = Tracer_Thickness
+    lines.Tracer.Transparency = Tracer_Transparency
+
+    --// Updates ESP (lines) in render loop
+    local function ESP()
+        local connection
+        connection = game:GetService("RunService").RenderStepped:Connect(function()
+            if on and v.Character ~= nil and v.Character:FindFirstChild("Humanoid") ~= nil and v.Character:FindFirstChild("HumanoidRootPart") ~= nil and v.Name ~= player.Name and v.Character.Humanoid.Health > 0 and v.Character:FindFirstChild("Head") ~= nil then
+                local pos, vis = camera:WorldToViewportPoint(v.Character.HumanoidRootPart.Position)
+                if vis then
+                    local Scale = v.Character.Head.Size.Y/2
+                    local Size = Vector3.new(2, 3, 1.5) * (Scale * 2) -- Change this for different box size
+
+                    local Top1 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, Size.Y, -Size.Z)).p)
+                    local Top2 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, Size.Y, Size.Z)).p)
+                    local Top3 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, Size.Z)).p)
+                    local Top4 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, -Size.Z)).p)
+
+                    local Bottom1 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, -Size.Y, -Size.Z)).p)
+                    local Bottom2 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, -Size.Y, Size.Z)).p)
+                    local Bottom3 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, -Size.Y, Size.Z)).p)
+                    local Bottom4 = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, -Size.Y, -Size.Z)).p)
+
+                    --// Top:
+                    lines.line1.From = Vector2.new(Top1.X, Top1.Y)
+                    lines.line1.To = Vector2.new(Top2.X, Top2.Y)
+
+                    lines.line2.From = Vector2.new(Top2.X, Top2.Y)
+                    lines.line2.To = Vector2.new(Top3.X, Top3.Y)
+
+                    lines.line3.From = Vector2.new(Top3.X, Top3.Y)
+                    lines.line3.To = Vector2.new(Top4.X, Top4.Y)
+
+                    lines.line4.From = Vector2.new(Top4.X, Top4.Y)
+                    lines.line4.To = Vector2.new(Top1.X, Top1.Y)
+
+                    --// Bottom:
+                    lines.line5.From = Vector2.new(Bottom1.X, Bottom1.Y)
+                    lines.line5.To = Vector2.new(Bottom2.X, Bottom2.Y)
+
+                    lines.line6.From = Vector2.new(Bottom2.X, Bottom2.Y)
+                    lines.line6.To = Vector2.new(Bottom3.X, Bottom3.Y)
+
+                    lines.line7.From = Vector2.new(Bottom3.X, Bottom3.Y)
+                    lines.line7.To = Vector2.new(Bottom4.X, Bottom4.Y)
+
+                    lines.line8.From = Vector2.new(Bottom4.X, Bottom4.Y)
+                    lines.line8.To = Vector2.new(Bottom1.X, Bottom1.Y)
+
+                    --//S ides:
+                    lines.line9.From = Vector2.new(Bottom1.X, Bottom1.Y)
+                    lines.line9.To = Vector2.new(Top1.X, Top1.Y)
+
+                    lines.line10.From = Vector2.new(Bottom2.X, Bottom2.Y)
+                    lines.line10.To = Vector2.new(Top2.X, Top2.Y)
+
+                    lines.line11.From = Vector2.new(Bottom3.X, Bottom3.Y)
+                    lines.line11.To = Vector2.new(Top3.X, Top3.Y)
+
+                    lines.line12.From = Vector2.new(Bottom4.X, Bottom4.Y)
+                    lines.line12.To = Vector2.new(Top4.X, Top4.Y)
+
+                    --// Tracer:
+                    if Tracers then
+                        local trace = camera:WorldToViewportPoint((v.Character.HumanoidRootPart.CFrame * CFrame.new(0, -Size.Y, 0)).p)
+
+                        lines.Tracer.From = Vector2.new(camera.ViewportSize.X/2, camera.ViewportSize.Y)
+                        lines.Tracer.To = Vector2.new(trace.X, trace.Y)
+                    end
+
+                    --// Teamcheck:
+                    if Team_Check then
+                        if v.TeamColor == player.TeamColor then
+                            for u, x in pairs(lines) do
+                                x.Color = green
+                            end
+                        else 
+                            for u, x in pairs(lines) do
+                                x.Color = red
+                            end
+                        end
+                    end
+
+                    --// Autothickness:
+                    if Autothickness then
+                        local distance = (player.Character.HumanoidRootPart.Position - v.Character.HumanoidRootPart.Position).magnitude
+                        local value = math.clamp(1/distance*100, 0.1, 4) --0.1 is min thickness, 6 is max
+                        for u, x in pairs(lines) do
+                            x.Thickness = value
+                        end
+                    else 
+                        for u, x in pairs(lines) do
+                            x.Thickness = Box_Thickness
+                        end
+                    end
+
+                    for u, x in pairs(lines) do
+                        if x ~= lines.Tracer then
+                            x.Visible = true
+                        end
+                    end
+                    if Tracers then
+                        lines.Tracer.Visible = true
+                    end
+                else 
+                    for u, x in pairs(lines) do
+                        x.Visible = false
+                    end
+                end
+            else 
+                for u, x in pairs(lines) do
+                    x.Visible = false
+                end
+                if game.Players:FindFirstChild(v.Name) == nil then
+                    connection:Disconnect()
+                end
+            end
+        end)
+    end
+    coroutine.wrap(ESP)()
+end
+
+game.Players.PlayerAdded:Connect(function(newplr)
+    --// Lines for 3D box (12)
+    local lines = {
+        line1 = NewLine(),
+        line2 = NewLine(),
+        line3 = NewLine(),
+        line4 = NewLine(),
+        line5 = NewLine(),
+        line6 = NewLine(),
+        line7 = NewLine(),
+        line8 = NewLine(),
+        line9 = NewLine(),
+        line10 = NewLine(),
+        line11 = NewLine(),
+        line12 = NewLine(),
+        Tracer = NewLine()
+    }
+
+    lines.Tracer.Color = Tracer_Color
+    lines.Tracer.Thickness = Tracer_Thickness
+    lines.Tracer.Transparency = Tracer_Transparency
+
+    --// Updates ESP (lines) in render loop
+    local function ESP()
+        local connection
+        connection = game:GetService("RunService").RenderStepped:Connect(function()
+            if on and newplr.Character ~= nil and newplr.Character:FindFirstChild("Humanoid") ~= nil and newplr.Character:FindFirstChild("HumanoidRootPart") ~= nil and newplr.Name ~= player.Name and newplr.Character.Humanoid.Health > 0 and newplr.Character:FindFirstChild("Head") ~= nil then
+                local pos, vis = camera:WorldToViewportPoint(newplr.Character.HumanoidRootPart.Position)
+                if vis then
+                    local Scale = newplr.Character.Head.Size.Y/2
+                    local Size = Vector3.new(2, 3, 1.5) * (Scale * 2) -- Change this for different box size
+
+                    local Top1 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, Size.Y, -Size.Z)).p)
+                    local Top2 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, Size.Y, Size.Z)).p)
+                    local Top3 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, Size.Z)).p)
+                    local Top4 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, -Size.Z)).p)
+
+                    local Bottom1 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, -Size.Y, -Size.Z)).p)
+                    local Bottom2 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(-Size.X, -Size.Y, Size.Z)).p)
+                    local Bottom3 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, -Size.Y, Size.Z)).p)
+                    local Bottom4 = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, -Size.Y, -Size.Z)).p)
+
+                    --// Top:
+                    lines.line1.From = Vector2.new(Top1.X, Top1.Y)
+                    lines.line1.To = Vector2.new(Top2.X, Top2.Y)
+
+                    lines.line2.From = Vector2.new(Top2.X, Top2.Y)
+                    lines.line2.To = Vector2.new(Top3.X, Top3.Y)
+
+                    lines.line3.From = Vector2.new(Top3.X, Top3.Y)
+                    lines.line3.To = Vector2.new(Top4.X, Top4.Y)
+
+                    lines.line4.From = Vector2.new(Top4.X, Top4.Y)
+                    lines.line4.To = Vector2.new(Top1.X, Top1.Y)
+
+                    --// Bottom:
+                    lines.line5.From = Vector2.new(Bottom1.X, Bottom1.Y)
+                    lines.line5.To = Vector2.new(Bottom2.X, Bottom2.Y)
+
+                    lines.line6.From = Vector2.new(Bottom2.X, Bottom2.Y)
+                    lines.line6.To = Vector2.new(Bottom3.X, Bottom3.Y)
+
+                    lines.line7.From = Vector2.new(Bottom3.X, Bottom3.Y)
+                    lines.line7.To = Vector2.new(Bottom4.X, Bottom4.Y)
+
+                    lines.line8.From = Vector2.new(Bottom4.X, Bottom4.Y)
+                    lines.line8.To = Vector2.new(Bottom1.X, Bottom1.Y)
+
+                    --//S ides:
+                    lines.line9.From = Vector2.new(Bottom1.X, Bottom1.Y)
+                    lines.line9.To = Vector2.new(Top1.X, Top1.Y)
+
+                    lines.line10.From = Vector2.new(Bottom2.X, Bottom2.Y)
+                    lines.line10.To = Vector2.new(Top2.X, Top2.Y)
+
+                    lines.line11.From = Vector2.new(Bottom3.X, Bottom3.Y)
+                    lines.line11.To = Vector2.new(Top3.X, Top3.Y)
+
+                    lines.line12.From = Vector2.new(Bottom4.X, Bottom4.Y)
+                    lines.line12.To = Vector2.new(Top4.X, Top4.Y)
+
+                    --// Tracer:
+                    if Tracers then
+                        local trace = camera:WorldToViewportPoint((newplr.Character.HumanoidRootPart.CFrame * CFrame.new(0, -Size.Y, 0)).p)
+                        lines.Tracer.From = Vector2.new(camera.ViewportSize.X/2, camera.ViewportSize.Y)
+                        lines.Tracer.To = Vector2.new(trace.X, trace.Y)
+                    end
+
+                    --// Teamcheck:
+                    if Team_Check then
+                        if newplr.TeamColor == player.TeamColor then
+                            for u, x in pairs(lines) do
+                                x.Color = green
+                            end
+                        else 
+                            for u, x in pairs(lines) do
+                                x.Color = red
+                            end
+                        end
+                    end
+
+                    --// Autothickness:
+                    if Autothickness then
+                        local distance = (player.Character.HumanoidRootPart.Position - newplr.Character.HumanoidRootPart.Position).magnitude
+                        local value = math.clamp(1/distance*100, 0.1, 4) --0.1 is min thickness, 6 is max
+                        for u, x in pairs(lines) do
+                            x.Thickness = value
+                        end
+                    else 
+                        for u, x in pairs(lines) do
+                            x.Thickness = Box_Thickness
+                        end
+                    end
+
+                    for u, x in pairs(lines) do
+                        if x ~= lines.Tracer then
+                            x.Visible = true
+                        end
+                    end
+                    if Tracers then
+                        lines.Tracer.Visible = true
+                    end
+                else 
+                    for u, x in pairs(lines) do
+                        x.Visible = false
+                    end
+                end
+            else 
+                for u, x in pairs(lines) do
+                    x.Visible = false
+                end
+                if game.Players:FindFirstChild(newplr.Name) == nil then
+                    connection:Disconnect()
+                end
+            end
+        end)
+    end
+    coroutine.wrap(ESP)()
+end)   end,
+})
+
+
+local Button = Visual:CreateButton({
+   Name = "Xray",
+   Callback = function()
+      local workspace = game:GetService("Workspace")
+
+      local function setTransparencyForBlocks(transparency)
+          for _, object in ipairs(workspace:GetDescendants()) do
+              if object:IsA("Part") then
+                  object.Transparency = transparency
+              end
+          end
+      end
+      
+      setTransparencyForBlocks(0.8)   
+   end,
+})
+
+
+local Button = Visual:CreateButton({
+   Name = "Rtx",
+   Callback = function()
+		loadstring(game:HttpGet('https://raw.githubusercontent.com/Biom49/Script/refs/heads/main/Rtx'))()
+   end,
+})
+
+
+
+local Toggle = Visual:CreateToggle({
+    Name = "Fps",
+    CurrentValue = false,
+    Flag = "Toggle1", 
+    Callback = function(Value)
+        local player = game.Players.LocalPlayer
+        local screenGui = player:WaitForChild("PlayerGui"):FindFirstChild("ScreenGui") or Instance.new("ScreenGui")
+        screenGui.Name = "ScreenGui"
+        screenGui.Parent = player.PlayerGui
+
+        local fpsLabel = screenGui:FindFirstChild("FpsLabel") or Instance.new("TextLabel")
+        fpsLabel.Name = "FpsLabel"
+        fpsLabel.Size = UDim2.new(0, 200, 0, 50)
+        fpsLabel.Position = UDim2.new(0, 10, 0, 10)  -- Set to top-left
+        fpsLabel.BackgroundTransparency = 1
+        fpsLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        fpsLabel.Font = Enum.Font.GothamBold
+        fpsLabel.TextSize = 24
+        fpsLabel.Parent = screenGui
+
+        local function updateFps()
+            local lastTime = tick()
+            local frameCount = 0
+
+            game:GetService("RunService").Heartbeat:Connect(function()
+                frameCount = frameCount + 1
+                if tick() - lastTime >= 1 then
+                    local fps = frameCount
+                    fpsLabel.Text = "FPS: " .. fps
+                    lastTime = tick()
+                    frameCount = 0
+                end
+            end)
+        end
+
+        if Value then
+            updateFps()
+        else
+            if fpsLabel then
+                fpsLabel:Destroy()
+            end
+        end
+    end,
+})
+
+
+local Slider = Visual:CreateSlider({
+    Name = "FOV",
+    Range = {0, 120}, 
+    Increment = 1, 
+    Suffix = "°",
+    CurrentValue = 70,
+    Flag = "FOVSlider",
+    Callback = function(Value)
+        local player = game.Players.LocalPlayer
+        if player and player.Character then
+            local camera = game.Workspace.CurrentCamera
+            if camera then
+                camera.FieldOfView = Value
+            end
+        end
+    end,
+})
+
+
+local Aimbot = Window:CreateTab("🤖 Aimbot 🤖", 4483362458) 
+
+local AimbotActived = false 
+local AimbotActived2 = false  
+local AimbotTeamCheck = false
+local WallCheck = false
+local DeadCheck = false
+local closestPlayer = nil
+local selectedPart = "Torse"  
+
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+
+local function getPlayerFromCharacter(character)
+    for _, player in pairs(Players:GetPlayers()) do
+        if player.Character == character then
+            return player
+        end
+    end
+    return nil
+end
+
+local function isPlayerBehindWall(localPlayer, targetPlayer)
+    local localPosition = localPlayer.Character.HumanoidRootPart.Position
+    local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
+    local direction = (targetPosition - localPosition).unit
+    local ray = Ray.new(localPosition, direction * (localPosition - targetPosition).Magnitude)
+
+    local hit = Workspace:FindPartOnRay(ray, localPlayer.Character)
+    return hit ~= nil
+end
+
+local function isPlayerDead(player)
+    return player.Character and player.Character:FindFirstChild("Humanoid") and player.Character.Humanoid.Health <= 0
+end
+
+local function getClosestPlayer()
+    local localPlayer = Players.LocalPlayer
+    local closestDistance = math.huge
+    local closestPlayer = nil
+
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= localPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            if AimbotTeamCheck and player.Team == localPlayer.Team then
+                continue
+            end
+
+            if DeadCheck and isPlayerDead(player) then
+                continue
+            end
+
+            local playerPosition = player.Character.HumanoidRootPart.Position
+
+            if playerPosition.X <= -1.253283977508545 and playerPosition.Y <= -370.7654113769531 and playerPosition.Z <= -5.06936502456665 then
+                continue
+            end
+
+            local localPosition = localPlayer.Character.HumanoidRootPart.Position
+            local distance = (playerPosition - localPosition).Magnitude
+
+            if distance < closestDistance then
+                closestDistance = distance
+                closestPlayer = player
+            end
+        end
+    end
+
+    return closestPlayer
+end
+
+local function getTargetPart(player)
+    if selectedPart == "Torse" then
+        return player.Character:FindFirstChild("UpperTorso") or player.Character:FindFirstChild("LowerTorso")
+    elseif selectedPart == "Head" then
+        return player.Character:FindFirstChild("Head")
+    end
+    return nil
+end
+
+local function aimAtTarget(targetPosition)
+    local camera = Workspace.CurrentCamera
+    local direction = (targetPosition - camera.CFrame.Position).unit
+    local targetCFrame = CFrame.new(camera.CFrame.Position, camera.CFrame.Position + direction)
+    camera.CFrame = camera.CFrame:Lerp(targetCFrame, 0.2)  -- Ajustez la vitesse avec le facteur 0.2
+end
+
+UserInputService.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton2 then
+        if AimbotActived then
+            AimbotActived2 = true
+            closestPlayer = getClosestPlayer()
+        end
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton2 then
+        AimbotActived2 = false
+        closestPlayer = nil
+    end
+end)
+
+RunService.RenderStepped:Connect(function()
+    if AimbotActived and AimbotActived2 and closestPlayer then
+        if closestPlayer.Character then
+            local targetPart = getTargetPart(closestPlayer)
+            if targetPart then
+                if WallCheck and isPlayerBehindWall(Players.LocalPlayer, closestPlayer) then
+                    return
+                end
+                aimAtTarget(targetPart.Position)
+            end
+        end
+    end
+end)
+
+local Toggle = Aimbot:CreateToggle({
+    Name = "Aimbot",
+    CurrentValue = false,
+    Flag = "Toggle1", 
+    Callback = function(Value)
+        AimbotActived = Value
+    end,
+})
+
+
+local Toggle = Aimbot:CreateToggle({
+    Name = "Aim assist (do not activate it at the same time as the aimbot)",
+    CurrentValue = false,
+    Flag = "Toggle1", 
+    Callback = function(Value)
+-- Variables
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local SilentAim = Value
+local targetPlayer = nil 
+local localPlayer = Players.LocalPlayer
+
+local function getClosestPlayer()
+    local closestPlayer = nil
+    local shortestDistance = math.huge
+    local character = localPlayer.Character
+    local head = character and character:FindFirstChild("Head")
+
+    if not head then return nil end
+
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= localPlayer and player.Team ~= localPlayer.Team then
+            local playerCharacter = player.Character
+            local playerHead = playerCharacter and playerCharacter:FindFirstChild("Head")
+
+            if playerHead then
+                local distance = (playerHead.Position - head.Position).Magnitude
+                if distance < shortestDistance then
+                    closestPlayer = player
+                    shortestDistance = distance
+                end
+            end
+        end
+    end
+
+    return closestPlayer
+end
+
+-- Fonction pour viser lentement un joueur
+local function aimAtPlayer(player)
+    if not player or not player.Character then return end
+    local targetHead = player.Character:FindFirstChild("Head")
+    local camera = workspace.CurrentCamera
+
+    if targetHead then
+        -- Interpolation de la position de la caméra pour viser le joueur
+        local targetCFrame = CFrame.new(camera.CFrame.Position, targetHead.Position)
+        camera.CFrame = camera.CFrame:Lerp(targetCFrame, 0.1) -- Ajuste la vitesse ici
+    end
+end
+
+-- Gestion des clics de souris
+local rightMouseDown = false
+
+UserInputService.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton2 then
+        rightMouseDown = true
+        if SilentAim then
+            targetPlayer = getClosestPlayer()
+        end
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton2 then
+        rightMouseDown = false
+        targetPlayer = nil
+    end
+end)
+
+RunService.RenderStepped:Connect(function()
+    if SilentAim and rightMouseDown and targetPlayer then
+        aimAtPlayer(targetPlayer)
+    end
+end)
+
+    end,
+})
+
+
+local Toggle = Aimbot:CreateToggle({
+    Name = "Check Team",
+    CurrentValue = false,
+    Flag = "Toggle2", 
+    Callback = function(Value)
+        AimbotTeamCheck = Value
+    end,
+})
+
+local Toggle = Aimbot:CreateToggle({
+    Name = "Wall Check",
+    CurrentValue = false,
+    Flag = "Toggle3", 
+    Callback = function(Value)
+        WallCheck = Value
+    end,
+})
+
+local Toggle = Aimbot:CreateToggle({
+    Name = "Dead Check",
+    CurrentValue = false,
+    Flag = "Toggle4", 
+    Callback = function(Value)
+        DeadCheck = Value
+    end,
+})
+
+local Keybind = Aimbot:CreateKeybind({
+    Name = "Activate Aimbot",
+    CurrentKeybind = "X",
+    HoldToInteract = false,
+    Flag = "Keybind1", 
+    Callback = function(Keybind)
+        AimbotActived = Keybind
+    end,
+})
+
+local Dropdown = Aimbot:CreateDropdown({
+    Name = "Select Part",
+    Options = {"Torse", "Head"},
+    CurrentOption = "Torse",
+    MultipleOptions = false,
+    Flag = "Dropdown1",
+    Callback = function(Options)
+        selectedPart = Options[1]
+    end,
+})
+
+
+local PovActive = false
+local PovSize = 300
+local PovTransparency = 0
+local PovColor = Color3.fromRGB(255, 255, 255)
+local PovBorderSize = 1
+
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "PovGui"
+screenGui.Parent = playerGui
+
+local povFrame = Instance.new("Frame")
+povFrame.Name = "PovFrame"
+povFrame.Size = UDim2.new(0, PovSize, 0, PovSize)
+povFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+povFrame.BackgroundTransparency = 1
+povFrame.Parent = screenGui
+povFrame.Visible = PovActive
+
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(1, 0)
+uiCorner.Parent = povFrame
+
+local uiStroke = Instance.new("UIStroke")
+uiStroke.Thickness = PovBorderSize
+uiStroke.Color = PovColor
+uiStroke.Transparency = PovTransparency
+uiStroke.Parent = povFrame
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    if PovActive then
+        local mouse = player:GetMouse()
+        povFrame.Position = UDim2.new(0, mouse.X, 0, mouse.Y)
+    end
+end)
+
+local Setting = Aimbot:CreateSection("Pov")
+
+local Toggle = Aimbot:CreateToggle({
+    Name = "Pov",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        PovActive = Value
+        povFrame.Visible = PovActive
+    end,
+})
+
+local SliderSize = Aimbot:CreateSlider({
+    Name = "Pov size",
+    Range = {0, 500},
+    Increment = 10,
+    Suffix = "px",
+    CurrentValue = PovSize,
+    Flag = "Slider1",
+    Callback = function(Value)
+        PovSize = Value
+        povFrame.Size = UDim2.new(0, PovSize, 0, PovSize)
+    end,
+})
+
+local SliderBorder = Aimbot:CreateSlider({
+    Name = "Pov Border",
+    Range = {0, 50},
+    Increment = 1,
+    Suffix = "px",
+    CurrentValue = PovBorderSize,
+    Flag = "Slider3",
+    Callback = function(Value)
+        PovBorderSize = Value
+        uiStroke.Thickness = PovBorderSize
+    end,
+})
+
+local SliderTransparency = Aimbot:CreateSlider({
+    Name = "Pov Transparency",
+    Range = {0, 1},
+    Increment = 0.1,
+    Suffix = "Transparency",
+    CurrentValue = PovTransparency,
+    Flag = "Slider2",
+    Callback = function(Value)
+        PovTransparency = Value
+        uiStroke.Transparency = PovTransparency
+    end,
+})
+
+local ColorPicker = Aimbot:CreateColorPicker({
+    Name = "Pov color",
+    Color = PovColor,
+    Flag = "ColorPicker1",
+    Callback = function(Value)
+        PovColor = Value
+        uiStroke.Color = PovColor
+    end,
+})
+
+local ToggleMultiColor = Aimbot:CreateToggle({
+    Name = "Multicolor",
+    CurrentValue = false,
+    Flag = "Toggle2",
+    Callback = function(Value)
+        while wait() do
+            if Value then
+        
+                local randomColor = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))
+                uiStroke.Color = randomColor
+                wait(0.1)
+    end 
+        end
+    end,
+})
+local Others = Window:CreateTab("Others", "rewind")
+
+
+local Section = Others:CreateSection("Utility")
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local StarterGui = game:GetService("StarterGui") -- Pour afficher les notifications
+
+local player = Players.LocalPlayer
+
+local function notify(title, text, duration)
+    StarterGui:SetCore("SendNotification", {
+        Title = title;
+        Text = text;
+        Duration = duration or 3;
+    })
+end
+
+local Button = Others:CreateButton({
+    Name = "Spawn Boat/Plane (Must take the boat in his hand before making it appear)",
+    Callback = function()
+        local success, err = pcall(function()
+            local player = game:GetService("Players").LocalPlayer
+            local character = player.Character
+            local playerPosition = character.PrimaryPart.Position
+            local spawnOffset = Vector3.new(5, 0, 5)
+            local spawnPosition = playerPosition + spawnOffset
+
+            if not character:FindFirstChild("Boat") then
+                notify("Error", "You don't have a boat in your inventory", 3)
+                return
+            end
+            local args = { [1] = spawnPosition }
+            character.Boat.Activate:FireServer(unpack(args))
+        end)
+
+        if not success then
+            notify("Error", "An error occurred: " .. err, 3)
+        end
+    end,
+})
+
+
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local placeId = game.PlaceId  
+
+local Button = Others:CreateButton({
+    Name = "ServerHop",
+    Callback = function()
+        TeleportService:Teleport(placeId, player)
+    end,
+})
+
+
+local Button = Others:CreateButton({
+    Name = "SuperRingV3(GravityGun/Telekinisi)",
+    Callback = function()
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local SoundService = game:GetService("SoundService")
+local StarterGui = game:GetService("StarterGui")
+local TextChatService = game:GetService("TextChatService")
+
+local LocalPlayer = Players.LocalPlayer
+
+-- Sound Effects
+local function playSound(soundId)
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://" .. soundId
+    sound.Parent = SoundService
+    sound:Play()
+    sound.Ended:Connect(function()
+        sound:Destroy()
+    end)
+end
+
+-- Play initial sound
+playSound("2865227271")
+
+-- GUI Creation
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "SuperRingPartsGUI"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 220, 0, 190)
+MainFrame.Position = UDim2.new(0.5, -110, 0.5, -95)
+MainFrame.BackgroundColor3 = Color3.fromRGB(205, 170, 125) -- Light brown
+MainFrame.BorderSizePixel = 0
+MainFrame.Parent = ScreenGui
+
+-- Make the GUI round
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 20)
+UICorner.Parent = MainFrame
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 40)
+Title.Position = UDim2.new(0, 0, 0, 0)
+Title.Text = "Super Ring Parts v3"
+Title.TextColor3 = Color3.fromRGB(101, 67, 33) -- Dark brown
+Title.BackgroundColor3 = Color3.fromRGB(222, 184, 135) -- Lighter brown
+Title.Font = Enum.Font.Fondamento -- More elegant font
+Title.TextSize = 22
+Title.Parent = MainFrame
+
+-- Round the title
+local TitleCorner = Instance.new("UICorner")
+TitleCorner.CornerRadius = UDim.new(0, 20)
+TitleCorner.Parent = Title
+
+local ToggleButton = Instance.new("TextButton")
+ToggleButton.Size = UDim2.new(0.8, 0, 0, 35)
+ToggleButton.Position = UDim2.new(0.1, 0, 0.3, 0)
+ToggleButton.Text = "Ring Parts Off"
+ToggleButton.BackgroundColor3 = Color3.fromRGB(160, 82, 45) -- Sienna
+ToggleButton.TextColor3 = Color3.fromRGB(255, 248, 220) -- Cornsilk
+ToggleButton.Font = Enum.Font.Fondamento
+ToggleButton.TextSize = 18
+ToggleButton.Parent = MainFrame
+
+-- Round the toggle button
+local ToggleCorner = Instance.new("UICorner")
+ToggleCorner.CornerRadius = UDim.new(0, 10)
+ToggleCorner.Parent = ToggleButton
+
+local DecreaseRadius = Instance.new("TextButton")
+DecreaseRadius.Size = UDim2.new(0.2, 0, 0, 35)
+DecreaseRadius.Position = UDim2.new(0.1, 0, 0.6, 0)
+DecreaseRadius.Text = "<"
+DecreaseRadius.BackgroundColor3 = Color3.fromRGB(139, 69, 19) -- Saddle brown
+DecreaseRadius.TextColor3 = Color3.fromRGB(255, 248, 220) -- Cornsilk
+DecreaseRadius.Font = Enum.Font.Fondamento
+DecreaseRadius.TextSize = 18
+DecreaseRadius.Parent = MainFrame
+
+-- Round the decrease button
+local DecreaseCorner = Instance.new("UICorner")
+DecreaseCorner.CornerRadius = UDim.new(0, 10)
+DecreaseCorner.Parent = DecreaseRadius
+
+local IncreaseRadius = Instance.new("TextButton")
+IncreaseRadius.Size = UDim2.new(0.2, 0, 0, 35)
+IncreaseRadius.Position = UDim2.new(0.7, 0, 0.6, 0)
+IncreaseRadius.Text = ">"
+IncreaseRadius.BackgroundColor3 = Color3.fromRGB(139, 69, 19) -- Saddle brown
+IncreaseRadius.TextColor3 = Color3.fromRGB(255, 248, 220) -- Cornsilk
+IncreaseRadius.Font = Enum.Font.Fondamento
+IncreaseRadius.TextSize = 18
+IncreaseRadius.Parent = MainFrame
+
+-- Round the increase button
+local IncreaseCorner = Instance.new("UICorner")
+IncreaseCorner.CornerRadius = UDim.new(0, 10)
+IncreaseCorner.Parent = IncreaseRadius
+
+local RadiusDisplay = Instance.new("TextLabel")
+RadiusDisplay.Size = UDim2.new(0.4, 0, 0, 35)
+RadiusDisplay.Position = UDim2.new(0.3, 0, 0.6, 0)
+RadiusDisplay.Text = "Radius: 50"
+RadiusDisplay.BackgroundColor3 = Color3.fromRGB(210, 180, 140) -- Tan
+RadiusDisplay.TextColor3 = Color3.fromRGB(101, 67, 33) -- Dark brown
+RadiusDisplay.Font = Enum.Font.Fondamento
+RadiusDisplay.TextSize = 18
+RadiusDisplay.Parent = MainFrame
+
+-- Round the radius display
+local RadiusCorner = Instance.new("UICorner")
+RadiusCorner.CornerRadius = UDim.new(0, 10)
+RadiusCorner.Parent = RadiusDisplay
+
+local Watermark = Instance.new("TextLabel")
+Watermark.Size = UDim2.new(1, 0, 0, 20)
+Watermark.Position = UDim2.new(0, 0, 1, -20)
+Watermark.Text = "Super Ring [V3] - Cracked By Projeto LKB"
+Watermark.TextColor3 = Color3.fromRGB(101, 67, 33) -- Dark brown
+Watermark.BackgroundTransparency = 1
+Watermark.Font = Enum.Font.Fondamento
+Watermark.TextSize = 14
+Watermark.Parent = MainFrame
+
+-- Add minimize button
+local MinimizeButton = Instance.new("TextButton")
+MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+MinimizeButton.Position = UDim2.new(1, -35, 0, 5)
+MinimizeButton.Text = "-"
+MinimizeButton.BackgroundColor3 = Color3.fromRGB(139, 69, 19) -- Saddle brown
+MinimizeButton.TextColor3 = Color3.fromRGB(255, 248, 220) -- Cornsilk
+MinimizeButton.Font = Enum.Font.Fondamento
+MinimizeButton.TextSize = 18
+MinimizeButton.Parent = MainFrame
+
+-- Round the minimize button
+local MinimizeCorner = Instance.new("UICorner")
+MinimizeCorner.CornerRadius = UDim.new(0, 15)
+MinimizeCorner.Parent = MinimizeButton
+
+-- Minimize functionality
+local minimized = false
+MinimizeButton.MouseButton1Click:Connect(function()
+    minimized = not minimized
+    if minimized then
+        MainFrame:TweenSize(UDim2.new(0, 220, 0, 40), "Out", "Quad", 0.3, true)
+        MinimizeButton.Text = "+"
+        ToggleButton.Visible = false
+        DecreaseRadius.Visible = false
+        IncreaseRadius.Visible = false
+        RadiusDisplay.Visible = false
+        Watermark.Visible = false
+    else
+        MainFrame:TweenSize(UDim2.new(0, 220, 0, 190), "Out", "Quad", 0.3, true)
+        MinimizeButton.Text = "-"
+        ToggleButton.Visible = true
+        DecreaseRadius.Visible = true
+        IncreaseRadius.Visible = true
+        RadiusDisplay.Visible = true
+        Watermark.Visible = true
+    end
+    playSound("12221967")
+end)
+
+-- Make GUI draggable
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+local function update(input)
+    local delta = input.Position - dragStart
+    MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+MainFrame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = MainFrame.Position
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+MainFrame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        dragInput = input
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        update(input)
+    end
+end)
+
+-- Ring Parts Logic
+if not getgenv().Network then
+    getgenv().Network = {
+        BaseParts = {},
+        Velocity = Vector3.new(14.46262424, 14.46262424, 14.46262424)
+    }
+    Network.RetainPart = function(Part)
+        if typeof(Part) == "Instance" and Part:IsA("BasePart") and Part:IsDescendantOf(workspace) then
+            table.insert(Network.BaseParts, Part)
+            Part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0)
+            Part.CanCollide = false
+        end
+    end
+    local function EnablePartControl()
+        LocalPlayer.ReplicationFocus = workspace
+        RunService.Heartbeat:Connect(function()
+            sethiddenproperty(LocalPlayer, "SimulationRadius", math.huge)
+            for _, Part in pairs(Network.BaseParts) do
+                if Part:IsDescendantOf(workspace) then
+                    Part.Velocity = Network.Velocity
+                end
+            end
+        end)
+    end
+    EnablePartControl()
+end
+
+local radius = 50
+local height = 100
+local rotationSpeed = 10
+local attractionStrength = 1000
+local ringPartsEnabled = false
+
+local function RetainPart(Part)
+    if Part:IsA("BasePart") and not Part.Anchored and Part:IsDescendantOf(workspace) then
+        if Part.Parent == LocalPlayer.Character or Part:IsDescendantOf(LocalPlayer.Character) then
+            return false
+        end
+
+        Part.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0)
+        Part.CanCollide = false
+        return true
+    end
+    return false
+end
+
+local parts = {}
+local function addPart(part)
+    if RetainPart(part) then
+        if not table.find(parts, part) then
+            table.insert(parts, part)
+        end
+    end
+end
+
+local function removePart(part)
+    local index = table.find(parts, part)
+    if index then
+        table.remove(parts, index)
+    end
+end
+
+for _, part in pairs(workspace:GetDescendants()) do
+    addPart(part)
+end
+
+workspace.DescendantAdded:Connect(addPart)
+workspace.DescendantRemoving:Connect(removePart)
+
+RunService.Heartbeat:Connect(function()
+    if not ringPartsEnabled then return end
+    
+    local humanoidRootPart = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if humanoidRootPart then
+        local tornadoCenter = humanoidRootPart.Position
+        for _, part in pairs(parts) do
+            if part.Parent and not part.Anchored then
+                local pos = part.Position
+                local distance = (Vector3.new(pos.X, tornadoCenter.Y, pos.Z) - tornadoCenter).Magnitude
+                local angle = math.atan2(pos.Z - tornadoCenter.Z, pos.X - tornadoCenter.X)
+                local newAngle = angle + math.rad(rotationSpeed)
+                local targetPos = Vector3.new(
+                    tornadoCenter.X + math.cos(newAngle) * math.min(radius, distance),
+                    tornadoCenter.Y + (height * (math.abs(math.sin((pos.Y - tornadoCenter.Y) / height)))),
+                    tornadoCenter.Z + math.sin(newAngle) * math.min(radius, distance)
+                )
+                local directionToTarget = (targetPos - part.Position).unit
+                part.Velocity = directionToTarget * attractionStrength
+            end
+        end
+    end
+end)
+
+-- Button functionality
+ToggleButton.MouseButton1Click:Connect(function()
+    ringPartsEnabled = not ringPartsEnabled
+    ToggleButton.Text = ringPartsEnabled and "Ring Parts On" or "Ring Parts Off"
+    ToggleButton.BackgroundColor3 = ringPartsEnabled and Color3.fromRGB(50, 205, 50) or Color3.fromRGB(160, 82, 45)
+    playSound("12221967")
+end)
+
+DecreaseRadius.MouseButton1Click:Connect(function()
+    radius = math.max(10, radius - 5)
+    RadiusDisplay.Text = "Radius: " .. radius
+    playSound("12221967")
+end)
+
+IncreaseRadius.MouseButton1Click:Connect(function()
+    radius = math.min(100, radius + 5)
+    RadiusDisplay.Text = "Radius: " .. radius
+    playSound("12221967")
+end)
+
+
+-- Get player thumbnail
+local userId = Players:GetUserIdFromNameAsync("NannaDev")
+local thumbType = Enum.ThumbnailType.HeadShot
+local thumbSize = Enum.ThumbnailSize.Size420x420
+local content, isReady = Players:GetUserThumbnailAsync(userId, thumbType, thumbSize)
+
+    end,
+})
+
+local Toggle = Others:CreateToggle({
+    Name = "Kill all (Take the sword in hand and activate the kill all. If there is a bug, activate and deactivate it twice)",
+    CurrentValue = false,
+    Flag = "Toggle1",
+    Callback = function(Value)
+        getgenv().kill_all = Value
+
+        -- Vérifie si l'épée existe avant d'activer l'attaque
+        spawn(function()
+            while getgenv().kill_all do
+                local sword = game:GetService("Players").LocalPlayer.Character:FindFirstChild("Sword")
+                if sword and sword:FindFirstChild("Activate") then
+                    local args = { Vector3.new(-45.733, 274.198, 82.873) }
+                    sword.Activate:FireServer(unpack(args))
+                end
+                wait(0.1)
+            end
+        end)
+
+        local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+
+        local function teleportBehindPlayer(targetPlayer)
+            if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                local humanoid = targetPlayer.Character:FindFirstChildOfClass("Humanoid")
+                if humanoid and humanoid.Health > 0 then
+                    local targetPosition = targetPlayer.Character.HumanoidRootPart.CFrame
+                    local newPosition = targetPosition * CFrame.new(0, 0, 3)
+                    
+                    -- Vérifie si le joueur peut être téléporté
+                    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                        LocalPlayer.Character:SetPrimaryPartCFrame(newPosition)
+                    end
+                end
+            end
+        end
+
+        spawn(function()
+            while getgenv().kill_all do
+                for _, v in pairs(Players:GetPlayers()) do
+                    if v ~= LocalPlayer and v.Character then
+                        local humanoid = v.Character:FindFirstChildOfClass("Humanoid")
+                        if humanoid and humanoid.Health > 0 then
+                            local startTime = tick()
+                            while tick() - startTime < 1 and getgenv().kill_all do
+                                teleportBehindPlayer(v)
+                                wait(0.1)
+                            end
+                        end
+                    end
+                end
+                wait(1)
+            end
+        end)
+    end,
+})
+
+
+ local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+
+
+ local Button = Others:CreateButton({
+    Name = "Get Super Fire Ball",
+    Callback = function()
+        local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+
+        if humanoidRootPart then
+            local oldPosition = humanoidRootPart.CFrame
+            humanoidRootPart.CFrame = CFrame.new(656.09, 255.76, -124.65)
+            wait(0.5)
+            humanoidRootPart.CFrame = oldPosition
+          
+        end 
+    end,
+ })
+ 
+
+local Button = Others:CreateButton({
+    Name = "Get invisible Sword",
+    Callback = function()
+        local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+
+        if humanoidRootPart then
+            local oldPosition = humanoidRootPart.CFrame
+            humanoidRootPart.CFrame = CFrame.new(-263.30, 277.97, -426.01)
+            wait(0.5)
+            humanoidRootPart.CFrame = oldPosition
+          
+        end 
+    end,
+ })
+ 
+ local Button = Others:CreateButton({
+    Name = "Get Super Paintball",
+    Callback = function()
+        local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+
+        if humanoidRootPart then
+            local oldPosition = humanoidRootPart.CFrame
+            humanoidRootPart.CFrame = CFrame.new(-143.53, 265.96, 482.11)
+            wait(0.5)
+            humanoidRootPart.CFrame = oldPosition
+        end 
+    end,
+ })
+
