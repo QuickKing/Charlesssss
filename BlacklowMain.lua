@@ -2512,7 +2512,7 @@ Gamehub:AddButton(
     {
         Name = "Door script #2",
         Callback = function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/Biom49/Script/refs/heads/main/Door%232"))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/QuickKing/byebyebye/refs/heads/main/xxxx"))()
         end
     }
 )
@@ -2526,21 +2526,10 @@ Gamehub:AddButton(
     }
 )
 
+
 Gamehub:AddButton(
     {
         Name = "Door script #4",
-        Callback = function()
-            loadstring(
-                game:HttpGet(
-                    "https://raw.githubusercontent.com/KINGHUB01/BlackKing-obf/main/Doors%20Blackking%20And%20BobHub"
-                )
-            )()
-        end
-    }
-)
-Gamehub:AddButton(
-    {
-        Name = "Door script #5",
         Callback = function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/notpoiu/mspaint/main/main.lua"))()
         end
@@ -2554,75 +2543,16 @@ local Section =
     }
 )
 
+
+
+
+
+
+
+
 Gamehub:AddButton(
     {
         Name = "brookhaven #1",
-        Callback = function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/REDzHUB/main/REDzHUB"))()
-        end
-    }
-)
-
-Gamehub:AddButton(
-    {
-        Name = "brookhaven #2",
-        Callback = function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/REDzHUB/main/REDzHUB"))()
-        end
-    }
-)
-
-Gamehub:AddButton(
-    {
-        Name = "brookhaven #3",
-        Callback = function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/Alexcirer/Alexcirer/refs/heads/main/Station"))()
-        end
-    }
-)
-
-Gamehub:AddButton(
-    {
-        Name = "brookhaven #4",
-        Callback = function()
-            loadstring(
-                game:HttpGet(
-                    "https://raw.githubusercontent.com/Hyz0r-Dev404/Hyz0/refs/heads/main/Working%25Hyz0r-Hub.md"
-                )
-            )()
-        end
-    }
-)
-
-Gamehub:AddButton(
-    {
-        Name = "brookhaven #5",
-        Callback = function()
-            loadstring(
-                game:HttpGet(
-                    "https://raw.githubusercontent.com/speedwavevip/scriptspeed/refs/heads/main/Brookhaven_lraq"
-                )
-            )()
-        end
-    }
-)
-
-Gamehub:AddButton(
-    {
-        Name = "brookhaven #6",
-        Callback = function()
-            loadstring(
-                game:HttpGet(
-                    "https://raw.githubusercontent.com/Luarmor123/community-Y-HUB/refs/heads/main/YHUB%20ENGLISH"
-                )
-            )()
-        end
-    }
-)
-
-Gamehub:AddButton(
-    {
-        Name = "brookhaven #7",
         Callback = function()
             loadstring(
                 game:HttpGet(
@@ -2634,22 +2564,10 @@ Gamehub:AddButton(
     }
 )
 
-Gamehub:AddButton(
-    {
-        Name = "brookhaven #8",
-        Callback = function()
-            loadstring(
-                game:HttpGet(
-                    "https://raw.githubusercontent.com/Trev0rZ/LoaderM/refs/heads/main/ImperiaHub-lWorking.lua"
-                )
-            )()
-        end
-    }
-)
 
 Gamehub:AddButton(
     {
-        Name = "brookhaven #9",
+        Name = "brookhaven #2",
         Callback = function()
             loadstring(
                 game:HttpGet("https://raw.githubusercontent.com/kigredns/SanderXV4.2.2/refs/heads/main/NormalSS.lua")
@@ -2660,7 +2578,7 @@ Gamehub:AddButton(
 
 Gamehub:AddButton(
     {
-        Name = "brookhaven #10",
+        Name = "brookhaven #3",
         Callback = function()
             loadstring(
                 game:HttpGet("https://raw.githubusercontent.com/kigredns/SanderXV4.2.2/refs/heads/main/NormalSS.lua")
@@ -2671,7 +2589,7 @@ Gamehub:AddButton(
 
 Gamehub:AddButton(
     {
-        Name = "brookhaven #11",
+        Name = "brookhaven #4",
         Callback = function()
             loadstring(game:HttpGet("https://pastebin.com/raw/GYyWRWHJ"))()
         end
@@ -2680,7 +2598,7 @@ Gamehub:AddButton(
 
 Gamehub:AddButton(
     {
-        Name = "brookhaven #12",
+        Name = "brookhaven #5",
         Callback = function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/RFRR1CH4RD/Loader/main/Salvatore.lua"))()
         end
@@ -2689,7 +2607,7 @@ Gamehub:AddButton(
 
 Gamehub:AddButton(
     {
-        Name = "brookhaven #13",
+        Name = "brookhaven #6",
         Callback = function()
             oadstring(game:HttpGet("https://raw.githubusercontent.com/RFRR1CH4RD/Loader/main/Salvatore.lua"))()
         end
@@ -2698,7 +2616,7 @@ Gamehub:AddButton(
 
 Gamehub:AddButton(
     {
-        Name = "brookhaven #14",
+        Name = "brookhaven #7",
         Callback = function()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/gclich/GHUBV14XZ/main/Ghub_Main_Loader.txt"))()
         end
@@ -2781,11 +2699,140 @@ Gamehub:AddButton(
     {
         Name = "Lucky block battlegrounds #1",
         Callback = function()
-            loadstring(
-                game:HttpGet(
-                    "https://raw.githubusercontent.com/Biom49/Script/refs/heads/main/Lucky%20block%20battlegrounds"
-                )
-            )()
+            local OrionLib = loadstring(game:HttpGet(("https://raw.githubusercontent.com/BlacklowDeveloper/Blacklow/refs/heads/main/Ui")))()
+            local Window = OrionLib:MakeWindow({Name = "Lucky block battlegrounds", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+            
+            OrionLib:MakeNotification({
+                Name = "Created by Zakolm",
+                Content = "lucky block battlegrounds",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+            local Tab = Window:MakeTab({
+                Name = "Player",
+                Icon = "rbxassetid://4483345998",
+                PremiumOnly = false
+            })
+            
+            local Section = Tab:AddSection({
+                Name = "Setting player"
+            })
+            
+            Tab:AddSlider({
+                Name = "Walkspeed",
+                Min = 16,
+                Max = 500,
+                Default = 16,
+                Color = Color3.fromRGB(255, 255, 255),
+                Increment = 1,
+                ValueName = "Sd",
+                Callback = function(Value)
+                    local player = game.Players.LocalPlayer
+                    player.Character.Humanoid.WalkSpeed = Value
+                end    
+            })
+            
+            Tab:AddSlider({
+                Name = "JumpPower",
+                Min = 50,
+                Max = 200,
+                Default = 50,
+                Color = Color3.fromRGB(255, 255, 255),
+                Increment = 1,
+                ValueName = "Jp",
+                Callback = function(Value)
+                    local player = game.Players.LocalPlayer
+                    player.Character.Humanoid.JumpPower = Value
+                end    
+            })
+            
+            Tab:AddToggle({
+                Name = "No Gravity",
+                Default = false,
+                Callback = function(Value)
+                    if Value then
+                        game.Workspace.Gravity = -1
+                    else
+                        game.Workspace.Gravity = 196.2
+                    end        
+                end        
+            })
+            
+            Tab:AddButton({
+                Name = "Reset",
+                Callback = function()
+                    local player = game.Players.LocalPlayer
+                    player.Character.Humanoid.Health = 0
+                end    
+            })
+            
+            
+            Tab:AddButton({
+                Name = "Gamemode",
+                Callback = function()
+                    loadstring(game:HttpGet("https://pastebin.com/raw/FwfNEqYz", true))()
+                end    
+            })
+            
+            Tab:AddButton({
+                Name = "Noclip",
+                Callback = function()
+                    local Noclip = nil
+                    local Clip = nil
+                    
+                    function noclip()
+                        Clip = false
+                        local function Nocl()
+                            if Clip == false and game.Players.LocalPlayer.Character ~= nil then
+                                for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                                    if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
+                                        v.CanCollide = false
+                                    end
+                                end
+                            end
+                            wait(0.21) 
+                        end
+                        Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
+                    end
+                    
+                    function clip()
+                        if Noclip then Noclip:Disconnect() end
+                        Clip = true
+                    end
+                    
+                    noclip() 
+                end    
+            })
+            local Tab = Window:MakeTab({
+                Name = "Lucky block ",
+                Icon = "rbxassetid://4483345998",
+                PremiumOnly = false
+            })
+            
+            local Section = Tab:AddSection({
+                Name = "Give Lucky block"
+            })
+            local selectluckyblock = nil
+            
+            local selectluckyblock 
+            
+            Tab:AddDropdown({
+                Name = "Lucky block",
+                Default = "1", 
+                Options = {"SpawnDiamondBlock", "SpawnGalaxyBlock", "SpawnLuckyBlock", "SpawnRainbowBlock", "SpawnSuperBlock"},
+                Callback = function(Value)
+                    selectluckyblock = Value 
+                end    
+            })
+            
+            Tab:AddButton({
+                Name = "Give",
+                Callback = function()
+                    if selectluckyblock then 
+                        game.ReplicatedStorage:WaitForChild(selectluckyblock):FireServer() 
+                    end
+                end    
+            })
         end
     }
 )
@@ -2820,16 +2867,6 @@ Gamehub:AddButton(
         end
     }
 )
-
-Gamehub:AddButton(
-    {
-        Name = "Lucky block battlegrounds #5",
-        Callback = function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/OfficialHi/AstroHub/main/Loader/Main.lua"))()
-        end
-    }
-)
-
 
 
 local Section =
@@ -2897,7 +2934,7 @@ Gamehub:AddButton(
         {
             Name = "Venox rival v2)",
             Callback = function()
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/PUSCRIPTS/PINGUIN/refs/heads/main/RivalsV1"))()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/venoxcc/universalscripts/refs/heads/main/rivals/venoxware"))()
             end
         }
 )
@@ -2907,7 +2944,7 @@ Gamehub:AddButton(
         {
             Name = "8 bit",
             Callback = function()
-                loadstring(game:HttpGet("https://dev-8-bit.pantheonsite.io/scripts/?script=rivalsv3.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/8bits4ya/rivals-v3/refs/heads/main/main.lua"))()
             end
         }
 )
@@ -2938,9 +2975,6 @@ Gamehub:AddButton(
             end
         }
 )
-
-
-
 
 local Tab9 =
     Window:MakeTab(
@@ -3019,7 +3053,98 @@ Tab9:AddButton(
         Name = "Https Logger(Only On good Executor)",
         Callback = function()
             local success, err = pcall(function()
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/NotDSF/HttpSpy/refs/heads/main/init.lua"))()
+                local SkibDiddyHttpSpy = Instance.new("ScreenGui")
+                local MainUI = Instance.new("Frame")
+                local TextLabel = Instance.new("TextLabel")
+                local TextButton = Instance.new("TextButton")
+                local UICorner = Instance.new("UICorner")
+                local ScrollingFrame = Instance.new("ScrollingFrame")
+                local UIListLayout = Instance.new("UIListLayout")
+                local TextLabel_2 = Instance.new("TextLabel")
+                SkibDiddyHttpSpy.Name = "SkibDiddy HttpSpy"
+                SkibDiddyHttpSpy.Parent = game.CoreGui
+                SkibDiddyHttpSpy.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+                MainUI.Name = "MainUI"
+                MainUI.Parent = SkibDiddyHttpSpy
+                MainUI.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+                MainUI.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                MainUI.BorderSizePixel = 0
+                MainUI.Position = UDim2.new(0.32458666, 0, 0.324929982, 0)
+                MainUI.Size = UDim2.new(0.349999994, 0, 0.349999994, 0)
+                TextLabel.Parent = MainUI
+                TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                TextLabel.BackgroundTransparency = 1.000
+                TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                TextLabel.BorderSizePixel = 0
+                TextLabel.Size = UDim2.new(1, 0, 0.100000001, 0)
+                TextLabel.Font = Enum.Font.SourceSans
+                TextLabel.Text = "SkibDiddy HawkTuah General Purpose Spy v1"
+                TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+                TextLabel.TextScaled = true
+                TextLabel.TextSize = 14.000
+                TextLabel.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+                TextLabel.TextWrapped = true
+                TextButton.Parent = TextLabel
+                TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                TextButton.BackgroundTransparency = 1.000
+                TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                TextButton.BorderSizePixel = 0
+                TextButton.Position = UDim2.new(0.925999999, 0, 0, 0)
+                TextButton.Size = UDim2.new(0.074000001, 0, 1, 0)
+                TextButton.Font = Enum.Font.SourceSans
+                TextButton.Text = "×"
+                TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+                TextButton.TextScaled = true
+                TextButton.TextSize = 14.000
+                TextButton.TextWrapped = true
+                UICorner.Parent = MainUI
+                ScrollingFrame.Parent = MainUI
+                ScrollingFrame.Active = true
+                ScrollingFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                ScrollingFrame.BackgroundTransparency = 1.000
+                ScrollingFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+                ScrollingFrame.BorderSizePixel = 0
+                ScrollingFrame.Position = UDim2.new(0, 0, 0.100000001, 0)
+                ScrollingFrame.Size = UDim2.new(1, 0, 0.899999976, 0)
+                UIListLayout.Parent = ScrollingFrame
+                UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+                local function MTOI_fake_script()
+                    local script = Instance.new('LocalScript', TextButton)
+                    Instance.new("UIDragDetector", script.Parent.Parent.Parent)
+                    script.Parent.MouseButton1Click:Connect(function()
+                        script.Parent.Parent.Parent.Parent:Destroy()
+                    end)
+                end
+                coroutine.wrap(MTOI_fake_script)()
+                local function addItem(text)
+                    local item = Instance.new("TextButton", ScrollingFrame)
+                    item.BackgroundTransparency = 1
+                    item.Size = UDim2.new(1,0,0.025,0)
+                    item.TextColor3 = Color3.new(1,1,1)
+                    item.TextScaled = true
+                    item.Text = "Log too big to preview"
+                    pcall(function() item.Text = "Request Info: "..text end)
+                    item.MouseButton1Click:Connect(function()
+                        setclipboard(text)
+                    end)
+                end
+                local function parseTable(...)
+                    local output = ""
+                    for i,v in pairs(...) do
+                        output=output..tostring(i).."='"..tostring(v).."', "
+                    end
+                    return "request({"..output.."})"
+                end
+                local realRequest = getgenv().request
+                getgenv().request = function(...)
+                    addItem(parseTable(...))
+                    return realRequest(...)
+                end
+                local realLoadstring = loadstring
+                getgenv().loadstring = function(...)
+                    addItem(...)
+                    return realLoadstring(...)
+                end
             end)
             if not success then
                 OrionLib:MakeNotification({
@@ -3288,6 +3413,34 @@ Tab9:AddButton(
         Callback = function()
             local success, err = pcall(function()
                 loadstring(game:HttpGet('https://raw.githubusercontent.com/Charleseeeeeeeeeeeeeee/Charlesssss/refs/heads/main/SoundyGrabber'))()
+            end)
+            if not success then
+                OrionLib:MakeNotification({
+                    Name = "⚠️Exploit Not supported⚠️",
+                    Content = "Your executor does not support"..err,
+                    Image = "rbxassetid://4483345998",
+                    Time = 5
+                })
+            end
+        end
+    }
+)
+
+
+Tab9:AddButton(
+    {
+        Name = "Hydroxide(value changer,remoteEvent ect )",
+        Callback = function()
+            local success, err = pcall(function()
+                local owner = "Upbolt"
+                local branch = "revision"
+                
+                local function webImport(file)
+                    return loadstring(game:HttpGetAsync(("https://raw.githubusercontent.com/%s/Hydroxide/%s/%s.lua"):format(owner, branch, file)), file .. '.lua')()
+                end
+                
+                webImport("init")
+                webImport("ui/main")
             end)
             if not success then
                 OrionLib:MakeNotification({
