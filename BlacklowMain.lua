@@ -298,6 +298,16 @@ Tab2:AddButton(
     }
 )
 
+
+Tab2:AddButton(
+    {
+        Name = "Fe Emotes",
+        Callback = function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/TrixAde/Proxima-Hub/main/UniversalDance-AnimGui.lua'))()
+        end
+    }
+)
+
 Tab2:AddButton(
     {
         Name = "Fe Emote(18+)",
