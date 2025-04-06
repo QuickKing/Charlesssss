@@ -3020,107 +3020,6 @@ Tab9:AddButton(
     }
 )
 
-Tab9:AddButton(
-    {
-        Name = "Vulnerability checker",
-        Callback = function()
-            local success, err = pcall(function()
-local LinkingService = game:GetService("LinkingService")
-local ScriptContext = game:GetService("ScriptContext")
-
-local escape_results = {}
-local total_escapes = 4
-local successful_escapes = 0
-
-print("Running env escape V1")
-if pcall(function()
-    setfenv(1, getfenv(require))
-    getfenv().game = nil
-    game:OpenScreenshotsFolder()
-end) then
-    table.insert(escape_results, "⚠️ env escape V1, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
-    successful_escapes = successful_escapes + 1
-else
-    table.insert(escape_results, "❌ env escape V1")
-end
-
-print("Running env escape V3")
-if pcall(function()
-    local newenv = getfenv(game.Loaded.wait)
-    newenv.game = nil
-    newenv.game:OpenScreenshotsFolder()
-end) then
-    table.insert(escape_results, "⚠️ env escape V3, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
-    successful_escapes = successful_escapes + 1
-else
-    table.insert(escape_results, "❌ env escape V3")
-end
-
-print("Running env escape V4")
-if pcall(function()
-    local s = getmetatable(getfenv(Drawing.new)).__index
-    s.game = nil
-    s.game:OpenScreenshotsFolder()
-end) then
-    table.insert(escape_results, "⚠️ env escape V4, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
-    successful_escapes = successful_escapes + 1
-else
-    table.insert(escape_results, "❌ env escape V4")
-end
-
-print("Running env escape V5")
-if pcall(function()
-    local f
-    xpcall(function()
-        sethiddenproperty(settings().Lua, "boom")
-    end, function()
-        f = debug.info(3, "f")
-    end)
-    getfenv(f).game:OpenScreenshotsFolder()
-end) then
-    table.insert(escape_results, "⚠️ env escape V5, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
-    successful_escapes = successful_escapes + 1
-else
-    table.insert(escape_results, "❌ env escape V5")
-end
-
-
-print("Attempting to open notepad via a script profiling method...")
-local profiling_result = ""
-if pcall(function()
-    LinkingService:OpenUrl(ScriptContext:SaveScriptProfilingData([[START C:\WINDOWS\system32\notepad.exe]], "ok.bat"))
-end) then
-    profiling_result = "⚠️ Script profiling method executed successfully! WARNING, this indicates a vulnerability that should be addressed! Especially considering this is a very known method!"
-else
-    profiling_result = "❌ Script profiling method failed or was blocked, which is a good sign!"
-end
-table.insert(escape_results, profilingresult)
-
-
-print("\n[Results]")
-for result in ipairs(escape_results) do
-    print(result)
-end
-
-
-if successful_escapes == 0 and profiling_result:find("❌") then
-    print("\nBased off of " .. total_escapes .. " env escapes and script profiling tested, you seem pretty safe!")
-else
-    local success_percent = (successful_escapes / total_escapes) * 100
-    print("\nWarning! " .. successful_escapes .. " out of " .. total_escapes .. " env escapes passed (" .. success_percent .. "%). Additionally, " .. profiling_result .. ". You might be at risk and should take precautions!")
-end
-	end)
-            if not success then
-                OrionLib:MakeNotification({
-                    Name = "⚠️Exploit Not supported⚠️",
-                    Content = "Your executor does not support",
-                    Image = "rbxassetid://4483345998",
-                    Time = 5
-                })
-            end
-        end
-    }
-)
 
 Tab9:AddButton(
     {
@@ -3475,6 +3374,110 @@ Tab9:AddButton(
         end
     }
 )
+
+
+Tab9:AddButton(
+    {
+        Name = "Vulnerability checker",
+        Callback = function()
+            local success, err = pcall(function()
+local LinkingService = game:GetService("LinkingService")
+local ScriptContext = game:GetService("ScriptContext")
+
+local escape_results = {}
+local total_escapes = 4
+local successful_escapes = 0
+
+print("Running env escape V1")
+if pcall(function()
+    setfenv(1, getfenv(require))
+    getfenv().game = nil
+    game:OpenScreenshotsFolder()
+end) then
+    table.insert(escape_results, "⚠️ env escape V1, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
+    successful_escapes = successful_escapes + 1
+else
+    table.insert(escape_results, "❌ env escape V1")
+end
+
+print("Running env escape V3")
+if pcall(function()
+    local newenv = getfenv(game.Loaded.wait)
+    newenv.game = nil
+    newenv.game:OpenScreenshotsFolder()
+end) then
+    table.insert(escape_results, "⚠️ env escape V3, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
+    successful_escapes = successful_escapes + 1
+else
+    table.insert(escape_results, "❌ env escape V3")
+end
+
+print("Running env escape V4")
+if pcall(function()
+    local s = getmetatable(getfenv(Drawing.new)).__index
+    s.game = nil
+    s.game:OpenScreenshotsFolder()
+end) then
+    table.insert(escape_results, "⚠️ env escape V4, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
+    successful_escapes = successful_escapes + 1
+else
+    table.insert(escape_results, "❌ env escape V4")
+end
+
+print("Running env escape V5")
+if pcall(function()
+    local f
+    xpcall(function()
+        sethiddenproperty(settings().Lua, "boom")
+    end, function()
+        f = debug.info(3, "f")
+    end)
+    getfenv(f).game:OpenScreenshotsFolder()
+end) then
+    table.insert(escape_results, "⚠️ env escape V5, WARNING, this env escape passed! This means you're vulnerable and need to take precautions!")
+    successful_escapes = successful_escapes + 1
+else
+    table.insert(escape_results, "❌ env escape V5")
+end
+
+
+print("Attempting to open notepad via a script profiling method...")
+local profiling_result = ""
+if pcall(function()
+    LinkingService:OpenUrl(ScriptContext:SaveScriptProfilingData([[START C:\WINDOWS\system32\notepad.exe]], "ok.bat"))
+end) then
+    profiling_result = "⚠️ Script profiling method executed successfully! WARNING, this indicates a vulnerability that should be addressed! Especially considering this is a very known method!"
+else
+    profiling_result = "❌ Script profiling method failed or was blocked, which is a good sign!"
+end
+table.insert(escape_results, profilingresult)
+
+
+print("\n[Results]")
+for result in ipairs(escape_results) do
+    print(result)
+end
+
+
+if successful_escapes == 0 and profiling_result:find("❌") then
+    print("\nBased off of " .. total_escapes .. " env escapes and script profiling tested, you seem pretty safe!")
+else
+    local success_percent = (successful_escapes / total_escapes) * 100
+    print("\nWarning! " .. successful_escapes .. " out of " .. total_escapes .. " env escapes passed (" .. success_percent .. "%). Additionally, " .. profiling_result .. ". You might be at risk and should take precautions!")
+end
+	end)
+            if not success then
+                OrionLib:MakeNotification({
+                    Name = "⚠️Exploit Not supported⚠️",
+                    Content = "Your executor does not support",
+                    Image = "rbxassetid://4483345998",
+                    Time = 5
+                })
+            end
+        end
+    }
+)
+
 
 
 Tab9:AddButton(
